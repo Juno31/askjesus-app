@@ -117,38 +117,29 @@ function Home() {
     askName: function () {
       const randomGreetings = random(GREETINGS);
 
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: `${randomGreetings}, I'm Jesus`,
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.JESUS,
+        isStart: true,
+        time: 1000,
+        content: `${randomGreetings}, I'm Jesus`,
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: "I was listening to Blackpink's new album. It's stunning.",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: "I was listening to Blackpink's new album. It's stunning.",
+        });
       }, 1000);
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: "What's your name?",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: "What's your name?",
+        });
 
         setTimeout(function () {
           setIsInput(true);
@@ -156,50 +147,38 @@ function Home() {
       }, 2000);
     },
     askAgenda: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: name,
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: name,
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: `Good to see you, ${name}.`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: `Good to see you, ${name}.`,
+        });
       }, 1000);
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: `Tell me what you've got`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: `Tell me what you've got`,
+        });
       }, 2000);
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: `Maybe I can help you.`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: `Maybe I can help you.`,
+        });
       }, 3000);
 
       setTimeout(function () {
@@ -207,50 +186,38 @@ function Home() {
       }, 4000);
     },
     askPrayer: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: agenda,
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: agenda,
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: "Got it.",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: "Got it.",
+        });
       }, 1000);
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: "Hmm.... Let me think.",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: "Hmm.... Let me think.",
+        });
       }, 2000);
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: "It might help a lot if you pray for me.",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: "It might help a lot if you pray for me.",
+        });
       }, 3000);
 
       setTimeout(function () {
@@ -259,26 +226,20 @@ function Home() {
       }, 4000);
     },
     acceptPrayer: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: "🙏 Amen",
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: "🙏 Amen",
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: "How nice of you. ",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: "How nice of you. ",
+        });
       }, 1000);
 
       setTimeout(function () {
@@ -286,26 +247,20 @@ function Home() {
       }, 2000);
     },
     declinePrayer: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: "I don't want to",
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: "I don't want to",
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: "It's okay. ",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: "It's okay. ",
+        });
       }, 1000);
 
       setTimeout(function () {
@@ -313,32 +268,26 @@ function Home() {
       }, 2500);
     },
     askReady: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 0,
-          content: "I'm done thinking about what you told me.",
-        },
-        {
+      addChat({
+        type: MESSAGE_TYPE.JESUS,
+        isStart: false,
+        time: 0,
+        content: "I'm done thinking about what you told me.",
+      });
+      addChat({
+        type: MESSAGE_TYPE.JESUS,
+        isStart: false,
+        time: 1000,
+        content: "There's something I want to tell you.",
+      });
+
+      setTimeout(function () {
+        addChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: "There's something I want to tell you.",
-        },
-      ]);
-
-      setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: `Are you ready to hear, ${name}?`,
-          },
-        ]);
+          content: `Are you ready to hear, ${name}?`,
+        });
       }, 1000);
 
       setTimeout(function () {
@@ -377,26 +326,20 @@ function Home() {
       }, completions.length * 1000);
     },
     notReady: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: true,
-          time: 0,
-          content: "Not really",
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: true,
+        time: 0,
+        content: "Not really",
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: "I'm sorry to hear that.",
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: "I'm sorry to hear that.",
+        });
 
         setTimeout(function () {
           setEnd(true);
@@ -404,38 +347,29 @@ function Home() {
       }, 1000);
     },
     satisfactionPositive: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: `😘 Good`,
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: `😘 Good`,
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: `My pleasure, ${name}.`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: `My pleasure, ${name}.`,
+        });
       }, 0);
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: `Can you tell me specifically what you were thinking?`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: `Can you tell me specifically what you were thinking?`,
+        });
 
         setTimeout(function () {
           setIsInput(true);
@@ -443,26 +377,20 @@ function Home() {
       }, 1000);
     },
     satisfactionNeutral: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: `Well....`,
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: `Well....`,
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: `Hm... Why did you think so?`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: `Hm... Why did you think so?`,
+        });
       }, 0);
 
       setTimeout(function () {
@@ -470,38 +398,29 @@ function Home() {
       }, 1000);
     },
     satisfactionNegative: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: `I don't like this answer.`,
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: `I don't like this answer.`,
+      });
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: `${name}, I'm sorry to hear that.`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: `${name}, I'm sorry to hear that.`,
+        });
       }, 0);
 
       setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: `If you tell me in detail, I'll be sure to refer to it next time.`,
-          },
-        ]);
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: `If you tell me in detail, I'll be sure to refer to it next time.`,
+        });
 
         setTimeout(function () {
           setIsInput(true);
