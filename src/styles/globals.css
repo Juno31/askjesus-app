@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body,
+#__next {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+@layer components {
+  .container {
+    @apply h-max min-h-screen min-w-full overflow-x-hidden;
+  }
+}
+
+@layer components {
+  .fade-up-target {
+    @apply translate-y-16 opacity-5 transition-all duration-1000 will-change-transform;
+  }
+
+  .animate {
+    @apply translate-y-0 opacity-100;
+  }
+}
