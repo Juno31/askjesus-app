@@ -1,4 +1,5 @@
 import { counselingFlowData } from "../constants/flow";
+import _ from "lodash";
 
 export class CounselingFlow {
   getChunk(chunkName) {
@@ -33,6 +34,16 @@ export class CounselingFlow {
     return counselingFlowData.choices.filter(
       (choice) => choice.response_name === responseName
     );
+  }
+
+  replaceParams(text = "", parameters) {
+    const replacedText = Object.entries(parameters).reduce(([key, value]) => {
+      const token = `{${key}}`;
+
+      return text.replace(token, value);
+    }, "");
+
+    return replacedText;
   }
 }
 
