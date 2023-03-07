@@ -5,16 +5,17 @@ import React, {
   useState,
 } from "react";
 import { useRouter } from "next/router";
+import _ from "lodash";
 
 //components
 import MessageWrapper from "@/components/message/message-wrapper";
-import JesusBubble from "@/components/message/system";
-import UserBubble from "@/components/message/mine";
+import JesusBubble from "@/components/message/jesus-bubble";
+import UserBubble from "@/components/message/user-bubble";
 import Jesus from "@/components/message/jesus";
 import Image from "next/image";
 
 //utils
-import random from "@/utils/random";
+import { CounselingFlow } from "@/utils/flow";
 
 //api
 import api from "@/apis";
@@ -28,7 +29,7 @@ const GREETINGS = ["Hello", "Hi", "Good Morning"];
 
 const INPUT_DEFAULT = {
   spellCheck: false,
-  autoComplete: false,
+  autoComplete: "off",
 };
 
 const PRAYER_TYPE = {
@@ -52,8 +53,10 @@ const COMPLETION_EXP =
 
 function Home() {
   const router = useRouter();
+  const flow = new CounselingFlow();
   const [step, setStep] = useState(0);
   const [name, setName] = useState("");
+  const [pid, setPid] = useState(null);
   const [agenda, setAgenda] = useState("");
   const [prayerType, setPrayerType] = useState();
   const [readyType, setReadyType] = useState(false);
@@ -66,6 +69,7 @@ function Home() {
   const [isSelect, setIsSelect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [end, setEnd] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   const reset = function () {
     setStep(0);
@@ -82,7 +86,7 @@ function Home() {
 
   const initialize = async function () {
     try {
-      const response = await api.healthCheck();
+      const response = await api.getServerStatus();
 
       if (response) {
         setStep(1);
@@ -92,28 +96,49 @@ function Home() {
     }
   };
 
-  const scrollOnAdd = function () {
-    const currentHeight = document.documentElement.scrollHeight; // document height
+  // const scrollOnAdd = function () {
+  //   const currentHeight = document.documentElement.scrollHeight; // document height
 
-    if (currentHeight <= window.screen.height) {
-      // do nothing
-    } else {
-      window.scrollTo({ top: currentHeight, behavior: "smooth" });
+  //   // if (currentHeight <= window.screen.height) {
+  //   //   // do nothing
+  //   // } else {
+  //   //   window.scrollTo({ top: currentHeight, behavior: "smooth" });
+  //   // }
+  // };
+
+  const replaceVariable = function (text, key, value) {
+    const token = `{${key}}`;
+
+    return text.replaceAll(token, value);
+  };
+
+  const getRandomAuto = function (messageCode) {
+    const lines = flow.getMessageLines(messageCode);
+
+    if (lines.length > 1) {
+      // random
+      const no = _.random(0, lines.length - 1);
+
+      return replaceVariable(lines[no].text, "name", name);
     }
+
+    return replaceVariable(lines[0].text, "name", name);
   };
 
   const addChat = function (chat) {
     setChats((current) => [...current, chat]);
-    scrollOnAdd();
+    // scrollOnAdd();
   };
 
   const triggerMessage = {
     error: function () {
+      setIsInput(false);
+      setIsSelect(false);
       addChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: `I sometimes want to be alone.`,
+        content: getRandomAuto("announce_offline_reason"),
       });
 
       setTimeout(function () {
@@ -121,18 +146,16 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: "Please come back later.",
+          content: getRandomAuto("announce_offline_retry"),
         });
       }, 1000);
     },
     askName: function () {
-      const randomGreetings = random(GREETINGS);
-
       addChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: `${randomGreetings}, I'm Jesus`,
+        content: getRandomAuto("ask_name_introduce"),
       });
 
       setTimeout(function () {
@@ -140,7 +163,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: "I was listening to Blackpink's new album. It's stunning.",
+          content: getRandomAuto("ask_name_talk"),
         });
       }, 1000);
 
@@ -149,7 +172,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: "What's your name?",
+          content: getRandomAuto("ask_name_ask"),
         });
 
         setTimeout(function () {
@@ -170,7 +193,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: `Good to see you, ${name}.`,
+          content: getRandomAuto("ask_agenda_welcome"),
         });
       }, 1000);
 
@@ -179,7 +202,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: `Tell me what you've got`,
+          content: getRandomAuto("ask_agenda_ask"),
         });
       }, 2000);
 
@@ -188,7 +211,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: `Maybe I can help you.`,
+          content: getRandomAuto("ask_agenda_guide"),
         });
       }, 3000);
 
@@ -209,7 +232,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: "Got it.",
+          content: getRandomAuto("ask_pray_react"),
         });
       }, 1000);
 
@@ -218,7 +241,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: "Hmm.... Let me think.",
+          content: getRandomAuto("ask_pray_think"),
         });
       }, 2000);
 
@@ -227,7 +250,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: "It might help a lot if you pray for me.",
+          content: getRandomAuto("ask_pray_ask"),
         });
       }, 3000);
 
@@ -249,7 +272,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: "How nice of you. ",
+          content: getRandomAuto("accept_pray_thank"),
         });
       }, 1000);
 
@@ -270,7 +293,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: "It's okay. ",
+          content: getRandomAuto("decline_pray_react"),
         });
       }, 1000);
 
@@ -283,27 +306,18 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: false,
         time: 0,
-        content: "I'm done thinking about what you told me.",
+        content: getRandomAuto("ask_ready_finish"),
       });
       addChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: false,
         time: 1000,
-        content: "There's something I want to tell you.",
+        content: getRandomAuto("ask_ready_ready"),
       });
 
       setTimeout(function () {
-        addChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: `Are you ready to hear, ${name}?`,
-        });
-      }, 1000);
-
-      setTimeout(function () {
         setIsSelect(true);
-      }, 2000);
+      }, 1000);
     },
     answerWord: function () {
       addChat({
@@ -313,22 +327,24 @@ function Home() {
         content: "🤗 Yes",
       });
 
-      completions.forEach(function (completion, index, array) {
+      const splittedCompletion = completions.split(". ");
+
+      splittedCompletion.forEach(function (completion, index, array) {
         if (!completion) return;
 
         setTimeout(function () {
           addChat({
             type: MESSAGE_TYPE.JESUS,
             isStart: index === 0,
-            time: 1000,
+            time: 2000,
             content: completion,
           });
-        }, index * 1000);
+        }, index * 2000);
       });
 
       setTimeout(function () {
         setIsSelect(true);
-      }, completions.length * 1000);
+      }, splittedCompletion.length * 2000);
     },
     notReady: function () {
       addChat({
@@ -343,12 +359,12 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: "I'm sorry to hear that.",
+          content: getRandomAuto("not_ready_sorry"),
         });
 
         setTimeout(function () {
           setEnd(true);
-        }, 1500);
+        }, 2000);
       }, 1000);
     },
     satisfactionPositive: function () {
@@ -364,7 +380,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: `My pleasure, ${name}.`,
+          content: getRandomAuto("satisfaction_positive_react"),
         });
       }, 0);
 
@@ -373,7 +389,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: `Can you tell me specifically what you were thinking?`,
+          content: getRandomAuto("satisfaction_positive_ask"),
         });
 
         setTimeout(function () {
@@ -394,7 +410,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: `Hm... Why did you think so?`,
+          content: getRandomAuto("satisfaction_neutral_ask"),
         });
       }, 0);
 
@@ -415,7 +431,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: `${name}, I'm sorry to hear that.`,
+          content: getRandomAuto("satisfaction_negative_react"),
         });
       }, 0);
 
@@ -424,7 +440,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: `If you tell me in detail, I'll be sure to refer to it next time.`,
+          content: getRandomAuto("satisfaction_negative_ask"),
         });
 
         setTimeout(function () {
@@ -444,7 +460,7 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: "Thank you for expressing your feelings honestly.",
+        content: getRandomAuto("feedback_long_react"),
       });
 
       setTimeout(function () {
@@ -452,8 +468,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content:
-            "I want you to share this experience with your friend. I bet you have some friends who need me.",
+          content: getRandomAuto("feedback_long_talk"),
         });
 
         setTimeout(function () {
@@ -473,7 +488,7 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: "I understand the words in your heart",
+        content: getRandomAuto("feedback_short_react"),
       });
 
       setTimeout(function () {
@@ -487,7 +502,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: "Do you have more thing to talk about?",
+          content: getRandomAuto("ask_retry_ask"),
         },
       ]);
 
@@ -495,7 +510,64 @@ function Home() {
         setIsSelect(true);
       }, 1000);
     },
-    endAction: function () {},
+    nextAgenda: function () {
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: "Yes, please.",
+      });
+
+      setTimeout(function () {
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: getRandomAuto("next_agenda_talk"),
+        });
+      }, 1000);
+
+      setTimeout(function () {
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: getRandomAuto("next_agenda_ask"),
+        });
+      }, 2000);
+
+      setTimeout(function () {
+        setIsInput(true);
+      }, 3000);
+    },
+    announceEnd: function () {
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        time: 0,
+        isStart: false,
+        content: "No, I'm done",
+      });
+
+      addChat({
+        type: MESSAGE_TYPE.JESUS,
+        time: 1000,
+        isStart: true,
+        content: getRandomAuto("announce_end_react"),
+      });
+
+      setTimeout(function () {
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: getRandomAuto("announce_end_talk"),
+        });
+
+        setTimeout(function () {
+          setEnd(true);
+        }, 1500);
+      }, 1000);
+    },
   };
 
   const handleArrowClick = function () {
@@ -506,10 +578,18 @@ function Home() {
     return e.key === "Enter";
   };
 
-  const handleNameSubmit = function () {
+  const handleNameSubmit = async function () {
     if (name?.length) {
-      setIsInput(false);
-      setStep(2);
+      try {
+        const response = await api.createCounseling(name);
+        const pid = response.payload.pid;
+
+        setPid(pid);
+        setIsInput(false);
+        setStep(2);
+      } catch (error) {
+        triggerMessage.error();
+      }
     }
   };
 
@@ -545,22 +625,38 @@ function Home() {
   const getChatGpt = async function () {
     setIsLoading(true);
     try {
-      setTimeout(function () {
-        const completion = COMPLETION_EXP.split(".");
-        setCompletions(completion);
-        setIsLoading(false);
-      }, 10000);
+      const messages = [
+        {
+          attempt: attempt,
+          isContext: true,
+          role: "user",
+          content: agenda,
+        },
+      ];
+      const parameters = [
+        {
+          attempt: attempt,
+          key: "name",
+          value: name,
+        },
+      ];
+
+      const response = await api.patchCounseling({
+        attempt: attempt + 1,
+        pid: pid,
+        messages: messages,
+        parameters: parameters,
+      });
+
+      const completion =
+        response.payload.messages[response.payload.messages.length - 1].content;
+
+      setAttempt((current) => current + 1);
+      setCompletions(completion);
+      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 0,
-          content: "",
-        },
-      ]);
+      triggerMessage.error();
     }
   };
 
@@ -581,70 +677,9 @@ function Home() {
 
     if (retry) {
       setAgenda(null);
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: "Yes, please.",
-        },
-      ]);
-
-      setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: true,
-            time: 1000,
-            content: "I'm a little busy, but I'll make time for you.",
-          },
-        ]);
-      }, 1000);
-
-      setTimeout(function () {
-        setChats((current) => [
-          ...current,
-          {
-            type: MESSAGE_TYPE.JESUS,
-            isStart: false,
-            time: 1000,
-            content: `So what's next, ${name}?`,
-          },
-        ]);
-      }, 2000);
-
-      setTimeout(function () {
-        setIsInput(true);
-      }, 3000);
+      triggerMessage.nextAgenda();
     } else {
-      addChat({
-        type: MESSAGE_TYPE.USER,
-        time: 0,
-        isStart: false,
-        content: "No, I'm done",
-      });
-
-      addChat({
-        type: MESSAGE_TYPE.JESUS,
-        time: 1000,
-        isStart: true,
-        content: `It was nice meeting you, ${name}.`,
-      });
-
-      setTimeout(function () {
-        addChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: "God bless you.",
-        });
-
-        setTimeout(function () {
-          setEnd(true);
-        }, 1500);
-      }, 1000);
+      triggerMessage.announceEnd();
     }
   };
 
@@ -693,7 +728,6 @@ function Home() {
   useEffect(
     function () {
       stepListener(step);
-      console.log("useEffect");
     },
     [step]
   );
@@ -708,26 +742,41 @@ function Home() {
     [step, completions]
   );
 
+  useEffect(
+    function () {
+      const currentHeight = document.documentElement.scrollHeight; // document height
+
+      if (window.screen.height < currentHeight) {
+        window.scrollTo({ top: currentHeight, behavior: "smooth" });
+      }
+    },
+    [chats]
+  );
+
   return (
-    <div className="container m-auto flex h-max justify-center">
+    <div className="container relative m-auto flex h-max justify-center">
+      <div className="bg-url fixed  min-w-full" />
       <div className=" relative flex w-full max-w-lg flex-col items-center bg-white">
         <header className="fixed top-0 z-10 flex h-16 w-full max-w-lg flex-row justify-between bg-white px-4 py-4">
           <Image
             src={"/icons/arrow-left-icon.svg"}
             width={23.35}
             height="20"
-            className="cursor-pointer"
+            className="cursor-pointer active:scale-95"
             onClick={handleArrowClick}
             alt={"back arrow"}
           />
-          <div className="font-bold text-indigo-900">Jesus</div>
-          <div className="cursor-pointer font-semibold text-purple-600">
+          <div className="text-kaya-black font-bold">Jesus</div>
+          <div className="text-kaya-500 cursor-pointer font-semibold">
             Share
           </div>
         </header>
-        <div className=" flex min-w-full max-w-full justify-center px-4 pb-60 pt-20">
+        <div className=" flex min-w-full max-w-full justify-center px-4 pb-32 pt-20">
           <section className="flex w-full max-w-full flex-col gap-2 rounded-3xl bg-white">
-            {chats.map(function (chat) {
+            <p className="flex min-w-full flex-row items-center justify-center py-4 font-medium">
+              Jesus has entered the chat.
+            </p>
+            {chats.map(function (chat, index) {
               const type = chat.type;
               const isStart = chat.isStart;
               const time = chat.time;
@@ -736,7 +785,7 @@ function Home() {
               if (type === "jesus") {
                 return (
                   <JesusMessage
-                    key={chat.type + chat.time + chat.content}
+                    key={chat.type + chat.time + chat.content + index}
                     type={type}
                     isStart={isStart}
                     time={time}
@@ -762,18 +811,18 @@ function Home() {
               </div>
             )}
             {end && (
-              <p className="min-w-full py-3 text-center text-base font-normal text-black">
+              <p className="text-kaya-black mt-1 min-w-full py-3 text-center text-base font-medium">
                 Jesus left the chat.
               </p>
             )}
           </section>
         </div>
         {(isInput || isSelect) && (
-          <footer className="fixed bottom-0 z-10 flex w-full max-w-lg flex-row justify-between gap-2 bg-transparent px-4 py-4">
+          <footer className="fixed bottom-0 z-10 flex w-full max-w-lg flex-row justify-between gap-2 bg-transparent bg-white px-4 py-4">
             {isInput && step === 1 && (
               <>
                 <input
-                  className="h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
+                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
                   placeholder="Type a message"
                   onChange={function (e) {
                     setName(e.target.value);
@@ -786,7 +835,12 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={"/icons/send-message-icon.svg"}
+                  className="cursor-pointer active:scale-95"
+                  src={
+                    name
+                      ? "/icons/send-message-active-icon.svg"
+                      : "/icons/send-message-icon.svg"
+                  }
                   width={48}
                   height={48}
                   onClick={handleNameSubmit}
@@ -797,7 +851,7 @@ function Home() {
             {isInput && step === 2 && (
               <>
                 <input
-                  className="h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
+                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
                   placeholder="Type a message"
                   onChange={function (e) {
                     setAgenda(e.target.value);
@@ -810,7 +864,12 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={"/icons/send-message-icon.svg"}
+                  className="cursor-pointer active:scale-95"
+                  src={
+                    agenda
+                      ? "/icons/send-message-active-icon.svg"
+                      : "/icons/send-message-icon.svg"
+                  }
                   width={48}
                   height={48}
                   onClick={handleAgendaSubmit}
@@ -821,7 +880,7 @@ function Home() {
             {isInput && step === 8 && (
               <>
                 <input
-                  className="h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
+                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
                   placeholder="Type a message"
                   onChange={function (e) {
                     setFeedback(e.target.value);
@@ -834,7 +893,12 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={"/icons/send-message-icon.svg"}
+                  className="cursor-pointer active:scale-95"
+                  src={
+                    feedback
+                      ? "/icons/send-message-active-icon.svg"
+                      : "/icons/send-message-icon.svg"
+                  }
                   width={48}
                   height={48}
                   onClick={handleFeedbackSubmit}
@@ -845,7 +909,7 @@ function Home() {
             {isInput && step === 10 && (
               <>
                 <input
-                  className="h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
+                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
                   placeholder="Type a message"
                   onChange={function (e) {
                     setAgenda(e.target.value);
@@ -858,7 +922,12 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={"/icons/send-message-icon.svg"}
+                  className="cursor-pointer active:scale-95"
+                  src={
+                    agenda
+                      ? "/icons/send-message-active-icon.svg"
+                      : "/icons/send-message-icon.svg"
+                  }
                   width={48}
                   height={48}
                   onClick={handleRetryAgendaSubmit}
@@ -991,7 +1060,9 @@ const JesusMessage = function ({ type, isStart, time, content }) {
     <div className="flex min-w-full max-w-full flex-row gap-2">
       {isStart ? <Jesus /> : <div className=" w-12"></div>}
       <MessageWrapper type={type}>
-        {isStart && <span className="text-sm font-bold text-black">Jesus</span>}
+        {isStart && (
+          <span className="text-kaya-black text-sm font-bold">Jesus</span>
+        )}
         <JesusBubble>{visible ? content : "...."}</JesusBubble>
       </MessageWrapper>
     </div>
@@ -1013,7 +1084,7 @@ const SelectItem = function ({ onClick, children }) {
   return (
     <div
       onClick={onClick}
-      className="flex h-12 w-max min-w-max cursor-pointer flex-row items-center rounded-3xl border border-indigo-900 bg-white px-3 py-4"
+      className="hover:bg-kaya-hover active:bg-kaya-active border-kaya-black flex h-12 w-max min-w-max cursor-pointer flex-row items-center rounded-3xl border bg-white px-3 py-4"
     >
       {children}
     </div>
