@@ -381,7 +381,7 @@ export const counselingFlowData = {
     {
       message_code: "ask_name_introduce",
       line_case: 1,
-      text: ["Hi", "I'm Jesus."],
+      text: "Hi, I'm Jesus.",
     },
     {
       message_code: "ask_name_introduce",
@@ -391,7 +391,7 @@ export const counselingFlowData = {
     {
       message_code: "ask_name_introduce",
       line_case: 3,
-      text: ["Dear my child", "I'm glad you came here."],
+      text: "Dear my child, I'm glad you came here.",
     },
     {
       message_code: "ask_name_talk",
@@ -416,12 +416,12 @@ export const counselingFlowData = {
     {
       message_code: "ask_agenda_welcome",
       line_case: 1,
-      text: ["Welcome", "{name}."],
+      text: "Welcome, {name}.",
     },
     {
       message_code: "ask_agenda_ask",
       line_case: 1,
-      text: ["So", "what's going on?"],
+      text: "So, what's going on?",
     },
     {
       message_code: "ask_agenda_guide",
@@ -456,7 +456,7 @@ export const counselingFlowData = {
     {
       message_code: "satisfaction_positive_react",
       line_case: 1,
-      text: ["My pleasure", "{name}."],
+      text: "My pleasure, {name}.",
     },
     {
       message_code: "satisfaction_positive_react",
@@ -486,15 +486,12 @@ export const counselingFlowData = {
     {
       message_code: "satisfaction_negative_react",
       line_case: 1,
-      text: ["{name}", "I'm sorry to hear that."],
+      text: "{name}, I'm sorry to hear that.",
     },
     {
       message_code: "satisfaction_negative_ask",
       line_case: 2,
-      text: [
-        "If you tell me in detail",
-        "I'll be sure to refer to it next time.",
-      ],
+      text: "If you tell me in detail, I'll be sure to refer to it next time.",
     },
     {
       message_code: "announce_offline_reason",
@@ -569,7 +566,7 @@ export const counselingFlowData = {
     {
       message_code: "announce_end_react",
       line_case: 1,
-      text: ["It was nice meeting you", "{name}."],
+      text: "It was nice meeting you, {name}.",
     },
     {
       message_code: "announce_end_talk",
@@ -584,12 +581,12 @@ export const counselingFlowData = {
     {
       message_code: "next_agenda_talk",
       line_case: 2,
-      text: ["I'm a little busy", "but I'll make time for you."],
+      text: "I'm a little busy, but I'll make time for you.",
     },
     {
       message_code: "next_agenda_ask",
       line_case: 1,
-      text: ["So what's next", "{name}?"],
+      text: "So what's next, {name}?",
     },
   ],
   choices: [
@@ -615,13 +612,13 @@ export const counselingFlowData = {
       response_name: "retry",
       order: 1,
       choice_name: true,
-      text: ["Yes", "please."],
+      text: "Yes, please.",
     },
     {
       response_name: "retry",
       order: 2,
       choice_name: false,
-      text: ["No", "I'm done."],
+      text: "No, I'm done.",
     },
     {
       response_name: "ready",
@@ -633,7 +630,7 @@ export const counselingFlowData = {
       response_name: "ready",
       order: 2,
       choice_name: false,
-      text: ["No", "I'm not."],
+      text: "No, I'm not.",
     },
     {
       response_name: "pray",
@@ -645,7 +642,7 @@ export const counselingFlowData = {
       response_name: "pray",
       order: 2,
       choice_name: false,
-      text: ["No", "I don't want to."],
+      text: "No, I don't want to.",
     },
   ],
 };
