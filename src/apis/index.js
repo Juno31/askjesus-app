@@ -1,11 +1,14 @@
-import Axios from 'axios';
+import Axios from "axios";
+
+const masterKey = `$2b$10$.hDUtFyoMibYehgjHVbIpep5UEHeKHdhPkA9TFCiqlLlccP/c7Y6G`;
 
 const axios = Axios.create({
-  baseURL: '/api',
+  baseURL: "https://hollister-api-prod.creator.ly",
   timeout: 30000,
-  responseType: 'json',
+  responseType: "json",
   headers: {
-    Authorization: `Bearer ${process.env.API_KEY}`,
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.API_KEY ?? masterKey}`,
   },
 });
 
@@ -13,8 +16,8 @@ const api = {
   async healthCheck() {
     try {
       const options = {
-        method: 'GET',
-        url: '/',
+        method: "GET",
+        url: "/",
       };
       const response = await axios(options);
 
@@ -22,6 +25,9 @@ const api = {
     } catch (error) {
       throw error;
     }
+  },
+  async getServerStatus() {
+    return await axios.get("/server-status");
   },
   async gpt(prompt) {
     try {

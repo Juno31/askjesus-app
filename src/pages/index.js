@@ -1,19 +1,19 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 //components
-import MessageContainer from '@/components/message/container';
-import MessageWrapper from '@/components/message/message-wrapper';
-import SystemBubble from '@/components/message/system';
-import MinBubble from '@/components/message/mine';
-import Jesus from '@/components/message/jesus';
+import MessageContainer from "@/components/message/container";
+import MessageWrapper from "@/components/message/message-wrapper";
+import SystemBubble from "@/components/message/system";
+import MinBubble from "@/components/message/mine";
+import Jesus from "@/components/message/jesus";
 
 //assets
 
 const MESSAGE_TYPE = {
-  SYSTEM: 'jesus',
-  USER: 'user',
+  SYSTEM: "jesus",
+  USER: "user",
 };
 
 function Home() {
@@ -31,7 +31,7 @@ function Home() {
               <Jesus />
               <MessageWrapper type={MESSAGE_TYPE.SYSTEM}>
                 <span className="text-sm font-bold text-black">Jesus</span>
-                <SystemBubble>Hi, I'm Jesus AI.</SystemBubble>
+                <SystemBubble>{"Hi, I'm Jesus AI."}</SystemBubble>
                 <SystemBubble>Ask me anything</SystemBubble>
               </MessageWrapper>
             </MessageContainer>
@@ -41,16 +41,18 @@ function Home() {
               </MessageWrapper>
             </MessageContainer>
             <Link
-              href={'/jesus'}
+              href={"/jesus"}
               className="mt-8 rounded-3xl bg-purple-600 px-16 py-4 text-center font-bold text-white"
             >
               Start chat with Jesus
             </Link>
           </section>
         </div>
-        <p className="mt-5 font-light text-purple-600">Give a friend a chance</p>
+        <p className="mt-5 font-light text-purple-600">
+          Give a friend a chance
+        </p>
         <Link
-          href={'/jesus'}
+          href={"/jesus"}
           className=" mt-2 rounded-3xl border-2 border-purple-600 bg-transparent px-16 py-4 text-center font-bold text-purple-600"
         >
           Start chat with Jesus

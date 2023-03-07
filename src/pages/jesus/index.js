@@ -1,25 +1,30 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
+import { useRouter } from "next/router";
 
 //components
-import MessageWrapper from '@/components/message/message-wrapper';
-import JesusBubble from '@/components/message/system';
-import UserBubble from '@/components/message/mine';
-import Jesus from '@/components/message/jesus';
-import Image from 'next/image';
+import MessageWrapper from "@/components/message/message-wrapper";
+import JesusBubble from "@/components/message/system";
+import UserBubble from "@/components/message/mine";
+import Jesus from "@/components/message/jesus";
+import Image from "next/image";
 
 //utils
-import random from '@/utils/random';
+import random from "@/utils/random";
 
 //api
-import api from '@/apis';
+import api from "@/apis";
 
 const MESSAGE_TYPE = {
-  JESUS: 'jesus',
-  USER: 'user',
+  JESUS: "jesus",
+  USER: "user",
 };
 
-const GREETINGS = ['Hello', 'Hi', 'Good Morning'];
+const GREETINGS = ["Hello", "Hi", "Good Morning"];
 
 const INPUT_DEFAULT = {
   spellCheck: false,
@@ -27,19 +32,19 @@ const INPUT_DEFAULT = {
 };
 
 const PRAYER_TYPE = {
-  ACCEPT: 'ACCEPT',
-  DECLINE: 'DECLINE',
+  ACCEPT: "ACCEPT",
+  DECLINE: "DECLINE",
 };
 
 const READY_TYPE = {
-  READY: 'READY',
-  NOT_READY: 'NOT_READY',
+  READY: "READY",
+  NOT_READY: "NOT_READY",
 };
 
 const SATISFACTION_TYPE = {
-  POSITIVE: 'POSITIVE',
-  NEUTRAL: 'NEUTRAL',
-  NEGATIVE: 'NEGATIVE',
+  POSITIVE: "POSITIVE",
+  NEUTRAL: "NEUTRAL",
+  NEGATIVE: "NEGATIVE",
 };
 
 const COMPLETION_EXP =
@@ -48,13 +53,13 @@ const COMPLETION_EXP =
 function Home() {
   const router = useRouter();
   const [step, setStep] = useState(0);
-  const [name, setName] = useState('');
-  const [agenda, setAgenda] = useState('');
+  const [name, setName] = useState("");
+  const [agenda, setAgenda] = useState("");
   const [prayerType, setPrayerType] = useState();
   const [readyType, setReadyType] = useState(false);
   const [ssatisfactionType, setSatisfactionType] = useState();
-  const [completions, setCompletions] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [completions, setCompletions] = useState("");
+  const [feedback, setFeedback] = useState("");
   const [retry, setRetry] = useState();
   const [chats, setChats] = useState([]);
   const [isInput, setIsInput] = useState(false);
@@ -64,12 +69,12 @@ function Home() {
 
   const reset = function () {
     setStep(0);
-    setName('');
-    setAgenda('');
+    setName("");
+    setAgenda("");
     setPrayerType(null);
     setReadyType(null);
     setSatisfactionType(null);
-    setCompletions('');
+    setCompletions("");
     setIsInput(false);
     setIsSelect(false);
     setIsLoading(false);
@@ -105,7 +110,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: 'Please come back later.',
+          content: "Please come back later.",
         });
       }, 1000);
     },
@@ -219,7 +224,7 @@ function Home() {
             type: MESSAGE_TYPE.JESUS,
             isStart: true,
             time: 1000,
-            content: 'Got it.',
+            content: "Got it.",
           },
         ]);
       }, 1000);
@@ -231,7 +236,7 @@ function Home() {
             type: MESSAGE_TYPE.JESUS,
             isStart: false,
             time: 1000,
-            content: 'Hmm.... Let me think.',
+            content: "Hmm.... Let me think.",
           },
         ]);
       }, 2000);
@@ -243,7 +248,7 @@ function Home() {
             type: MESSAGE_TYPE.JESUS,
             isStart: false,
             time: 1000,
-            content: 'It might help a lot if you pray for me.',
+            content: "It might help a lot if you pray for me.",
           },
         ]);
       }, 3000);
@@ -260,7 +265,7 @@ function Home() {
           type: MESSAGE_TYPE.USER,
           isStart: false,
           time: 0,
-          content: '🙏 Amen',
+          content: "🙏 Amen",
         },
       ]);
 
@@ -271,7 +276,7 @@ function Home() {
             type: MESSAGE_TYPE.JESUS,
             isStart: true,
             time: 1000,
-            content: 'How nice of you. ',
+            content: "How nice of you. ",
           },
         ]);
       }, 1000);
@@ -347,7 +352,7 @@ function Home() {
           type: MESSAGE_TYPE.USER,
           isStart: false,
           time: 0,
-          content: '🤗 Yes',
+          content: "🤗 Yes",
         },
       ]);
 
@@ -378,7 +383,7 @@ function Home() {
           type: MESSAGE_TYPE.USER,
           isStart: true,
           time: 0,
-          content: 'Not really',
+          content: "Not really",
         },
       ]);
 
@@ -515,7 +520,7 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: 'Thank you for expressing your feelings honestly.',
+        content: "Thank you for expressing your feelings honestly.",
       });
 
       setTimeout(function () {
@@ -524,7 +529,7 @@ function Home() {
           isStart: false,
           time: 1000,
           content:
-            'I want you to share this experience with your friend. I bet you have some friends who need me.',
+            "I want you to share this experience with your friend. I bet you have some friends who need me.",
         });
 
         setTimeout(function () {
@@ -544,7 +549,7 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: 'I understand the words in your heart',
+        content: "I understand the words in your heart",
       });
 
       setTimeout(function () {
@@ -558,7 +563,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: 'Do you have more thing to talk about?',
+          content: "Do you have more thing to talk about?",
         },
       ]);
 
@@ -570,11 +575,11 @@ function Home() {
   };
 
   const handleArrowClick = function () {
-    router.push('/');
+    router.push("/");
   };
 
   const checkEnter = function (e) {
-    return e.key === 'Enter';
+    return e.key === "Enter";
   };
 
   const handleNameSubmit = function () {
@@ -617,7 +622,7 @@ function Home() {
     setIsLoading(true);
     try {
       setTimeout(function () {
-        const completion = COMPLETION_EXP.split('.');
+        const completion = COMPLETION_EXP.split(".");
         setCompletions(completion);
         setIsLoading(false);
       }, 10000);
@@ -629,7 +634,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 0,
-          content: '',
+          content: "",
         },
       ]);
     }
@@ -658,7 +663,7 @@ function Home() {
           type: MESSAGE_TYPE.USER,
           isStart: false,
           time: 0,
-          content: 'Yes, please.',
+          content: "Yes, please.",
         },
       ]);
 
@@ -709,7 +714,7 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: 'God bless you.',
+          content: "God bless you.",
         });
 
         setTimeout(function () {
@@ -764,9 +769,9 @@ function Home() {
   useLayoutEffect(
     function () {
       stepListener(step);
-      console.log('useEffect');
+      console.log("useEffect");
     },
-    [step],
+    [step]
   );
 
   useEffect(
@@ -776,7 +781,7 @@ function Home() {
         setStep(6);
       }
     },
-    [step, completions],
+    [step, completions]
   );
 
   return (
@@ -784,15 +789,17 @@ function Home() {
       <div className=" relative flex w-full max-w-lg flex-col items-center bg-white">
         <header className="fixed top-0 z-10 flex h-16 w-full max-w-lg flex-row justify-between bg-white px-4 py-4">
           <Image
-            src={'/icons/arrow-left-icon.svg'}
+            src={"/icons/arrow-left-icon.svg"}
             width={23.35}
             height="20"
             className="cursor-pointer"
             onClick={handleArrowClick}
-            alt={'back arrow'}
+            alt={"back arrow"}
           />
           <div className="font-bold text-indigo-900">Jesus</div>
-          <div className="cursor-pointer font-semibold text-purple-600">Share</div>
+          <div className="cursor-pointer font-semibold text-purple-600">
+            Share
+          </div>
         </header>
         <div className=" flex min-w-full max-w-full justify-center px-4 pb-60 pt-20">
           <section className="flex w-full max-w-full flex-col gap-2 rounded-3xl bg-white">
@@ -802,9 +809,10 @@ function Home() {
               const time = chat.time;
               const content = chat.content;
 
-              if (type === 'jesus') {
+              if (type === "jesus") {
                 return (
                   <JesusMessage
+                    key={chat.type + chat.time + chat.content}
                     type={type}
                     isStart={isStart}
                     time={time}
@@ -815,6 +823,7 @@ function Home() {
 
               return (
                 <UserMessage
+                  key={chat.type + chat.time + chat.content}
                   type={type}
                   content={content}
                 />
@@ -853,11 +862,11 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={'/icons/send-message-icon.svg'}
+                  src={"/icons/send-message-icon.svg"}
                   width={48}
                   height={48}
                   onClick={handleNameSubmit}
-                  alt={'submit'}
+                  alt={"submit"}
                 />
               </>
             )}
@@ -877,11 +886,11 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={'/icons/send-message-icon.svg'}
+                  src={"/icons/send-message-icon.svg"}
                   width={48}
                   height={48}
                   onClick={handleAgendaSubmit}
-                  alt={'submit'}
+                  alt={"submit"}
                 />
               </>
             )}
@@ -901,11 +910,11 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={'/icons/send-message-icon.svg'}
+                  src={"/icons/send-message-icon.svg"}
                   width={48}
                   height={48}
                   onClick={handleFeedbackSubmit}
-                  alt={'submit'}
+                  alt={"submit"}
                 />
               </>
             )}
@@ -925,11 +934,11 @@ function Home() {
                   {...INPUT_DEFAULT}
                 />
                 <Image
-                  src={'/icons/send-message-icon.svg'}
+                  src={"/icons/send-message-icon.svg"}
                   width={48}
                   height={48}
                   onClick={handleRetryAgendaSubmit}
-                  alt={'submit'}
+                  alt={"submit"}
                 />
               </>
             )}
@@ -947,14 +956,16 @@ function Home() {
                     handleAmenSubmit(PRAYER_TYPE.DECLINE);
                   }}
                 >
-                  I don't want to
+                  {"I don't want to"}
                 </SelectItem>
               </div>
             )}
             {isSelect && step === 6 && (
               <div className="flex w-full max-w-full flex-row justify-center gap-3">
                 <SelectItem onClick={handleReadySubmit}>🤗 Yes</SelectItem>
-                <SelectItem onClick={handleNotReadySubmit}>Not really</SelectItem>
+                <SelectItem onClick={handleNotReadySubmit}>
+                  Not really
+                </SelectItem>
               </div>
             )}
             {isSelect && step === 0 && (
@@ -983,7 +994,7 @@ function Home() {
                     handleSatisfactionSubmit(SATISFACTION_TYPE.NEGATIVE);
                   }}
                 >
-                  I don't like this answer.
+                  {"I don't like this answer."}
                 </SelectItem>
               </div>
             )}
@@ -1008,7 +1019,7 @@ function Home() {
                     handleSatisfactionSubmit(SATISFACTION_TYPE.NEGATIVE);
                   }}
                 >
-                  I don't like this answer.
+                  {"I don't like this answer."}
                 </SelectItem>
               </div>
             )}
@@ -1026,7 +1037,7 @@ function Home() {
                     handleRetrySubmit(false);
                   }}
                 >
-                  No, I'm done.
+                  {"No, I'm done."}
                 </SelectItem>
               </div>
             )}
@@ -1057,7 +1068,7 @@ const JesusMessage = function ({ type, isStart, time, content }) {
       {isStart ? <Jesus /> : <div className=" w-12"></div>}
       <MessageWrapper type={type}>
         {isStart && <span className="text-sm font-bold text-black">Jesus</span>}
-        <JesusBubble>{visible ? content : '....'}</JesusBubble>
+        <JesusBubble>{visible ? content : "...."}</JesusBubble>
       </MessageWrapper>
     </div>
   );
