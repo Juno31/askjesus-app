@@ -92,8 +92,19 @@ function Home() {
     }
   };
 
+  const scrollOnAdd = function () {
+    const currentHeight = document.documentElement.scrollHeight; // document height
+
+    if (currentHeight <= window.screen.height) {
+      // do nothing
+    } else {
+      window.scrollTo({ top: currentHeight, behavior: "smooth" });
+    }
+  };
+
   const addChat = function (chat) {
     setChats((current) => [...current, chat]);
+    scrollOnAdd();
   };
 
   const triggerMessage = {
@@ -295,29 +306,23 @@ function Home() {
       }, 2000);
     },
     answerWord: function () {
-      setChats((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.USER,
-          isStart: false,
-          time: 0,
-          content: "🤗 Yes",
-        },
-      ]);
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: "🤗 Yes",
+      });
 
       completions.forEach(function (completion, index, array) {
         if (!completion) return;
 
         setTimeout(function () {
-          setChats((current) => [
-            ...current,
-            {
-              type: MESSAGE_TYPE.JESUS,
-              isStart: index === 0,
-              time: 1000,
-              content: completion,
-            },
-          ]);
+          addChat({
+            type: MESSAGE_TYPE.JESUS,
+            isStart: index === 0,
+            time: 1000,
+            content: completion,
+          });
         }, index * 1000);
       });
 
@@ -685,7 +690,7 @@ function Home() {
     }
   };
 
-  useLayoutEffect(
+  useEffect(
     function () {
       stepListener(step);
       console.log("useEffect");
