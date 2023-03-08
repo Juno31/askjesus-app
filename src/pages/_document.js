@@ -3,10 +3,7 @@ import Script from "next/script";
 export default function Document() {
   return (
     <Html lang="en">
-      <Head>
-        <title>Ask Jesus</title>
-
-      </Head>
+      <Head />
       <body>
         <Main />
         <NextScript />

@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import "@/styles/custom.css";
 import { useEffect } from "react";
 import Script from "next/script";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   useEffect(function () {
@@ -16,6 +17,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <Head>
+        <title>Ask Jesus</title>
+      </Head>
       <Script
         id="beusable-script"
         dangerouslySetInnerHTML={{
