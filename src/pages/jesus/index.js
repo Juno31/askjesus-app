@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import _ from "lodash";
@@ -6,12 +6,12 @@ import _ from "lodash";
 //components
 import BubbleWrapper from "@/components/Message/bubble-wrapper";
 import JesusBubble from "@/components/Message/jesus-bubble";
-import UserBubble from "@/components/Message/user-bubble";
-import Jesus from "@/components/Message/jesus-profile-image";
 import { BeatLoader } from "react-spinners";
 import Background from "@/components/Background";
 import Profile from "@/components/Profile";
 import Warning from "@/components/Warning";
+import JesusMessage from "@/components/Message/jesus-message";
+import UserMessage from "@/components/Message/user-message";
 
 //utils
 import { CounselingFlow } from "@/utils/flow";
@@ -27,8 +27,6 @@ import useToast from "@/hooks/useToast";
 import {
   MESSAGE_TYPE,
   INPUT_DEFAULT,
-  PRAYER_TYPE,
-  READY_TYPE,
   SATISFACTION_TYPE,
 } from "@/constants/service";
 import Head from "next/head";
@@ -42,10 +40,10 @@ function Home() {
   const [agenda, setAgenda] = useState("");
   const [prayerType, setPrayerType] = useState();
   const [readyType, setReadyType] = useState(false);
-  const [ssatisfactionType, setSatisfactionType] = useState();
+  const [satisfactionType, setSatisfactionType] = useState();
   const [completions, setCompletions] = useState("");
   const [feedback, setFeedback] = useState("");
-  // const [retry, setRetry] = useState();
+  const [retry, setRetry] = useState();
   const [chats, setChats] = useState([]);
   const [isInput, setIsInput] = useState(false);
   const [isSelect, setIsSelect] = useState(false);
@@ -99,14 +97,51 @@ function Home() {
 
   const addChat = function (chat) {
     setChats((current) => [...current, chat]);
-    // scrollOnAdd();
+  };
+
+  const addUserChat = function (chat) {
+    setChats((current) => [...current, chat]);
+
+    // if (pid) {
+    //   api.createCounselingMessages({
+    //     pid: pid,
+    //     isContext: false,
+    //     role: "assistant",
+    //     content: chat.content,
+    //   });
+    // }
+  };
+
+  const addAssistantChat = function (chat) {
+    setChats((current) => [...current, chat]);
+
+    // if (pid) {
+    //   api.createCounselingMessages({
+    //     pid: pid,
+    //     isContext: false,
+    //     role: "assistant",
+    //     content: chat.content,
+    //   });
+    // }
+  };
+
+  const addUserParameter = function (key, chat) {
+    setChats((current) => [...current, chat]);
+
+    if (pid) {
+      api.createCounselingParameters({
+        pid: pid,
+        key: key,
+        value: chat.content,
+      });
+    }
   };
 
   const triggerMessage = {
     announceOffline: function () {
       setIsInput(false);
       setIsSelect(false);
-      addChat({
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
@@ -118,7 +153,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -129,11 +164,15 @@ function Home() {
           ),
         });
       }, 1000);
+
+      setTimeout(function () {
+        setEnd(true);
+      }, 2000);
     },
     announceFailure: function () {
       setIsInput(false);
       setIsSelect(false);
-      addChat({
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
@@ -145,7 +184,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -162,7 +201,7 @@ function Home() {
       }, 2000);
     },
     askName: function () {
-      addChat({
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
@@ -174,7 +213,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -187,7 +226,7 @@ function Home() {
       }, 1000);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -204,7 +243,7 @@ function Home() {
       }, 2000);
     },
     askAgenda: function () {
-      addChat({
+      addUserChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
@@ -212,7 +251,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -225,7 +264,7 @@ function Home() {
       }, 1000);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -238,7 +277,7 @@ function Home() {
       }, 2000);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -263,7 +302,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -276,7 +315,7 @@ function Home() {
       }, 1000);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -289,7 +328,7 @@ function Home() {
       }, 2000);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -307,15 +346,17 @@ function Home() {
       }, 4000);
     },
     acceptPrayer: function () {
-      addChat({
+      addUserParameter("pray", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: "🙏 Amen",
+        content: flow
+          .getChoices("pray")
+          .find((choice) => choice.choice_name === prayerType).text,
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -332,15 +373,17 @@ function Home() {
       }, 2000);
     },
     declinePrayer: function () {
-      addChat({
+      addUserParameter("pray", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: "I don't want to",
+        content: flow
+          .getChoices("pray")
+          .find((choice) => choice.choice_name === prayerType).text,
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -357,7 +400,7 @@ function Home() {
       }, 2500);
     },
     askReady: function () {
-      addChat({
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: false,
         time: 0,
@@ -367,7 +410,8 @@ function Home() {
           name
         ),
       });
-      addChat({
+
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: false,
         time: 1000,
@@ -383,11 +427,13 @@ function Home() {
       }, 1000);
     },
     answerWord: function () {
-      addChat({
+      addUserParameter("ready", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: "🤗 Yes",
+        content: flow
+          .getChoices("ready")
+          .find((choice) => choice.choice_name === readyType).text,
       });
 
       const splittedCompletion = completions.split(". ");
@@ -410,15 +456,17 @@ function Home() {
       }, splittedCompletion.length * 2000);
     },
     notReady: function () {
-      addChat({
+      addUserParameter("ready", {
         type: MESSAGE_TYPE.USER,
-        isStart: true,
+        isStart: false,
         time: 0,
-        content: "Not really",
+        content: flow
+          .getChoices("ready")
+          .find((choice) => choice.choice_name === readyType).text,
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -435,15 +483,17 @@ function Home() {
       }, 1000);
     },
     satisfactionPositive: function () {
-      addChat({
+      addUserParameter("satisfaction", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: `😘 Good`,
+        content: flow
+          .getChoices("satisfaction")
+          .find((choice) => choice.choice_name === satisfactionType).text,
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -456,7 +506,7 @@ function Home() {
       }, 0);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -473,15 +523,17 @@ function Home() {
       }, 1000);
     },
     satisfactionNeutral: function () {
-      addChat({
+      addUserParameter("satisfaction", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: `Well....`,
+        content: flow
+          .getChoices("satisfaction")
+          .find((choice) => choice.choice_name === satisfactionType).text,
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -498,15 +550,17 @@ function Home() {
       }, 1000);
     },
     satisfactionNegative: function () {
-      addChat({
+      addUserParameter("satisfaction", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: `I don't like this answer.`,
+        content: flow
+          .getChoices("satisfaction")
+          .find((choice) => choice.choice_name === satisfactionType).text,
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -519,7 +573,7 @@ function Home() {
       }, 0);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -536,14 +590,14 @@ function Home() {
       }, 1000);
     },
     feedbackLong: function () {
-      addChat({
+      addUserChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
         content: feedback,
       });
 
-      addChat({
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
@@ -555,7 +609,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -572,14 +626,14 @@ function Home() {
       }, 1000);
     },
     feedbackShort: function () {
-      addChat({
+      addUserChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
         content: feedback,
       });
 
-      addChat({
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
@@ -595,7 +649,7 @@ function Home() {
       }, 1000);
     },
     askRetry: function () {
-      setChats((current) => [
+      addAssistantChat((current) => [
         ...current,
         {
           type: MESSAGE_TYPE.JESUS,
@@ -614,15 +668,17 @@ function Home() {
       }, 1000);
     },
     nextAgenda: function () {
-      addChat({
+      addUserParameter("retry", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: "Yes, please.",
+        content: flow
+          .getChoices("retry")
+          .find((choice) => choice.choice_name === retry).text,
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
@@ -635,7 +691,7 @@ function Home() {
       }, 1000);
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -652,14 +708,16 @@ function Home() {
       }, 3000);
     },
     announceEnd: function () {
-      addChat({
+      addUserParameter("retry", {
         type: MESSAGE_TYPE.USER,
-        time: 0,
         isStart: false,
-        content: "No, I'm done",
+        time: 0,
+        content: flow
+          .getChoices("retry")
+          .find((choice) => choice.choice_name === retry).text,
       });
 
-      addChat({
+      addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         time: 1000,
         isStart: true,
@@ -671,7 +729,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addChat({
+        addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -708,7 +766,6 @@ function Home() {
         const response = await api.createCounseling(name);
         const pid = response.payload.pid;
 
-        api.registerParameters(pid, "name", name);
         setPid(pid);
         setIsInput(false);
         setStep(2);
@@ -779,22 +836,17 @@ function Home() {
     }
   };
 
-  const handleReadySubmit = function () {
+  const handleReadySubmit = function (type) {
     setIsSelect(false);
-    setReadyType(READY_TYPE.READY);
+    setReadyType(type);
     setStep(7);
   };
 
-  const handleNotReadySubmit = function () {
+  const handleRetrySubmit = function (type) {
     setIsSelect(false);
-    setReadyType(READY_TYPE.NOT_READY);
-    setStep(7);
-  };
+    setRetry(type);
 
-  const handleRetrySubmit = function (retry) {
-    setIsSelect(false);
-
-    if (retry) {
+    if (type) {
       setAgenda(null);
       triggerMessage.nextAgenda();
     } else {
@@ -815,7 +867,7 @@ function Home() {
         } else if (step === 3) {
           triggerMessage.askPrayer();
         } else if (step === 4) {
-          if (prayerType === PRAYER_TYPE.ACCEPT) {
+          if (prayerType) {
             triggerMessage.acceptPrayer();
           } else {
             triggerMessage.declinePrayer();
@@ -823,17 +875,17 @@ function Home() {
         } else if (step === 6) {
           triggerMessage.askReady();
         } else if (step === 7) {
-          if (readyType === READY_TYPE.READY) {
+          if (readyType) {
             triggerMessage.answerWord();
           } else {
             triggerMessage.notReady();
           }
         } else if (step === 8) {
-          if (ssatisfactionType === SATISFACTION_TYPE.POSITIVE) {
+          if (satisfactionType === "positive") {
             triggerMessage.satisfactionPositive();
-          } else if (ssatisfactionType === SATISFACTION_TYPE.NEUTRAL) {
+          } else if (satisfactionType === "neutral") {
             triggerMessage.satisfactionNeutral();
-          } else if (ssatisfactionType === SATISFACTION_TYPE.NEGATIVE) {
+          } else if (satisfactionType === "negative") {
             triggerMessage.satisfactionNegative();
           }
         } else if (step === 9) {
@@ -1092,101 +1144,82 @@ function Home() {
             )}
             {isSelect && step === 3 && (
               <div className="flex w-full max-w-full flex-row justify-center gap-3">
-                <SelectItem
-                  onClick={function () {
-                    handleAmenSubmit(PRAYER_TYPE.ACCEPT);
-                  }}
-                >
-                  🙏 Amen
-                </SelectItem>
-                <SelectItem
-                  onClick={function () {
-                    handleAmenSubmit(PRAYER_TYPE.DECLINE);
-                  }}
-                >
-                  {"I don't want to"}
-                </SelectItem>
+                {flow.getChoices("pray").map(function (choice) {
+                  return (
+                    <SelectItem
+                      key={choice.response_name + choice.choice}
+                      onClick={function () {
+                        handleAmenSubmit(choice.choice_name);
+                      }}
+                    >
+                      {choice.text}
+                    </SelectItem>
+                  );
+                })}
               </div>
             )}
             {isSelect && step === 6 && (
               <div className="flex w-full max-w-full flex-row justify-center gap-3">
-                <SelectItem onClick={handleReadySubmit}>🤗 Yes</SelectItem>
-                <SelectItem onClick={handleNotReadySubmit}>
-                  Not really
-                </SelectItem>
-              </div>
-            )}
-            {isSelect && step === 0 && (
-              <div className="flex w-full max-w-full flex-row justify-center gap-3">
-                <SelectItem onClick={initialize}>I changed my mind</SelectItem>
+                {flow.getChoices("ready").map(function (choice) {
+                  return (
+                    <SelectItem
+                      key={choice.response_name + choice.choice}
+                      onClick={function () {
+                        handleReadySubmit(choice.choice_name);
+                      }}
+                    >
+                      {choice.text}
+                    </SelectItem>
+                  );
+                })}
               </div>
             )}
             {isSelect && step === 7 && (
               <div className="flex w-full max-w-full flex-row justify-center gap-3">
-                <SelectItem
-                  onClick={function () {
-                    handleSatisfactionSubmit(SATISFACTION_TYPE.POSITIVE);
-                  }}
-                >
-                  😘 Good
-                </SelectItem>
-                <SelectItem
-                  onClick={function () {
-                    handleSatisfactionSubmit(SATISFACTION_TYPE.NEUTRAL);
-                  }}
-                >
-                  Well....
-                </SelectItem>
-                <SelectItem
-                  onClick={function () {
-                    handleSatisfactionSubmit(SATISFACTION_TYPE.NEGATIVE);
-                  }}
-                >
-                  {"I don't like this answer."}
-                </SelectItem>
+                {flow.getChoices("satisfaction").map(function (choice) {
+                  return (
+                    <SelectItem
+                      key={choice.response_name + choice.choice}
+                      onClick={function () {
+                        handleSatisfactionSubmit(choice.choice_name);
+                      }}
+                    >
+                      {choice.text}
+                    </SelectItem>
+                  );
+                })}
               </div>
             )}
             {isSelect && step === 8 && (
               <div className="flex w-full max-w-full flex-row justify-center gap-3">
-                <SelectItem
-                  onClick={function () {
-                    handleSatisfactionSubmit(SATISFACTION_TYPE.POSITIVE);
-                  }}
-                >
-                  😘 Good
-                </SelectItem>
-                <SelectItem
-                  onClick={function () {
-                    handleSatisfactionSubmit(SATISFACTION_TYPE.NEUTRAL);
-                  }}
-                >
-                  Well....
-                </SelectItem>
-                <SelectItem
-                  onClick={function () {
-                    handleSatisfactionSubmit(SATISFACTION_TYPE.NEGATIVE);
-                  }}
-                >
-                  {"I don't like this answer."}
-                </SelectItem>
+                {flow.getChoices("satisfaction").map(function (choice) {
+                  return (
+                    <SelectItem
+                      key={choice.response_name + choice.choice}
+                      onClick={function () {
+                        handleSatisfactionSubmit(choice.choice_name);
+                      }}
+                    >
+                      {choice.text}
+                    </SelectItem>
+                  );
+                })}
               </div>
             )}
             {isSelect && step === 10 && (
               <div className="flex w-full max-w-full flex-row justify-center gap-3">
-                <SelectItem
-                  onClick={function () {
-                    handleRetrySubmit(true);
-                  }}
-                >
-                  Yes, please.
-                </SelectItem>
-                <SelectItem
-                  onClick={function () {
-                    handleRetrySubmit(false);
-                  }}
-                >
-                  {"No, I'm done."}
-                </SelectItem>
+                {flow.getChoices("retry").map(function (choice) {
+                  return (
+                    <SelectItem
+                      key={choice.response_name + choice.choice}
+                      onClick={function () {
+                        handleRetrySubmit(choice.choice_name);
+                      }}
+                    >
+                      {choice.text}
+                    </SelectItem>
+                  );
+                })}
               </div>
             )}
           </footer>
@@ -1197,55 +1230,6 @@ function Home() {
 }
 
 export default Home;
-
-const JesusMessage = function ({ type, isStart, time, content, openProfile }) {
-  const [visible, setVisble] = useState(false);
-
-  useLayoutEffect(function () {
-    if (time) {
-      setTimeout(function () {
-        setVisble(true);
-      }, time);
-    } else {
-      setVisble(true);
-    }
-  }, []);
-
-  return (
-    <div className="flex min-w-full max-w-full flex-row gap-2">
-      {isStart ? (
-        <Jesus onClick={openProfile} />
-      ) : (
-        <div className=" w-12"></div>
-      )}
-      <BubbleWrapper type={type}>
-        {isStart && <span className="text-sm font-bold text-white">Jesus</span>}
-        <JesusBubble>
-          {visible ? (
-            content
-          ) : (
-            <BeatLoader
-              color={"#f1c5f7"}
-              size={"8px"}
-              speedMultiplier={"0.5"}
-            />
-          )}
-        </JesusBubble>
-      </BubbleWrapper>
-    </div>
-  );
-};
-
-const UserMessage = function ({ type, content }) {
-  return (
-    <div className="my-2 flex min-w-full max-w-full flex-row gap-2">
-      <div className=" w-12"></div>
-      <BubbleWrapper type={type}>
-        <UserBubble>{content}</UserBubble>
-      </BubbleWrapper>
-    </div>
-  );
-};
 
 const SelectItem = function ({ onClick, children }) {
   return (
