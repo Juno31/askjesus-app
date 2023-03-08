@@ -30,6 +30,19 @@ export class CounselingFlow {
     return lines[no];
   }
 
+  getRandomText(messageCode) {
+    const lines = this.getMessageLines(messageCode);
+
+    if (lines.length > 1) {
+      // random
+      const no = _.random(0, lines.length - 1);
+
+      return lines[no].text;
+    }
+
+    return lines[0].text;
+  }
+
   getChoices(responseName) {
     return counselingFlowData.choices.filter(
       (choice) => choice.response_name === responseName
