@@ -1,4 +1,4 @@
-## This is a boilerplate with custom configurations.
+## This is a boilerplate with custom configurations
 
 ### Configurations
 
@@ -11,4 +11,4 @@
 ### Explainations
 
 This App is configured by create-next-app with tailwind css.
-test
+testtest
