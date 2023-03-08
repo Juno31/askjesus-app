@@ -11,8 +11,6 @@ export default function App({ Component, pageProps }) {
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
     });
-
-    console.log(vh);
   }, []);
 
   return <Component {...pageProps} />;
