@@ -1,7 +1,5 @@
 import Axios from "axios";
 
-const masterKey = `$2b$10$.hDUtFyoMibYehgjHVbIpep5UEHeKHdhPkA9TFCiqlLlccP/c7Y6G`;
-
 const axios = Axios.create({
   baseURL: process.env.SERVER_HOST,
   timeout: 100000,
@@ -28,9 +26,13 @@ const api = {
   },
   async getServerStatus() {
     // 우리 서버 헬스체크
-    const { data } = await axios.get("/service-status");
+    try {
+      const { data } = await axios.get("/service-status");
 
-    return data;
+      return data;
+    } catch (error) {
+      throw error;
+    }
   },
   async getGPTStatus() {
     // GPT 요청 가능 체크
@@ -45,15 +47,39 @@ const api = {
 
     return data;
   },
-  async patchCounseling({ attempt, pid, messages, parameters }) {
+  async patchCounseling(pid, attempt) {
     const { data } = await axios.patch(`/counselings/${pid}`, {
-      // isContext === true 고, role === user일 경우에만 gpt 요청
       attempt: attempt,
-      messages,
-      parameters,
     });
 
     return data;
+  },
+
+  async registerParameters(pid, key, value) {
+    try {
+      const { data } = await axios.post(`/counselings/${pid}/parameters`, {
+        key: key,
+        value: value,
+      });
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async createCounselingMessages({ pid, isContext, role, content }) {
+    try {
+      const { data } = await axios.post(`/counselings/${pid}/messages`, {
+        isContext,
+        role,
+        content,
+      });
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
   },
 };
 
