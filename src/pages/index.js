@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 //components
-import BubbleContainer from "@/components/Message/bubble-container";
-import BubbleWrapper from "@/components/Message/bubble-wrapper";
-import JesusBubble from "@/components/Message/jesus-bubble";
-import UserBubble from "@/components/Message/user-bubble";
-import Jesus from "@/components/Message/jesus-profile-image";
+import BubbleContainer from "@/components/Message1/bubble-container";
+import BubbleWrapper from "@/components/Message1/bubble-wrapper";
+import JesusBubble from "@/components/Message1/jesus-bubble";
+import UserBubble from "@/components/Message1/user-bubble";
+import Jesus from "@/components/Message1/jesus-profile-image";
 
 //constants
 import { MESSAGE_TYPE } from "@/constants/service";

@@ -4,10 +4,10 @@ import Image from "next/image";
 import _ from "lodash";
 
 //components
-import BubbleWrapper from "@/components/Message/bubble-wrapper";
-import JesusBubble from "@/components/Message/jesus-bubble";
-import UserBubble from "@/components/Message/user-bubble";
-import Jesus from "@/components/Message/jesus-profile-image";
+import BubbleWrapper from "@/components/Message1/bubble-wrapper";
+import JesusBubble from "@/components/Message1/jesus-bubble";
+import UserBubble from "@/components/Message1/user-bubble";
+import Jesus from "@/components/Message1/jesus-profile-image";
 import { BeatLoader } from "react-spinners";
 import Background from "@/components/Background";
 import Profile from "@/components/Profile";
