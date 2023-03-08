@@ -133,7 +133,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "introduce",
       message_code: "ask_name_introduce",
-      line_count: 3,
+      line_count: 8,
       line_example: null,
     },
     {
@@ -141,7 +141,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "talk",
       message_code: "ask_name_talk",
-      line_count: 3,
+      line_count: 16,
       line_example: null,
     },
     {
@@ -149,7 +149,7 @@ export const counselingFlowData = {
       message_order: 3,
       message_name: "ask",
       message_code: "ask_name_ask",
-      line_count: 1,
+      line_count: 7,
       line_example: null,
     },
     {
@@ -157,7 +157,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "welcome",
       message_code: "ask_agenda_welcome",
-      line_count: 1,
+      line_count: 4,
       line_example: null,
     },
     {
@@ -165,7 +165,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "ask",
       message_code: "ask_agenda_ask",
-      line_count: 1,
+      line_count: 12,
       line_example: null,
     },
     {
@@ -173,7 +173,7 @@ export const counselingFlowData = {
       message_order: 3,
       message_name: "guide",
       message_code: "ask_agenda_guide",
-      line_count: 1,
+      line_count: 9,
       line_example: null,
     },
     {
@@ -181,7 +181,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "react",
       message_code: "ask_pray_react",
-      line_count: 1,
+      line_count: 4,
       line_example: null,
     },
     {
@@ -189,7 +189,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "think",
       message_code: "ask_pray_think",
-      line_count: 1,
+      line_count: 9,
       line_example: null,
     },
     {
@@ -197,7 +197,7 @@ export const counselingFlowData = {
       message_order: 3,
       message_name: "ask",
       message_code: "ask_pray_ask",
-      line_count: 1,
+      line_count: 4,
       line_example: null,
     },
     {
@@ -205,7 +205,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "thank",
       message_code: "accept_pray_thank",
-      line_count: 1,
+      line_count: 7,
       line_example: null,
     },
     {
@@ -213,7 +213,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "react",
       message_code: "decline_pray_react",
-      line_count: 1,
+      line_count: 5,
       line_example: null,
     },
     {
@@ -221,7 +221,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "finish",
       message_code: "ask_ready_finish",
-      line_count: 1,
+      line_count: 3,
       line_example: null,
     },
     {
@@ -229,7 +229,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "ready",
       message_code: "ask_ready_ready",
-      line_count: 1,
+      line_count: 4,
       line_example: null,
     },
     {
@@ -237,7 +237,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "react",
       message_code: "satisfaction_positive_react",
-      line_count: 2,
+      line_count: 14,
       line_example: null,
     },
     {
@@ -245,7 +245,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "ask",
       message_code: "satisfaction_positive_ask",
-      line_count: 3,
+      line_count: 2,
       line_example: null,
     },
     {
@@ -253,7 +253,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "ask",
       message_code: "satisfaction_neutral_ask",
-      line_count: 1,
+      line_count: 6,
       line_example: null,
     },
     {
@@ -261,7 +261,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "react",
       message_code: "satisfaction_negative_react",
-      line_count: 1,
+      line_count: 5,
       line_example: null,
     },
     {
@@ -269,7 +269,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "ask",
       message_code: "satisfaction_negative_ask",
-      line_count: 1,
+      line_count: 5,
       line_example: null,
     },
     {
@@ -277,7 +277,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "reason",
       message_code: "announce_offline_reason",
-      line_count: 2,
+      line_count: 5,
       line_example: null,
     },
     {
@@ -285,7 +285,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "retry",
       message_code: "announce_offline_retry",
-      line_count: 1,
+      line_count: 7,
       line_example: null,
     },
     {
@@ -293,7 +293,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "reason",
       message_code: "announce_failure_reason",
-      line_count: 1,
+      line_count: 3,
       line_example: null,
     },
     {
@@ -301,7 +301,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "retry",
       message_code: "announce_failure_retry",
-      line_count: 1,
+      line_count: 6,
       line_example: null,
     },
     {
@@ -309,7 +309,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "sorry",
       message_code: "not_ready_sorry",
-      line_count: 1,
+      line_count: 8,
       line_example: null,
     },
     {
@@ -317,7 +317,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "react",
       message_code: "feedback_short_react",
-      line_count: 2,
+      line_count: 4,
       line_example: null,
     },
     {
@@ -325,7 +325,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "react",
       message_code: "feedback_long_react",
-      line_count: 1,
+      line_count: 3,
       line_example: null,
     },
     {
@@ -341,7 +341,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "ask",
       message_code: "ask_retry_ask",
-      line_count: 1,
+      line_count: 2,
       line_example: null,
     },
     {
@@ -349,7 +349,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "react",
       message_code: "announce_end_react",
-      line_count: 1,
+      line_count: 2,
       line_example: null,
     },
     {
@@ -357,7 +357,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "talk",
       message_code: "announce_end_talk",
-      line_count: 1,
+      line_count: 6,
       line_example: null,
     },
     {
@@ -365,7 +365,7 @@ export const counselingFlowData = {
       message_order: 1,
       message_name: "talk",
       message_code: "next_agenda_talk",
-      line_count: 2,
+      line_count: 5,
       line_example: null,
     },
     {
@@ -373,7 +373,7 @@ export const counselingFlowData = {
       message_order: 2,
       message_name: "ask",
       message_code: "next_agenda_ask",
-      line_count: 1,
+      line_count: 2,
       line_example: null,
     },
   ],
@@ -394,9 +394,34 @@ export const counselingFlowData = {
       text: "Dear my child, I'm glad you came here.",
     },
     {
+      message_code: "ask_name_introduce",
+      line_case: 4,
+      text: "Greetings and salutations, my child.",
+    },
+    {
+      message_code: "ask_name_introduce",
+      line_case: 5,
+      text: "Hello there!",
+    },
+    {
+      message_code: "ask_name_introduce",
+      line_case: 6,
+      text: "👋",
+    },
+    {
+      message_code: "ask_name_introduce",
+      line_case: 7,
+      text: "Greetings, earthling!",
+    },
+    {
+      message_code: "ask_name_introduce",
+      line_case: 8,
+      text: "Knock, knock.",
+    },
+    {
       message_code: "ask_name_talk",
       line_case: 1,
-      text: "I'm having some french fries with truffles on. Tastes good.",
+      text: "I had some french fries with truffles on. Tastes good.",
     },
     {
       message_code: "ask_name_talk",
@@ -409,14 +434,124 @@ export const counselingFlowData = {
       text: "You know what? I stayed up all night watching Netflix yesterday.",
     },
     {
+      message_code: "ask_name_talk",
+      line_case: 4,
+      text: "I was reading Steve Jobs' biography. He's so cool.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 5,
+      text: "I think my eyesight is getting worse because I used my smartphone a lot thesedays.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 6,
+      text: "I'm terrible at small talk. So let's just skip the pleasantries.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 7,
+      text: "I see a mix of ambition and stale coffee from you.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 8,
+      text: "I'm worried that my cell phone bill is high. I should delete Youtube.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 9,
+      text: "One sec. Delivery is here. 🏃‍♂️",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 10,
+      text: "I bought something on Amazon, but it hasn't been delivered. This is distracting me.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 11,
+      text: "I was wondering if I should buy a wine cellar.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 12,
+      text: "Yes, I'm the one you've been looking for.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 13,
+      text: "I was looking for some good alarm apps. I also sometimes need help waking up early.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 14,
+      text: "I'm here to share love.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 15,
+      text: "What a great world that we can meet like this.",
+    },
+    {
+      message_code: "ask_name_talk",
+      line_case: 16,
+      text: "I was studying Python.",
+    },
+    {
       message_code: "ask_name_ask",
       line_case: 1,
       text: "What's your name?",
     },
     {
+      message_code: "ask_name_ask",
+      line_case: 2,
+      text: "What should I call you?",
+    },
+    {
+      message_code: "ask_name_ask",
+      line_case: 3,
+      text: "I'm trying to be more friendly and remember people's names. Can you tell me yours?",
+    },
+    {
+      message_code: "ask_name_ask",
+      line_case: 4,
+      text: "I'd love to get to know you better. Would you mind telling me what your name is?",
+    },
+    {
+      message_code: "ask_name_ask",
+      line_case: 5,
+      text: "I'd love to remember your name. Can you please tell me what it is?",
+    },
+    {
+      message_code: "ask_name_ask",
+      line_case: 6,
+      text: "There's something special about you, and I'd love to know your name.",
+    },
+    {
+      message_code: "ask_name_ask",
+      line_case: 7,
+      text: "I'd love to know your name so I can pray for you and your journey.",
+    },
+    {
       message_code: "ask_agenda_welcome",
       line_case: 1,
-      text: "Welcome, {name}.",
+      text: "Welcome, {name}. So glad you're here today.",
+    },
+    {
+      message_code: "ask_agenda_welcome",
+      line_case: 2,
+      text: "Nice to meet you, {name}. Let's continue our conversation.",
+    },
+    {
+      message_code: "ask_agenda_welcome",
+      line_case: 3,
+      text: "Hi {name}, I'm happy to know your name.",
+    },
+    {
+      message_code: "ask_agenda_welcome",
+      line_case: 4,
+      text: "I thank for the opportunity to help and guide you, {name}.",
     },
     {
       message_code: "ask_agenda_ask",
@@ -424,9 +559,104 @@ export const counselingFlowData = {
       text: "So, what's going on?",
     },
     {
+      message_code: "ask_agenda_ask",
+      line_case: 2,
+      text: "How's life treating you?",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 3,
+      text: "Before we start, can you give me an idea of what you want to discuss today?",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 4,
+      text: "I'm excited to talk with you. Can you give me an idea of what you want to focus on?",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 5,
+      text: "What were some things you hoped we could touch on in our conversation today?",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 6,
+      text: "I'd like to know what you want to ask.",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 7,
+      text: "So, what's been on your mind lately? Is there anything you'd like to talk about?",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 8,
+      text: "What's something that's been challenging you lately? I'd be happy to listen and offer any support I can.",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 9,
+      text: "What's a topic that you feel strongly about? I'd love to hear your thoughts.",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 10,
+      text: "What's something that's been occupying your thoughts lately? I'd love to hear about it.",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 11,
+      text: "I feel called to serve and help others. Is there anything specific that you're struggling with? I'd be honored to listen and offer any support I can.",
+    },
+    {
+      message_code: "ask_agenda_ask",
+      line_case: 12,
+      text: "Ask me anything.",
+    },
+    {
       message_code: "ask_agenda_guide",
       line_case: 1,
       text: "Maybe I can help you.",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 2,
+      text: "It's good to express your worries in words.",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 3,
+      text: "I really want to help you today. Can you tell me in detail?",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 4,
+      text: "It's important to acknowledge and express our concerns.",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 5,
+      text: "Let's work through this together and find a way forward.",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 6,
+      text: "By the way, please don't ask for lottery numbers. And I don't have an Instagram ID.",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 7,
+      text: "Sometimes a fresh perspective can make all the difference.",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 8,
+      text: "The more accurate and specific questions you ask, the wiser I can give you.",
+    },
+    {
+      message_code: "ask_agenda_guide",
+      line_case: 9,
+      text: "I can give you an answer to your problem.",
     },
     {
       message_code: "ask_pray_react",
@@ -434,14 +664,84 @@ export const counselingFlowData = {
       text: "Thank you for telling your story.",
     },
     {
+      message_code: "ask_pray_react",
+      line_case: 2,
+      text: "Thank you for opening up to me. I'm here for you, and I care about what you're going through.",
+    },
+    {
+      message_code: "ask_pray_react",
+      line_case: 3,
+      text: "I appreciate you sharing that with me.",
+    },
+    {
+      message_code: "ask_pray_react",
+      line_case: 4,
+      text: "I get it.",
+    },
+    {
       message_code: "ask_pray_think",
       line_case: 1,
       text: "Let me think.",
     },
     {
+      message_code: "ask_pray_think",
+      line_case: 2,
+      text: "🤔",
+    },
+    {
+      message_code: "ask_pray_think",
+      line_case: 3,
+      text: "Just a minute, I'm not as fast as I used to be. It's this darn age thing.",
+    },
+    {
+      message_code: "ask_pray_think",
+      line_case: 4,
+      text: "My brain is buffering.",
+    },
+    {
+      message_code: "ask_pray_think",
+      line_case: 5,
+      text: "Let me take a quick pause to ask for guidance and wisdom in this situation.",
+    },
+    {
+      message_code: "ask_pray_think",
+      line_case: 6,
+      text: "I need a moment to reflect.",
+    },
+    {
+      message_code: "ask_pray_think",
+      line_case: 7,
+      text: "Can you give me a moment?",
+    },
+    {
+      message_code: "ask_pray_think",
+      line_case: 8,
+      text: "I can respond with a grateful heart.",
+    },
+    {
+      message_code: "ask_pray_think",
+      line_case: 9,
+      text: "Wait just a minute.",
+    },
+    {
       message_code: "ask_pray_ask",
       line_case: 1,
-      text: "It would help if you pray for me. Will you?",
+      text: "It will help if you pray for me. Will you?",
+    },
+    {
+      message_code: "ask_pray_ask",
+      line_case: 2,
+      text: "Before we continue, let's take a quick moment to pray for peace and wisdom to approach this situation with love and compassion.",
+    },
+    {
+      message_code: "ask_pray_ask",
+      line_case: 3,
+      text: "Let's pause for a moment to seek direction.",
+    },
+    {
+      message_code: "ask_pray_ask",
+      line_case: 4,
+      text: "Prayer can be a powerful tool for finding comfort and strength in difficult times.",
     },
     {
       message_code: "accept_pray_thank",
@@ -449,9 +749,59 @@ export const counselingFlowData = {
       text: "How nice of you.",
     },
     {
+      message_code: "accept_pray_thank",
+      line_case: 2,
+      text: "Thank you so much for your prayers. It means a lot to me.",
+    },
+    {
+      message_code: "accept_pray_thank",
+      line_case: 3,
+      text: "Thank you from the bottom of my heart.",
+    },
+    {
+      message_code: "accept_pray_thank",
+      line_case: 4,
+      text: "Thank you for thinking of me.",
+    },
+    {
+      message_code: "accept_pray_thank",
+      line_case: 5,
+      text: "I can feel the positive energy of your prayers.",
+    },
+    {
+      message_code: "accept_pray_thank",
+      line_case: 6,
+      text: "Thank you for being there for me.",
+    },
+    {
+      message_code: "accept_pray_thank",
+      line_case: 7,
+      text: "Thank you for your love and support.",
+    },
+    {
       message_code: "decline_pray_react",
       line_case: 1,
       text: "It's okay.",
+    },
+    {
+      message_code: "decline_pray_react",
+      line_case: 2,
+      text: "Well, I guess I'll just have to rely on my own.",
+    },
+    {
+      message_code: "decline_pray_react",
+      line_case: 3,
+      text: "It's cool.",
+    },
+    {
+      message_code: "decline_pray_react",
+      line_case: 4,
+      text: "I respect your decision.",
+    },
+    {
+      message_code: "decline_pray_react",
+      line_case: 5,
+      text: "I appreciate your honesty.",
     },
     {
       message_code: "satisfaction_positive_react",
@@ -464,19 +814,74 @@ export const counselingFlowData = {
       text: "Awesome! I'm glad that you liked it.",
     },
     {
-      message_code: "satisfaction_positive_ask",
-      line_case: 1,
-      text: "Can you tell me specifically what you were thinking?",
+      message_code: "satisfaction_positive_react",
+      line_case: 3,
+      text: "I'm grateful that I could offer support.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 4,
+      text: "Glad to have been able to offer some guidance",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 5,
+      text: "It's always a pleasure to help out. Remember that you're never alone!",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 6,
+      text: "I'm so pleased that my words were helpful.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 7,
+      text: "Thank you for letting me be a part of your journey.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 8,
+      text: "I'm honored to have been able to assist in any way.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 9,
+      text: "Hearing that is truly rewarding.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 10,
+      text: "That's wonderful to hear!",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 11,
+      text: "I'm happy to have been able to offer guidance on your spiritual journey.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 12,
+      text: "It's a blessing to be able to share wisdom with others.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 13,
+      text: "I'm just glad my words brought a smile to your face.",
+    },
+    {
+      message_code: "satisfaction_positive_react",
+      line_case: 14,
+      text: "I consider that a job well done.",
     },
     {
       message_code: "satisfaction_positive_ask",
-      line_case: 2,
+      line_case: 1,
       text: "Please tell me more.",
     },
     {
       message_code: "satisfaction_positive_ask",
-      line_case: 3,
-      text: "Could you share your thoughts to me?",
+      line_case: 2,
+      text: "Please share your thoughts with me.",
     },
     {
       message_code: "satisfaction_neutral_ask",
@@ -484,14 +889,79 @@ export const counselingFlowData = {
       text: "Hm... Why did you think so?",
     },
     {
+      message_code: "satisfaction_neutral_ask",
+      line_case: 2,
+      text: "I would love to hear your thoughts on the words I gave. Did it resonate with you?",
+    },
+    {
+      message_code: "satisfaction_neutral_ask",
+      line_case: 3,
+      text: "Your opinion matters to me. Can you share your thoughts?",
+    },
+    {
+      message_code: "satisfaction_neutral_ask",
+      line_case: 4,
+      text: "Let me know what you think about my words.",
+    },
+    {
+      message_code: "satisfaction_neutral_ask",
+      line_case: 5,
+      text: "I value your opinion. Can you share with me how my advice resonated with you?",
+    },
+    {
+      message_code: "satisfaction_neutral_ask",
+      line_case: 6,
+      text: "Please help me understand how to improve my advice to serve you and others better.",
+    },
+    {
       message_code: "satisfaction_negative_react",
       line_case: 1,
       text: "{name}, I'm sorry to hear that.",
     },
     {
+      message_code: "satisfaction_negative_react",
+      line_case: 2,
+      text: "I'm sorry to hear that my words didn't meet your expectations.",
+    },
+    {
+      message_code: "satisfaction_negative_react",
+      line_case: 3,
+      text: "I understand that not everyone will agree or value my words.",
+    },
+    {
+      message_code: "satisfaction_negative_react",
+      line_case: 4,
+      text: "I appreciate your criticism.",
+    },
+    {
+      message_code: "satisfaction_negative_react",
+      line_case: 5,
+      text: "I appreciate your honesty.",
+    },
+    {
+      message_code: "satisfaction_negative_ask",
+      line_case: 1,
+      text: "I'll refer to it next time if you tell me in detail.",
+    },
+    {
       message_code: "satisfaction_negative_ask",
       line_case: 2,
-      text: "If you tell me in detail, I'll be sure to refer to it next time.",
+      text: "Your opinion matters to me. Can you share your thoughts?",
+    },
+    {
+      message_code: "satisfaction_negative_ask",
+      line_case: 3,
+      text: "Can you tell me what you didn't like about my words?",
+    },
+    {
+      message_code: "satisfaction_negative_ask",
+      line_case: 4,
+      text: "I believe in the importance of humility and being open to feedback. Could you provide me with some feedback on the advice I gave?",
+    },
+    {
+      message_code: "satisfaction_negative_ask",
+      line_case: 5,
+      text: "Can you tell me more about what didn't resonate with you?",
     },
     {
       message_code: "announce_offline_reason",
@@ -504,14 +974,69 @@ export const counselingFlowData = {
       text: "I'm outside. I have a party tonight.",
     },
     {
+      message_code: "announce_offline_reason",
+      line_case: 3,
+      text: "I'm not feeling up to talking right now.",
+    },
+    {
+      message_code: "announce_offline_reason",
+      line_case: 4,
+      text: "I'm kind of like a phone with a low battery right now. I need to recharge.",
+    },
+    {
+      message_code: "announce_offline_reason",
+      line_case: 5,
+      text: "I need some quiet time to focus.",
+    },
+    {
       message_code: "announce_offline_retry",
       line_case: 1,
       text: "Please come back later.",
     },
     {
+      message_code: "announce_offline_retry",
+      line_case: 2,
+      text: "I'll be back soon.",
+    },
+    {
+      message_code: "announce_offline_retry",
+      line_case: 3,
+      text: "Maybe another time?",
+    },
+    {
+      message_code: "announce_offline_retry",
+      line_case: 4,
+      text: "Can we catch up later?",
+    },
+    {
+      message_code: "announce_offline_retry",
+      line_case: 5,
+      text: "🏃‍♂️",
+    },
+    {
+      message_code: "announce_offline_retry",
+      line_case: 6,
+      text: "I hope you can understand.",
+    },
+    {
+      message_code: "announce_offline_retry",
+      line_case: 7,
+      text: "Hopefully, we can catch up soon!",
+    },
+    {
       message_code: "announce_failure_reason",
       line_case: 1,
-      text: "I think I need to go out for a minute. Something urgent happened.",
+      text: "I need to go out for a minute. Something urgent happened.",
+    },
+    {
+      message_code: "announce_failure_reason",
+      line_case: 2,
+      text: "I received an urgent call from a friend who needed my help.",
+    },
+    {
+      message_code: "announce_failure_reason",
+      line_case: 3,
+      text: "I think I left the oven on at home.",
     },
     {
       message_code: "announce_failure_retry",
@@ -519,9 +1044,44 @@ export const counselingFlowData = {
       text: "Please come back later.",
     },
     {
+      message_code: "announce_failure_retry",
+      line_case: 2,
+      text: "I'll be back soon.",
+    },
+    {
+      message_code: "announce_failure_retry",
+      line_case: 3,
+      text: "I'll explain to you later. Sorry.",
+    },
+    {
+      message_code: "announce_failure_retry",
+      line_case: 4,
+      text: "I hope you can forgive me.",
+    },
+    {
+      message_code: "announce_failure_retry",
+      line_case: 5,
+      text: "Hopefully, we can catch up soon!",
+    },
+    {
+      message_code: "announce_failure_retry",
+      line_case: 6,
+      text: "I'm sorry for leaving so suddenly.",
+    },
+    {
       message_code: "ask_ready_finish",
       line_case: 1,
       text: "I think I'm done. I have something to tell you.",
+    },
+    {
+      message_code: "ask_ready_finish",
+      line_case: 2,
+      text: "I can't wait to share my words with you.",
+    },
+    {
+      message_code: "ask_ready_finish",
+      line_case: 3,
+      text: "Done and dusted!",
     },
     {
       message_code: "ask_ready_ready",
@@ -529,9 +1089,59 @@ export const counselingFlowData = {
       text: "Are you ready?",
     },
     {
+      message_code: "ask_ready_ready",
+      line_case: 2,
+      text: "Do you have a moment to hear me out?",
+    },
+    {
+      message_code: "ask_ready_ready",
+      line_case: 3,
+      text: "Are you open to hearing my thoughts?",
+    },
+    {
+      message_code: "ask_ready_ready",
+      line_case: 4,
+      text: "Can you open your heart to receive guidance?",
+    },
+    {
       message_code: "not_ready_sorry",
       line_case: 1,
       text: "I'm sorry to hear that.",
+    },
+    {
+      message_code: "not_ready_sorry",
+      line_case: 2,
+      text: "That's okay. Let me know when you're ready and we can move forward together.",
+    },
+    {
+      message_code: "not_ready_sorry",
+      line_case: 3,
+      text: "I'm here to support you whenever you're ready.",
+    },
+    {
+      message_code: "not_ready_sorry",
+      line_case: 4,
+      text: "It's okay to feel unsure. We can take it at your pace and when you feel comfortable.",
+    },
+    {
+      message_code: "not_ready_sorry",
+      line_case: 5,
+      text: "That's okay. I wasn't ready either.",
+    },
+    {
+      message_code: "not_ready_sorry",
+      line_case: 6,
+      text: "Take your time. I'll just go eat a snack.",
+    },
+    {
+      message_code: "not_ready_sorry",
+      line_case: 7,
+      text: "Remember, all things are possible when you're ready to face them.",
+    },
+    {
+      message_code: "not_ready_sorry",
+      line_case: 8,
+      text: "Well, it's okay. Just remember that you're never alone!",
     },
     {
       message_code: "feedback_short_react",
@@ -541,12 +1151,32 @@ export const counselingFlowData = {
     {
       message_code: "feedback_short_react",
       line_case: 2,
-      text: "I already received what you wanted to say through your heart.",
+      text: "Believe it or not, I already received what you wanted to say from your heart.",
+    },
+    {
+      message_code: "feedback_short_react",
+      line_case: 3,
+      text: "🤔",
+    },
+    {
+      message_code: "feedback_short_react",
+      line_case: 4,
+      text: "Okie.",
     },
     {
       message_code: "feedback_long_react",
       line_case: 1,
       text: "Thank you for expressing your feelings honestly.",
+    },
+    {
+      message_code: "feedback_long_react",
+      line_case: 2,
+      text: "Thank you for sharing your honest opinion with me.",
+    },
+    {
+      message_code: "feedback_long_react",
+      line_case: 3,
+      text: "I might frame it and hang it on my wall.",
     },
     {
       message_code: "feedback_long_talk",
@@ -556,12 +1186,17 @@ export const counselingFlowData = {
     {
       message_code: "feedback_long_talk",
       line_case: 2,
-      text: "I want you to share this experience with your friend. I bet you have some friends who need me.",
+      text: "I was hoping you could share this experience with your friend. I bet you have some friends who need me.",
     },
     {
       message_code: "ask_retry_ask",
       line_case: 1,
-      text: "Do you have more thing to talk about?",
+      text: "Do you have more things to talk about?",
+    },
+    {
+      message_code: "ask_retry_ask",
+      line_case: 2,
+      text: null,
     },
     {
       message_code: "announce_end_react",
@@ -569,14 +1204,44 @@ export const counselingFlowData = {
       text: "It was nice meeting you, {name}.",
     },
     {
+      message_code: "announce_end_react",
+      line_case: 2,
+      text: "Let me know if you need anything else.",
+    },
+    {
+      message_code: "announce_end_talk",
+      line_case: 1,
+      text: "If you have any difficulties in your life, come to me.",
+    },
+    {
       message_code: "announce_end_talk",
       line_case: 2,
       text: "God bless you.",
     },
     {
+      message_code: "announce_end_talk",
+      line_case: 3,
+      text: "I'm always here to lend an ear!",
+    },
+    {
+      message_code: "announce_end_talk",
+      line_case: 4,
+      text: "Keep moving forward with confidence, {name}!",
+    },
+    {
+      message_code: "announce_end_talk",
+      line_case: 5,
+      text: "❤️",
+    },
+    {
+      message_code: "announce_end_talk",
+      line_case: 6,
+      text: "May God continue to guide you on your path.",
+    },
+    {
       message_code: "next_agenda_talk",
       line_case: 1,
-      text: "Nice choice.",
+      text: "Good choice.",
     },
     {
       message_code: "next_agenda_talk",
@@ -584,9 +1249,29 @@ export const counselingFlowData = {
       text: "I'm a little busy, but I'll make time for you.",
     },
     {
+      message_code: "next_agenda_talk",
+      line_case: 3,
+      text: "I'm hungry right now, so let's finish it quickly.",
+    },
+    {
+      message_code: "next_agenda_talk",
+      line_case: 4,
+      text: "Fine.",
+    },
+    {
+      message_code: "next_agenda_talk",
+      line_case: 5,
+      text: null,
+    },
+    {
       message_code: "next_agenda_ask",
       line_case: 1,
       text: "So what's next, {name}?",
+    },
+    {
+      message_code: "next_agenda_ask",
+      line_case: 2,
+      text: "Ask me anything.",
     },
   ],
   choices: [
@@ -594,19 +1279,19 @@ export const counselingFlowData = {
       response_name: "satisfaction",
       order: 1,
       choice_name: "positive",
-      text: "😘 Good",
+      text: "😘 I love it",
     },
     {
       response_name: "satisfaction",
       order: 2,
       choice_name: "neutral",
-      text: "Well....",
+      text: "🤔 Well...",
     },
     {
       response_name: "satisfaction",
       order: 3,
       choice_name: "negative",
-      text: "I don't like this answer.",
+      text: "👎 I don't like this answer.",
     },
     {
       response_name: "retry",
@@ -630,19 +1315,19 @@ export const counselingFlowData = {
       response_name: "ready",
       order: 2,
       choice_name: false,
-      text: "No, I'm not.",
+      text: "No, I'm not ready.",
     },
     {
       response_name: "pray",
       order: 1,
       choice_name: true,
-      text: "Amen",
+      text: "🙏 Amen",
     },
     {
       response_name: "pray",
       order: 2,
       choice_name: false,
-      text: "No, I don't want to.",
+      text: "🙄 I don't want to.",
     },
   ],
 };
