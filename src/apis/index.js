@@ -36,7 +36,13 @@ const api = {
   },
   async getGPTStatus() {
     // GPT 요청 가능 체크
-    return (await axios.get("/gpt-status")).data;
+    try {
+      const { data } = await axios.get("/gpt-healthcheck");
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
   },
   async createCounseling(userName) {
     return (await axios.post("/counselings", { userName })).data;
