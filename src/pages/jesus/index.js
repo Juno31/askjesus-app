@@ -20,6 +20,9 @@ import replaceVariable from "@/utils/replaceVariable";
 //api
 import api from "@/apis";
 
+//hook
+import useToast from "@/hooks/useToast";
+
 //constants
 import {
   MESSAGE_TYPE,
@@ -51,6 +54,8 @@ function Home() {
 
   const [appear, setAppear] = useState(false);
   const [warning, setWarning] = useState(false);
+
+  const { handleToast, component: Toast } = useToast();
 
   const reset = function () {
     setStep(0);
@@ -671,6 +676,11 @@ function Home() {
     setWarning(true);
   };
 
+  const handleShareClick = function () {
+    navigator.clipboard.writeText(process.env.FRONT_HOST);
+    handleToast("Copied to clipboard");
+  };
+
   const checkEnter = function (e) {
     return e.key === "Enter";
   };
@@ -841,6 +851,7 @@ function Home() {
 
   return (
     <div className="container relative m-auto flex h-max justify-center">
+      {Toast}
       <Background />
       <Profile
         appear={appear}
@@ -869,7 +880,10 @@ function Home() {
             alt={"back arrow"}
           />
           <div className="font-bold text-white">Jesus</div>
-          <div className="text-kaya-500 cursor-pointer font-semibold">
+          <div
+            className="text-kaya-500 cursor-pointer font-semibold"
+            onClick={handleShareClick}
+          >
             Share
           </div>
         </header>
