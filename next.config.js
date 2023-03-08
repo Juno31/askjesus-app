@@ -1,17 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  async rewrites() {
-    return [
-      {
-        source: '/api',
-        destination: 'https://hollister-api-prod.creator.ly',
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api",
+  //       destination: "https://api.askjesus.me",
+  //     },
+  //   ];
+  // },
   env: {
-    SERVER_HOST: 'https://hollister-api-prod.creator.ly',
-    API_KEY: '$2b$10$.hDUtFyoMibYehgjHVbIpep5UEHeKHdhPkA9TFCiqlLlccP/c7Y6G',
+    SERVER_HOST: "https://api.askjesus.me",
+    API_KEY: "$2b$10$.hDUtFyoMibYehgjHVbIpep5UEHeKHdhPkA9TFCiqlLlccP/c7Y6G",
   },
   reactStrictMode: false,
 };
