@@ -39,11 +39,7 @@ function useToast() {
   const component = useMemo(
     function () {
       // view
-      return (
-        <>
-          toast && <Toast toast={toast} />
-        </>
-      );
+      return <>{toast && <Toast toast={toast} />}</>;
     },
     [toast]
   );

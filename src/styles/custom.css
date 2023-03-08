@@ -195,7 +195,7 @@ input:focus {
 
     position: fixed;
     left: 50%;
-    bottom: -44px;
+    bottom: -56px;
     transform: translate(-50%, 0%);
 
     display: flex;
