@@ -13,7 +13,6 @@ export default function Document() {
           id="beusable-script"
           dangerouslySetInnerHTML={{
             __html: `          
-<script type="text/javascript">
 (function(w, d, a){
     w.__beusablerumclient__ = {
         load : function(src){
@@ -23,7 +22,7 @@ export default function Document() {
         }
     };w.__beusablerumclient__.load(a + "?url=" + encodeURIComponent(d.URL));
 })(window, document, "//rum.beusable.net/load/b220608e154414u003");
-</script>`,
+`,
           }}
         />
       </body>
