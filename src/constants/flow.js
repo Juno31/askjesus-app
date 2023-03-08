@@ -1194,11 +1194,6 @@ export const counselingFlowData = {
       text: "Do you have more things to talk about?",
     },
     {
-      message_code: "ask_retry_ask",
-      line_case: 2,
-      text: null,
-    },
-    {
       message_code: "announce_end_react",
       line_case: 1,
       text: "It was nice meeting you, {name}.",
@@ -1257,11 +1252,6 @@ export const counselingFlowData = {
       message_code: "next_agenda_talk",
       line_case: 4,
       text: "Fine.",
-    },
-    {
-      message_code: "next_agenda_talk",
-      line_case: 5,
-      text: null,
     },
     {
       message_code: "next_agenda_ask",
