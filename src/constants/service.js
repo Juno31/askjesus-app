@@ -1,0 +1,41 @@
+const MESSAGE_TYPE = {
+  JESUS: "JESUS",
+  USER: "USER",
+};
+
+const INPUT_DEFAULT = {
+  spellCheck: false,
+  autoComplete: "off",
+};
+
+const PRAYER_TYPE = {
+  ACCEPT: "ACCEPT",
+  DECLINE: "DECLINE",
+};
+
+const READY_TYPE = {
+  READY: "READY",
+  NOT_READY: "NOT_READY",
+};
+
+const SATISFACTION_TYPE = {
+  POSITIVE: "POSITIVE",
+  NEUTRAL: "NEUTRAL",
+  NEGATIVE: "NEGATIVE",
+};
+
+Object.freeze([
+  MESSAGE_TYPE,
+  INPUT_DEFAULT,
+  PRAYER_TYPE,
+  READY_TYPE,
+  SATISFACTION_TYPE,
+]);
+
+export {
+  MESSAGE_TYPE,
+  INPUT_DEFAULT,
+  PRAYER_TYPE,
+  READY_TYPE,
+  SATISFACTION_TYPE,
+};
