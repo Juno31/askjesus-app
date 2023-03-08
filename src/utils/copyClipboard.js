@@ -1,4 +1,4 @@
-const copyClipboard = function (url) {
+const copyClipboard = function (navigator, url) {
   navigator.clipboard.writeText(url);
 };
 

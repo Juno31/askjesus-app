@@ -17,6 +17,7 @@ function Profile({ appear, closeProfile }) {
             height={24}
             onClick={closeProfile}
             className={"cursor-pointer"}
+            alt={"close-icon"}
           />
         </div>
         <Image
@@ -24,10 +25,11 @@ function Profile({ appear, closeProfile }) {
           width={100}
           height={100}
           className="mt-6"
+          alt={"jesus-icon"}
         />
         <h1 className="text-kaya-black mt-3 text-xl font-bold">Jesus</h1>
         <p className="text-kaya-black mt-2 text-center">
-          I'm not as old as you think <br />
+          {"I'm not as old as you think"} <br />
           #edm_lover
         </p>
       </div>

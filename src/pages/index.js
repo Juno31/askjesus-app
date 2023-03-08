@@ -41,7 +41,7 @@ function Home() {
                     <span className="text-kaya-black text-sm font-bold">
                       Jesus
                     </span>
-                    <JesusBubble>Hi, I'm Jesus AI.</JesusBubble>
+                    <JesusBubble>{"Hi, I'm Jesus AI."}</JesusBubble>
                     <JesusBubble>Ask me anything</JesusBubble>
                   </BubbleWrapper>
                 </BubbleContainer>
@@ -64,7 +64,7 @@ function Home() {
           <button
             className="mx-6 mt-2 rounded-2xl border-2 py-4 px-7 text-base font-bold text-white md:min-w-full"
             onClick={function () {
-              copyClipboard("http://localhost:3000");
+              copyClipboard(navigator, process.env.FRONT_HOST);
             }}
           >
             Share to Your Faithful Friend

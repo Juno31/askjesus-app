@@ -767,51 +767,51 @@ function Home() {
     }
   };
 
-  const stepListener = function (step) {
-    if (step === 0) {
-      initialize();
-    } else if (step === 1) {
-      triggerMessage.askName();
-    } else if (step === 2) {
-      triggerMessage.askAgenda();
-    } else if (step === 3) {
-      triggerMessage.askPrayer();
-    } else if (step === 4) {
-      if (prayerType === PRAYER_TYPE.ACCEPT) {
-        triggerMessage.acceptPrayer();
-      } else {
-        triggerMessage.declinePrayer();
-      }
-    } else if (step === 6) {
-      triggerMessage.askReady();
-    } else if (step === 7) {
-      if (readyType === READY_TYPE.READY) {
-        triggerMessage.answerWord();
-      } else {
-        triggerMessage.notReady();
-      }
-    } else if (step === 8) {
-      if (ssatisfactionType === SATISFACTION_TYPE.POSITIVE) {
-        triggerMessage.satisfactionPositive();
-      } else if (ssatisfactionType === SATISFACTION_TYPE.NEUTRAL) {
-        triggerMessage.satisfactionNeutral();
-      } else if (ssatisfactionType === SATISFACTION_TYPE.NEGATIVE) {
-        triggerMessage.satisfactionNegative();
-      }
-    } else if (step === 9) {
-      if (feedback.length < 100) {
-        triggerMessage.feedbackLong();
-      } else {
-        triggerMessage.feedbackShort();
-      }
-    } else if (step === 10) {
-      triggerMessage.askRetry();
-    }
-  };
-
   useEffect(
     // triggerMessage on step change
     function () {
+      const stepListener = function (step) {
+        if (step === 0) {
+          initialize();
+        } else if (step === 1) {
+          triggerMessage.askName();
+        } else if (step === 2) {
+          triggerMessage.askAgenda();
+        } else if (step === 3) {
+          triggerMessage.askPrayer();
+        } else if (step === 4) {
+          if (prayerType === PRAYER_TYPE.ACCEPT) {
+            triggerMessage.acceptPrayer();
+          } else {
+            triggerMessage.declinePrayer();
+          }
+        } else if (step === 6) {
+          triggerMessage.askReady();
+        } else if (step === 7) {
+          if (readyType === READY_TYPE.READY) {
+            triggerMessage.answerWord();
+          } else {
+            triggerMessage.notReady();
+          }
+        } else if (step === 8) {
+          if (ssatisfactionType === SATISFACTION_TYPE.POSITIVE) {
+            triggerMessage.satisfactionPositive();
+          } else if (ssatisfactionType === SATISFACTION_TYPE.NEUTRAL) {
+            triggerMessage.satisfactionNeutral();
+          } else if (ssatisfactionType === SATISFACTION_TYPE.NEGATIVE) {
+            triggerMessage.satisfactionNegative();
+          }
+        } else if (step === 9) {
+          if (feedback.length < 100) {
+            triggerMessage.feedbackLong();
+          } else {
+            triggerMessage.feedbackShort();
+          }
+        } else if (step === 10) {
+          triggerMessage.askRetry();
+        }
+      };
+
       stepListener(step);
     },
     [step]
@@ -831,9 +831,6 @@ function Home() {
     // scroll on message triggered
     function () {
       const currentHeight = document.documentElement.scrollHeight; // document height
-
-      console.log(currentHeight);
-      console.log(window.innerHeight);
 
       if (window.innerHeight < currentHeight) {
         window.scrollTo({ top: currentHeight, behavior: "smooth" });
