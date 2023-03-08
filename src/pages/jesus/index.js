@@ -50,7 +50,7 @@ function Home() {
   const [isSelect, setIsSelect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [end, setEnd] = useState(false);
-  const [attempt, setAttempt] = useState(0);
+  const [attempt, setAttempt] = useState(1);
 
   const [appear, setAppear] = useState(false);
   const [warning, setWarning] = useState(false);
