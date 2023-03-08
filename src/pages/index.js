@@ -8,9 +8,11 @@ import JesusBubble from "@/components/Message/jesus-bubble";
 import UserBubble from "@/components/Message/user-bubble";
 import Jesus from "@/components/Message/jesus-profile-image";
 import Profile from "@/components/Profile";
+import JesusMessage from "@/components/Message/jesus-message";
+import UserMessage from "@/components/Message/user-message";
 
 //constants
-import { MESSAGE_TYPE } from "@/constants/service";
+import { MESSAGE_TYPE, M } from "@/constants/service";
 import Background from "@/components/Background";
 
 //utils
@@ -19,11 +21,43 @@ import useToast from "@/hooks/useToast";
 function Home() {
   const { handleToast, component: Toast } = useToast();
   const [appear, setAppear] = useState(false);
+  const [chats, setChats] = useState([]);
 
   const handleShareClick = function () {
     navigator.clipboard.writeText(process.env.FRONT_HOST);
     handleToast("Copied to clipboard");
   };
+
+  const addChat = function (chat) {
+    setChats((current) => [...current, chat]);
+  };
+
+  useEffect(function () {
+    addChat({
+      type: MESSAGE_TYPE.JESUS,
+      isStart: true,
+      time: 1000,
+      content: "Hi, I'm Jesus.",
+    });
+
+    setTimeout(function () {
+      addChat({
+        type: MESSAGE_TYPE.JESUS,
+        isStart: false,
+        time: 1000,
+        content: "Ask me anything",
+      });
+    }, 1000);
+
+    setTimeout(function () {
+      addChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: "Type message...",
+      });
+    }, 2000);
+  }, []);
 
   return (
     <>
@@ -48,26 +82,39 @@ function Home() {
           <div className="z-0 flex w-full min-w-full justify-center">
             <section className=" mx-6 mt-16 flex w-full max-w-full flex-col gap-2 rounded-3xl bg-white py-6 px-4 md:mx-0 md:px-6">
               <div className="md:px-4">
-                <BubbleContainer>
-                  <Jesus
-                    onClick={function () {
-                      setAppear(true);
-                    }}
-                  />
-                  <BubbleWrapper type={MESSAGE_TYPE.JESUS}>
-                    <span className="text-kaya-black text-sm font-bold">
-                      Jesus
-                    </span>
-                    <JesusBubble>{"Hi, I'm Jesus AI."}</JesusBubble>
-                    <JesusBubble>Ask me anything</JesusBubble>
-                  </BubbleWrapper>
-                </BubbleContainer>
-                <div className=" mt-2"></div>
-                <BubbleContainer>
-                  <BubbleWrapper>
-                    <UserBubble>Type message...</UserBubble>
-                  </BubbleWrapper>
-                </BubbleContainer>
+                <section className="flex h-52 w-full max-w-full flex-col gap-2 rounded-3xl">
+                  {chats.map(function (chat, index) {
+                    const type = chat.type;
+                    const isStart = chat.isStart;
+                    const time = chat.time;
+                    const content = chat.content;
+
+                    console.log(chat);
+
+                    if (type === MESSAGE_TYPE.JESUS) {
+                      return (
+                        <JesusMessage
+                          key={chat.type + chat.time + chat.content + index}
+                          type={type}
+                          isStart={isStart}
+                          time={time}
+                          content={content}
+                          openProfile={function () {
+                            setAppear(true);
+                          }}
+                        />
+                      );
+                    }
+
+                    return (
+                      <UserMessage
+                        key={chat.type + chat.time + chat.content}
+                        type={type}
+                        content={content}
+                      />
+                    );
+                  })}
+                </section>
               </div>
               <Link
                 href={"/jesus"}
