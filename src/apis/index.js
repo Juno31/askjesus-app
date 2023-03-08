@@ -61,7 +61,7 @@ const api = {
     return data;
   },
 
-  async registerParameters(pid, key, value) {
+  async createCounselingParameters({ pid, key, value }) {
     try {
       const { data } = await axios.post(`/counselings/${pid}/parameters`, {
         key: key,
