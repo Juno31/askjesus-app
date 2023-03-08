@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input {
+  outline: none;
+}
+
+input:focus {
+  border: 1px solid #7e7e7e;
+}
+
+@layer components {
+  .container {
+    @apply h-max min-w-full overflow-x-hidden;
+  }
+}
+
+@layer components {
+  .fade-up-target {
+    @apply translate-y-1 opacity-5;
+  }
+
+  .animate {
+    @apply translate-y-0 opacity-100;
+  }
+}
+
+@layer utilities {
+  .max-h-view {
+    max-height: calc(var(--vh, 1vh) * 100);
+  }
+}
+
+@layer utilities {
+  .z-5 {
+    z-index: 5;
+  }
+}
+
+@layer utilities {
+  .popup {
+    width: 100%;
+    max-width: 320px;
+    height: max-content;
+  }
+}
+
+@layer utilities {
+  .bg-url {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* height: 100vh;
+    max-height: 100vh; */
+    height: 100%;
+    background-image: url("../../public/assets/background.png");
+    background-repeat: repeat-x;
+    background-position: 100% 100%;
+    background-size: cover;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    animation: marquee 300000s infinite linear;
+  }
+
+  @keyframes marquee {
+    0% {
+      background-position: 0;
+    }
+
+    100% {
+      background-position: -11900000px;
+    }
+  }
+}
+
+@layer utilities {
+  .max-w-kaya {
+    max-width: 600px;
+  }
+  .border-kaya-black {
+    border-color: #7e7e7e;
+  }
+  .text-kaya-black {
+    color: #49454f;
+  }
+
+  .text-kaya-gray {
+    color: #ebeaea;
+  }
+
+  .bg-kaya-gray {
+    background: #ebeaea;
+  }
+
+  .bg-kaya-hover {
+    background: rgba(151, 89, 179, 0.08);
+  }
+
+  .bg-kaya-active {
+    background: rgba(151, 89, 179, 0.12);
+  }
+
+  .bg-kaya-black {
+    background: #49454f;
+  }
+  .text-kaya-100 {
+    color: #fae1fb;
+  }
+  .text-kaya-200 {
+    color: #f1c5f7;
+  }
+  .text-kaya-300 {
+    color: #dba2e8;
+  }
+  .text-kaya-400 {
+    color: #be82d1;
+  }
+  .text-kaya-500 {
+    color: #9759b3;
+  }
+  .text-kaya-600 {
+    color: #784199;
+  }
+  .text-kaya-700 {
+    color: #5b2c80;
+  }
+  .text-kaya-800 {
+    color: #411c67;
+  }
+  .text-kaya-900 {
+    color: #2e1155;
+  }
+  .bg-kaya-100 {
+    background: #fae1fb;
+  }
+  .bg-kaya-200 {
+    background: #f1c5f7;
+  }
+  .bg-kaya-300 {
+    background: #dba2e8;
+  }
+  .bg-kaya-400 {
+    background: #be82d1;
+  }
+  .bg-kaya-500 {
+    background: #9759b3;
+  }
+  .bg-kaya-600 {
+    background: #784199;
+  }
+  .bg-kaya-700 {
+    background: #5b2c80;
+  }
+  .bg-kaya-800 {
+    background: #411c67;
+  }
+  .bg-kaya-900 {
+    background: #2e1155;
+  }
+  .border-kaya-100 {
+    border-color: #fae1fb;
+  }
+  .border-kaya-200 {
+    border-color: #f1c5f7;
+  }
+  .border-kaya-300 {
+    border-color: #dba2e8;
+  }
+  .border-kaya-400 {
+    border-color: #be82d1;
+  }
+  .border-kaya-500 {
+    border-color: #9759b3;
+  }
+  .border-kaya-600 {
+    border-color: #784199;
+  }
+  .border-kaya-700 {
+    border-color: #5b2c80;
+  }
+  .border-kaya-800 {
+    border-color: #411c67;
+  }
+  .border-kaya-900 {
+    border-color: #2e1155;
+  }
+}

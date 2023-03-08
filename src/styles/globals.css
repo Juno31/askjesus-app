@@ -1,3 +1,4 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,116 +7,7 @@ html,
 body,
 #__next {
   min-width: 100vw;
-  min-height: 100vh;
-}
+  min-height: calc(var(--vh, 1vh) * 100);
 
-input {
-  outline: none;
-}
-
-input:focus {
-  outline: 1px solid #7e7e7e;
-}
-
-@layer components {
-  .container {
-    @apply h-max min-h-screen min-w-full overflow-x-hidden;
-  }
-}
-
-@layer components {
-  .fade-up-target {
-    @apply translate-y-16 opacity-5 transition-all duration-1000 will-change-transform;
-  }
-
-  .animate {
-    @apply translate-y-0 opacity-100;
-  }
-}
-
-@layer utilities {
-  .bg-url {
-    min-height: 100%;
-    background: url("../../public/assets/background.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    object-fit: fill;
-  }
-}
-
-@layer utilities {
-  .max-w-kaya {
-    max-width: 600px;
-  }
-  .border-kaya-black {
-    border-color: #7e7e7e;
-  }
-  .text-kaya-black {
-    color: #49454f;
-  }
-  .bg-kaya-hover {
-    background: rgba(151, 89, 179, 0.08);
-  }
-
-  .bg-kaya-active {
-    background: rgba(151, 89, 179, 0.12);
-  }
-
-  .bg-kaya-black {
-    background: #49454f;
-  }
-  .text-kaya-100 {
-    color: #fae1fb;
-  }
-  .text-kaya-200 {
-    color: #f1c5f7;
-  }
-  .text-kaya-300 {
-    color: #dba2e8;
-  }
-  .text-kaya-400 {
-    color: #be82d1;
-  }
-  .text-kaya-500 {
-    color: #9759b3;
-  }
-  .text-kaya-600 {
-    color: #784199;
-  }
-  .text-kaya-700 {
-    color: #5b2c80;
-  }
-  .text-kaya-800 {
-    color: #411c67;
-  }
-  .text-kaya-900 {
-    color: #2e1155;
-  }
-  .bg-kaya-100 {
-    background: #fae1fb;
-  }
-  .bg-kaya-200 {
-    background: #f1c5f7;
-  }
-  .bg-kaya-300 {
-    background: #dba2e8;
-  }
-  .bg-kaya-400 {
-    background: #be82d1;
-  }
-  .bg-kaya-500 {
-    background: #9759b3;
-  }
-  .bg-kaya-600 {
-    background: #784199;
-  }
-  .bg-kaya-700 {
-    background: #5b2c80;
-  }
-  .bg-kaya-800 {
-    background: #411c67;
-  }
-  .bg-kaya-900 {
-    background: #2e1155;
-  }
+  font-family: "Noto Sans", sans-serif;
 }
