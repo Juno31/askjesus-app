@@ -13,11 +13,19 @@ import { MESSAGE_TYPE } from "@/constants/service";
 import Background from "@/components/Background";
 
 //utils
-import copyClipboard from "@/utils/copyClipboard";
+import useToast from "@/hooks/useToast";
 
 function Home() {
+  const { handleToast, component: Toast } = useToast();
+
+  const handleShareClick = function () {
+    navigator.clipboard.writeText(process.env.FRONT_HOST);
+    handleToast("Copied to clipboard");
+  };
+
   return (
     <>
+      {Toast}
       <Background />
       <div className="container m-auto flex justify-center">
         <div className="max-w-kaya z-10 flex max-h-max w-full flex-col items-center">
@@ -63,9 +71,7 @@ function Home() {
           <p className="mt-16 text-white">or give your friend a chance</p>
           <button
             className="mx-6 mt-2 rounded-2xl border-2 py-4 px-7 text-base font-bold text-white md:min-w-full"
-            onClick={function () {
-              copyClipboard(navigator, process.env.FRONT_HOST);
-            }}
+            onClick={handleShareClick}
           >
             Share to Your Faithful Friend
           </button>
