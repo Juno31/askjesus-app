@@ -1,55 +1,33 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import _ from "lodash";
 
 //components
-import MessageWrapper from "@/components/message/message-wrapper";
-import JesusBubble from "@/components/message/jesus-bubble";
-import UserBubble from "@/components/message/user-bubble";
-import Jesus from "@/components/message/jesus";
-import Image from "next/image";
+import BubbleWrapper from "@/components/Message/bubble-wrapper";
+import JesusBubble from "@/components/Message/jesus-bubble";
+import UserBubble from "@/components/Message/user-bubble";
+import Jesus from "@/components/Message/jesus-profile-image";
+import { BeatLoader } from "react-spinners";
+import Background from "@/components/Background";
+import Profile from "@/components/Profile";
+import Warning from "@/components/Warning";
 
 //utils
 import { CounselingFlow } from "@/utils/flow";
+import replaceVariable from "@/utils/replaceVariable";
 
 //api
 import api from "@/apis";
 
-const MESSAGE_TYPE = {
-  JESUS: "jesus",
-  USER: "user",
-};
-
-const GREETINGS = ["Hello", "Hi", "Good Morning"];
-
-const INPUT_DEFAULT = {
-  spellCheck: false,
-  autoComplete: "off",
-};
-
-const PRAYER_TYPE = {
-  ACCEPT: "ACCEPT",
-  DECLINE: "DECLINE",
-};
-
-const READY_TYPE = {
-  READY: "READY",
-  NOT_READY: "NOT_READY",
-};
-
-const SATISFACTION_TYPE = {
-  POSITIVE: "POSITIVE",
-  NEUTRAL: "NEUTRAL",
-  NEGATIVE: "NEGATIVE",
-};
-
-const COMPLETION_EXP =
-  "Hello my beloved child, I am always with you and I know the troubles you face. You don't need me to prove who I am, for my love for you is evident and true. Trust in me and believe in my words, for my teachings will guide you towards the path of righteousness and peace. May my love and blessingsbe with you always.";
+//constants
+import {
+  MESSAGE_TYPE,
+  INPUT_DEFAULT,
+  PRAYER_TYPE,
+  READY_TYPE,
+  SATISFACTION_TYPE,
+} from "@/constants/service";
 
 function Home() {
   const router = useRouter();
@@ -63,13 +41,16 @@ function Home() {
   const [ssatisfactionType, setSatisfactionType] = useState();
   const [completions, setCompletions] = useState("");
   const [feedback, setFeedback] = useState("");
-  const [retry, setRetry] = useState();
+  // const [retry, setRetry] = useState();
   const [chats, setChats] = useState([]);
   const [isInput, setIsInput] = useState(false);
   const [isSelect, setIsSelect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [end, setEnd] = useState(false);
   const [attempt, setAttempt] = useState(0);
+
+  const [appear, setAppear] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const reset = function () {
     setStep(0);
@@ -89,40 +70,13 @@ function Home() {
       const response = await api.getServerStatus();
 
       if (response) {
-        setStep(1);
+        setTimeout(function () {
+          setStep(1);
+        }, 1000);
       }
     } catch (error) {
       triggerMessage.error();
     }
-  };
-
-  // const scrollOnAdd = function () {
-  //   const currentHeight = document.documentElement.scrollHeight; // document height
-
-  //   // if (currentHeight <= window.screen.height) {
-  //   //   // do nothing
-  //   // } else {
-  //   //   window.scrollTo({ top: currentHeight, behavior: "smooth" });
-  //   // }
-  // };
-
-  const replaceVariable = function (text, key, value) {
-    const token = `{${key}}`;
-
-    return text.replaceAll(token, value);
-  };
-
-  const getRandomAuto = function (messageCode) {
-    const lines = flow.getMessageLines(messageCode);
-
-    if (lines.length > 1) {
-      // random
-      const no = _.random(0, lines.length - 1);
-
-      return replaceVariable(lines[no].text, "name", name);
-    }
-
-    return replaceVariable(lines[0].text, "name", name);
   };
 
   const addChat = function (chat) {
@@ -138,7 +92,11 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: getRandomAuto("announce_offline_reason"),
+        content: replaceVariable(
+          flow.getRandomText("announce_offline_reason"),
+          "name",
+          name
+        ),
       });
 
       setTimeout(function () {
@@ -146,7 +104,38 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("announce_offline_retry"),
+          content: replaceVariable(
+            flow.getRandomText("announce_offline_retry"),
+            "name",
+            name
+          ),
+        });
+      }, 1000);
+    },
+    announceFailure: function () {
+      setIsInput(false);
+      setIsSelect(false);
+      addChat({
+        type: MESSAGE_TYPE.JESUS,
+        isStart: true,
+        time: 1000,
+        content: replaceVariable(
+          flow.getRandomText("announce_offline_reason"),
+          "name",
+          name
+        ),
+      });
+
+      setTimeout(function () {
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: replaceVariable(
+            flow.getRandomText("announce_offline_retry"),
+            "name",
+            name
+          ),
         });
       }, 1000);
     },
@@ -155,7 +144,11 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: getRandomAuto("ask_name_introduce"),
+        content: replaceVariable(
+          flow.getRandomText("ask_name_introduce"),
+          "name",
+          name
+        ),
       });
 
       setTimeout(function () {
@@ -163,7 +156,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("ask_name_talk"),
+          content: replaceVariable(
+            flow.getRandomText("ask_name_talk"),
+            "name",
+            name
+          ),
         });
       }, 1000);
 
@@ -172,7 +169,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("ask_name_ask"),
+          content: replaceVariable(
+            flow.getRandomText("ask_name_ask"),
+            "name",
+            name
+          ),
         });
 
         setTimeout(function () {
@@ -193,7 +194,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("ask_agenda_welcome"),
+          content: replaceVariable(
+            flow.getRandomText("ask_agenda_welcome"),
+            "name",
+            name
+          ),
         });
       }, 1000);
 
@@ -202,7 +207,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("ask_agenda_ask"),
+          content: replaceVariable(
+            flow.getRandomText("ask_agenda_ask"),
+            "name",
+            name
+          ),
         });
       }, 2000);
 
@@ -211,7 +220,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("ask_agenda_guide"),
+          content: replaceVariable(
+            flow.getRandomText("ask_agenda_guide"),
+            "name",
+            name
+          ),
         });
       }, 3000);
 
@@ -232,7 +245,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("ask_pray_react"),
+          content: replaceVariable(
+            flow.getRandomText("ask_pray_react"),
+            "name",
+            name
+          ),
         });
       }, 1000);
 
@@ -241,7 +258,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("ask_pray_think"),
+          content: replaceVariable(
+            flow.getRandomText("ask_pray_think"),
+            "name",
+            name
+          ),
         });
       }, 2000);
 
@@ -250,7 +271,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("ask_pray_ask"),
+          content: replaceVariable(
+            flow.getRandomText("ask_pray_ask"),
+            "name",
+            name
+          ),
         });
       }, 3000);
 
@@ -272,7 +297,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("accept_pray_thank"),
+          content: replaceVariable(
+            flow.getRandomText("accept_pray_thank"),
+            "name",
+            name
+          ),
         });
       }, 1000);
 
@@ -293,7 +322,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("decline_pray_react"),
+          content: replaceVariable(
+            flow.getRandomText("decline_pray_react"),
+            "name",
+            name
+          ),
         });
       }, 1000);
 
@@ -306,13 +339,21 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: false,
         time: 0,
-        content: getRandomAuto("ask_ready_finish"),
+        content: replaceVariable(
+          flow.getRandomText("ask_ready_finish"),
+          "name",
+          name
+        ),
       });
       addChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: false,
         time: 1000,
-        content: getRandomAuto("ask_ready_ready"),
+        content: replaceVariable(
+          flow.getRandomText("ask_ready_ready"),
+          "name",
+          name
+        ),
       });
 
       setTimeout(function () {
@@ -359,7 +400,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("not_ready_sorry"),
+          content: replaceVariable(
+            flow.getRandomText("not_ready_sorry"),
+            "name",
+            name
+          ),
         });
 
         setTimeout(function () {
@@ -380,7 +425,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("satisfaction_positive_react"),
+          content: replaceVariable(
+            flow.getRandomText("satisfaction_positive_react"),
+            "name",
+            name
+          ),
         });
       }, 0);
 
@@ -389,7 +438,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("satisfaction_positive_ask"),
+          content: replaceVariable(
+            flow.getRandomText("satisfaction_positive_ask"),
+            "name",
+            name
+          ),
         });
 
         setTimeout(function () {
@@ -410,7 +463,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("satisfaction_neutral_ask"),
+          content: replaceVariable(
+            flow.getRandomText("satisfaction_neutral_ask"),
+            "name",
+            name
+          ),
         });
       }, 0);
 
@@ -431,7 +488,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("satisfaction_negative_react"),
+          content: replaceVariable(
+            flow.getRandomText("satisfaction_negative_react"),
+            "name",
+            name
+          ),
         });
       }, 0);
 
@@ -440,7 +501,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("satisfaction_negative_ask"),
+          content: replaceVariable(
+            flow.getRandomText("satisfaction_negative_ask"),
+            "name",
+            name
+          ),
         });
 
         setTimeout(function () {
@@ -460,7 +525,11 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: getRandomAuto("feedback_long_react"),
+        content: replaceVariable(
+          flow.getRandomText("feedback_long_react"),
+          "name",
+          name
+        ),
       });
 
       setTimeout(function () {
@@ -468,7 +537,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("feedback_long_talk"),
+          content: replaceVariable(
+            flow.getRandomText("feedback_long_talk"),
+            "name",
+            name
+          ),
         });
 
         setTimeout(function () {
@@ -488,7 +561,11 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
-        content: getRandomAuto("feedback_short_react"),
+        content: replaceVariable(
+          flow.getRandomText("feedback_short_react"),
+          "name",
+          name
+        ),
       });
 
       setTimeout(function () {
@@ -502,7 +579,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("ask_retry_ask"),
+          content: replaceVariable(
+            flow.getRandomText("ask_retry_ask"),
+            "name",
+            name
+          ),
         },
       ]);
 
@@ -523,7 +604,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: true,
           time: 1000,
-          content: getRandomAuto("next_agenda_talk"),
+          content: replaceVariable(
+            flow.getRandomText("next_agenda_talk"),
+            "name",
+            name
+          ),
         });
       }, 1000);
 
@@ -532,7 +617,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("next_agenda_ask"),
+          content: replaceVariable(
+            flow.getRandomText("next_agenda_ask"),
+            "name",
+            name
+          ),
         });
       }, 2000);
 
@@ -552,7 +641,11 @@ function Home() {
         type: MESSAGE_TYPE.JESUS,
         time: 1000,
         isStart: true,
-        content: getRandomAuto("announce_end_react"),
+        content: replaceVariable(
+          flow.getRandomText("announce_end_react"),
+          "name",
+          name
+        ),
       });
 
       setTimeout(function () {
@@ -560,7 +653,11 @@ function Home() {
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
-          content: getRandomAuto("announce_end_talk"),
+          content: replaceVariable(
+            flow.getRandomText("announce_end_talk"),
+            "name",
+            name
+          ),
         });
 
         setTimeout(function () {
@@ -571,7 +668,7 @@ function Home() {
   };
 
   const handleArrowClick = function () {
-    router.push("/");
+    setWarning(true);
   };
 
   const checkEnter = function (e) {
@@ -584,6 +681,7 @@ function Home() {
         const response = await api.createCounseling(name);
         const pid = response.payload.pid;
 
+        api.registerParameters(pid, "name", name);
         setPid(pid);
         setIsInput(false);
         setStep(2);
@@ -625,27 +723,12 @@ function Home() {
   const getChatGpt = async function () {
     setIsLoading(true);
     try {
-      const messages = [
-        {
-          attempt: attempt,
-          isContext: true,
-          role: "user",
-          content: agenda,
-        },
-      ];
-      const parameters = [
-        {
-          attempt: attempt,
-          key: "name",
-          value: name,
-        },
-      ];
-
-      const response = await api.patchCounseling({
-        attempt: attempt + 1,
-        pid: pid,
-        messages: messages,
-        parameters: parameters,
+      const currentAttempt = attempt;
+      const response = await api.createCounselingMessages({
+        pid,
+        isContext: true,
+        role: "user",
+        content: agenda,
       });
 
       const completion =
@@ -654,6 +737,7 @@ function Home() {
       setAttempt((current) => current + 1);
       setCompletions(completion);
       setIsLoading(false);
+      api.patchCounseling(pid, currentAttempt + 1);
     } catch (error) {
       setIsLoading(false);
       triggerMessage.error();
@@ -726,6 +810,7 @@ function Home() {
   };
 
   useEffect(
+    // triggerMessage on step change
     function () {
       stepListener(step);
     },
@@ -743,10 +828,14 @@ function Home() {
   );
 
   useEffect(
+    // scroll on message triggered
     function () {
       const currentHeight = document.documentElement.scrollHeight; // document height
 
-      if (window.screen.height < currentHeight) {
+      console.log(currentHeight);
+      console.log(window.innerHeight);
+
+      if (window.innerHeight < currentHeight) {
         window.scrollTo({ top: currentHeight, behavior: "smooth" });
       }
     },
@@ -755,9 +844,25 @@ function Home() {
 
   return (
     <div className="container relative m-auto flex h-max justify-center">
-      <div className="bg-url fixed  min-w-full" />
-      <div className=" relative flex w-full max-w-lg flex-col items-center bg-white">
-        <header className="fixed top-0 z-10 flex h-16 w-full max-w-lg flex-row justify-between bg-white px-4 py-4">
+      <Background />
+      <Profile
+        appear={appear}
+        closeProfile={function () {
+          setAppear(false);
+        }}
+      />
+      <Warning
+        warning={warning}
+        cancel={function () {
+          setWarning(false);
+        }}
+        leave={function () {
+          setWarning(false);
+          router.push("/");
+        }}
+      />
+      <div className="max-w-kaya relative flex w-full flex-col items-center bg-white bg-opacity-0">
+        <header className="max-w-kaya z-5 fixed top-0 flex h-16 w-full flex-row justify-between bg-white bg-opacity-0 px-4 py-4">
           <Image
             src={"/icons/arrow-left-icon.svg"}
             width={23.35}
@@ -766,14 +871,14 @@ function Home() {
             onClick={handleArrowClick}
             alt={"back arrow"}
           />
-          <div className="text-kaya-black font-bold">Jesus</div>
+          <div className="font-bold text-white">Jesus</div>
           <div className="text-kaya-500 cursor-pointer font-semibold">
             Share
           </div>
         </header>
-        <div className=" flex min-w-full max-w-full justify-center px-4 pb-32 pt-20">
-          <section className="flex w-full max-w-full flex-col gap-2 rounded-3xl bg-white">
-            <p className="flex min-w-full flex-row items-center justify-center py-4 font-medium">
+        <div className="flex min-w-full max-w-full justify-center px-4 pt-16">
+          <section className="flex w-full max-w-full flex-col gap-2 rounded-3xl">
+            <p className="flex min-w-full flex-row items-center justify-center py-4 font-medium text-white">
               Jesus has entered the chat.
             </p>
             {chats.map(function (chat, index) {
@@ -782,7 +887,7 @@ function Home() {
               const time = chat.time;
               const content = chat.content;
 
-              if (type === "jesus") {
+              if (type === MESSAGE_TYPE.JESUS) {
                 return (
                   <JesusMessage
                     key={chat.type + chat.time + chat.content + index}
@@ -790,6 +895,9 @@ function Home() {
                     isStart={isStart}
                     time={time}
                     content={content}
+                    openProfile={function () {
+                      setAppear(true);
+                    }}
                   />
                 );
               }
@@ -805,20 +913,28 @@ function Home() {
             {isLoading && step === 5 && (
               <div className="flex min-w-full max-w-full flex-row gap-2">
                 <div className=" w-12"></div>
-                <MessageWrapper type={MESSAGE_TYPE.JESUS}>
-                  <JesusBubble>....</JesusBubble>
-                </MessageWrapper>
+                <BubbleWrapper type={MESSAGE_TYPE.JESUS}>
+                  <JesusBubble>
+                    {" "}
+                    <BeatLoader
+                      color={"#f1c5f7"}
+                      size={"8px"}
+                      speedMultiplier={"0.5"}
+                    />
+                  </JesusBubble>
+                </BubbleWrapper>
               </div>
             )}
             {end && (
-              <p className="text-kaya-black mt-1 min-w-full py-3 text-center text-base font-medium">
+              <p className="mt-1 min-w-full py-3 text-center text-base font-medium text-white">
                 Jesus left the chat.
               </p>
             )}
+            <div className="h-32 min-w-full"></div>
           </section>
         </div>
         {(isInput || isSelect) && (
-          <footer className="fixed bottom-0 z-10 flex w-full max-w-lg flex-row justify-between gap-2 bg-transparent bg-white px-4 py-4">
+          <footer className="max-w-kaya z-5 fixed bottom-0 flex w-full flex-row justify-between gap-2 bg-transparent bg-white bg-opacity-0 px-4 py-4">
             {isInput && step === 1 && (
               <>
                 <input
@@ -1043,7 +1159,7 @@ function Home() {
 
 export default Home;
 
-const JesusMessage = function ({ type, isStart, time, content }) {
+const JesusMessage = function ({ type, isStart, time, content, openProfile }) {
   const [visible, setVisble] = useState(false);
 
   useLayoutEffect(function () {
@@ -1058,13 +1174,25 @@ const JesusMessage = function ({ type, isStart, time, content }) {
 
   return (
     <div className="flex min-w-full max-w-full flex-row gap-2">
-      {isStart ? <Jesus /> : <div className=" w-12"></div>}
-      <MessageWrapper type={type}>
-        {isStart && (
-          <span className="text-kaya-black text-sm font-bold">Jesus</span>
-        )}
-        <JesusBubble>{visible ? content : "...."}</JesusBubble>
-      </MessageWrapper>
+      {isStart ? (
+        <Jesus onClick={openProfile} />
+      ) : (
+        <div className=" w-12"></div>
+      )}
+      <BubbleWrapper type={type}>
+        {isStart && <span className="text-sm font-bold text-white">Jesus</span>}
+        <JesusBubble>
+          {visible ? (
+            content
+          ) : (
+            <BeatLoader
+              color={"#f1c5f7"}
+              size={"8px"}
+              speedMultiplier={"0.5"}
+            />
+          )}
+        </JesusBubble>
+      </BubbleWrapper>
     </div>
   );
 };
@@ -1073,9 +1201,9 @@ const UserMessage = function ({ type, content }) {
   return (
     <div className="my-2 flex min-w-full max-w-full flex-row gap-2">
       <div className=" w-12"></div>
-      <MessageWrapper type={type}>
+      <BubbleWrapper type={type}>
         <UserBubble>{content}</UserBubble>
-      </MessageWrapper>
+      </BubbleWrapper>
     </div>
   );
 };
