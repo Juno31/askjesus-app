@@ -1193,7 +1193,7 @@ function Home() {
         id="beusable-script-chat"
         dangerouslySetInnerHTML={{
           __html: `
-        <script type="text/javascript">
+<script type="text/javascript">
 (function(w, d, a){
     w.__beusablerumclient__ = {
         load : function(src){
