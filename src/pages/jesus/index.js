@@ -70,17 +70,29 @@ function Home() {
     setIsLoading(false);
   };
 
+  const checkService = async function () {
+    try {
+      const serverReady = api.getServerStatus;
+      const gptReady = api.getGPTStatus;
+
+      const serviceReady = Promise.all([serverReady(), gptReady()]);
+
+      return serviceReady;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const initialize = async function () {
     try {
-      const response = await api.getServerStatus();
-
-      if (response) {
+      const serviceReady = await checkService();
+      if (serviceReady) {
         setTimeout(function () {
           setStep(1);
         }, 1000);
       }
     } catch (error) {
-      triggerMessage.error();
+      triggerMessage.announceOffline();
     }
   };
 
@@ -90,7 +102,7 @@ function Home() {
   };
 
   const triggerMessage = {
-    error: function () {
+    announceOffline: function () {
       setIsInput(false);
       setIsSelect(false);
       addChat({
@@ -125,7 +137,7 @@ function Home() {
         isStart: true,
         time: 1000,
         content: replaceVariable(
-          flow.getRandomText("announce_offline_reason"),
+          flow.getRandomText("announce_failure_reason"),
           "name",
           name
         ),
@@ -137,12 +149,16 @@ function Home() {
           isStart: false,
           time: 1000,
           content: replaceVariable(
-            flow.getRandomText("announce_offline_retry"),
+            flow.getRandomText("announce_failure_retry"),
             "name",
             name
           ),
         });
       }, 1000);
+
+      setTimeout(function () {
+        setEnd(true);
+      }, 2000);
     },
     askName: function () {
       addChat({
@@ -696,15 +712,23 @@ function Home() {
         setIsInput(false);
         setStep(2);
       } catch (error) {
-        triggerMessage.error();
+        triggerMessage.announceOffline();
       }
     }
   };
 
-  const handleAgendaSubmit = function () {
-    setIsInput(false);
-    getChatGpt();
-    setStep(3);
+  const handleAgendaSubmit = async function () {
+    try {
+      const serviceReady = await checkService();
+
+      if (serviceReady) {
+        setIsInput(false);
+        getChatGpt();
+        setStep(3);
+      }
+    } catch (error) {
+      triggerMessage.announceFailure();
+    }
   };
 
   const handleRetryAgendaSubmit = function () {
@@ -750,7 +774,7 @@ function Home() {
       api.patchCounseling(pid, currentAttempt + 1);
     } catch (error) {
       setIsLoading(false);
-      triggerMessage.error();
+      triggerMessage.announceOffline();
     }
   };
 
