@@ -862,7 +862,7 @@ function Home() {
                   placeholder={"Type a message"}
                 />
                 <Image
-                  className="cursor-pointer active:scale-95"
+                  className="cursor-pointer active:scale-75"
                   src={
                     name
                       ? "/icons/send-message-active-icon.svg"
