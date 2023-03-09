@@ -82,7 +82,7 @@ function Home() {
           <div className="z-0 flex w-full min-w-full justify-center">
             <section className=" mx-6 mt-16 flex w-full max-w-full flex-col gap-2 rounded-3xl bg-white py-6 px-4 md:mx-0 md:px-6">
               <div className="md:px-4">
-                <section className="flex h-52 w-full max-w-full flex-col gap-2 rounded-3xl">
+                <section className="flex h-48 w-full max-w-full flex-col gap-2 rounded-3xl md:h-52">
                   {chats.map(function (chat, index) {
                     const type = chat.type;
                     const isStart = chat.isStart;
@@ -116,7 +116,7 @@ function Home() {
               </div>
               <Link
                 href={"/jesus"}
-                className="bg-kaya-500 mt-4 rounded-2xl px-16 py-4 text-center font-bold text-white"
+                className="bg-kaya-500 mt-2 rounded-2xl px-16 py-4 text-center font-bold text-white md:mt-4"
               >
                 Start chat with Jesus
               </Link>
