@@ -794,7 +794,7 @@ function Home() {
         </header>
         <div className="flex min-w-full max-w-full justify-center px-4 pt-16">
           <section className="flex w-full max-w-full flex-col gap-2 rounded-3xl">
-            <p className="flex min-w-full flex-row items-center justify-center py-4 font-medium text-white">
+            <p className="flex min-w-full flex-row items-center justify-center py-4 text-sm font-medium text-white md:text-base">
               Jesus has entered the chat.
             </p>
             {chats.map(function (chat, index) {
@@ -842,7 +842,7 @@ function Home() {
               </div>
             )}
             {end && (
-              <p className="mt-1 min-w-full py-3 text-center text-base font-medium text-white">
+              <p className="mt-1 min-w-full py-3 text-center text-sm font-medium text-white md:text-base">
                 Jesus left the chat.
               </p>
             )}
