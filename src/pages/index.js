@@ -115,7 +115,7 @@ function Home() {
                 </section>
               </div>
               <Link
-                href={"/jesus"}
+                href={"/chat"}
                 className="bg-kaya-500 mt-2 rounded-2xl px-16 py-4 text-center font-bold text-white md:mt-4"
               >
                 Start chat with Jesus
