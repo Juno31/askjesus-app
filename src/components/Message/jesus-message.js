@@ -1,10 +1,13 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 
 //Components
 import Jesus from "./jesus-profile-image";
 import BubbleWrapper from "./bubble-wrapper";
 import JesusBubble from "@/components/Message/jesus-bubble";
 import { BeatLoader } from "react-spinners";
+
+//utils
+import scrollToBottom from "@/utils/scrollToBottom";
 
 const JesusMessage = function ({ type, isStart, time, content, openProfile }) {
   const [visible, setVisble] = useState(false);
@@ -18,6 +21,15 @@ const JesusMessage = function ({ type, isStart, time, content, openProfile }) {
       setVisble(true);
     }
   }, []);
+
+  useEffect(
+    function () {
+      if (visible) {
+        scrollToBottom();
+      }
+    },
+    [visible]
+  );
 
   return (
     <div className="flex min-w-full max-w-full flex-row gap-2">
