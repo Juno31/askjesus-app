@@ -20,10 +20,12 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Ask Jesus</title>
       </Head>
-      <Script
-        id="beusable-script"
-        dangerouslySetInnerHTML={{
-          __html: `          
+      {process?.env?.NODE_ENV === "production" && (
+        <>
+          <Script
+            id="beusable-script"
+            dangerouslySetInnerHTML={{
+              __html: `          
 (function(w, d, a){
     w.__beusablerumclient__ = {
         load : function(src){
@@ -34,24 +36,27 @@ export default function App({ Component, pageProps }) {
     };w.__beusablerumclient__.load(a + "?url=" + encodeURIComponent(d.URL));
 })(window, document, "//rum.beusable.net/load/b220608e154414u003");
 `,
-        }}
-      />
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-T3LCKS2W46"
-      ></Script>
-      <Script
-        id="google-analytics"
-        dangerouslySetInnerHTML={{
-          __html: `
+            }}
+          />
+          <Script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-T3LCKS2W46"
+          />
+          <Script
+            id="google-analytics"
+            dangerouslySetInnerHTML={{
+              __html: `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-T3LCKS2W46');
   `,
-        }}
-      ></Script>
+            }}
+          />
+        </>
+      )}
+
       <Component {...pageProps} />
     </>
   );
