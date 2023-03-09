@@ -784,9 +784,9 @@ function Home() {
             onClick={handleArrowClick}
             alt={"back arrow"}
           />
-          <div className="font-bold text-white">Jesus</div>
+          <div className="text-xl font-bold text-white">Jesus</div>
           <div
-            className="text-kaya-500 cursor-pointer font-semibold"
+            className="text-kaya-500 cursor-pointer text-xl font-semibold"
             onClick={handleShareClick}
           >
             Share
