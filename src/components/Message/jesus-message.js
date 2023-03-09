@@ -24,7 +24,7 @@ const JesusMessage = function ({ type, isStart, time, content, openProfile }) {
 
   useEffect(
     function () {
-      if (visible) {
+      if (visible && window.location.pathname !== "/") {
         scrollToBottom();
       }
     },

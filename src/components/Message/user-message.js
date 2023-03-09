@@ -9,7 +9,9 @@ import scrollToBottom from "@/utils/scrollToBottom";
 
 const UserMessage = function ({ type, content }) {
   useEffect(function () {
-    scrollToBottom();
+    if (window.location.pathname !== "/") {
+      scrollToBottom();
+    }
   }, []);
 
   return (
