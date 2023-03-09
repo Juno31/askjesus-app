@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import _ from "lodash";
@@ -12,6 +12,7 @@ import Profile from "@/components/Profile";
 import Warning from "@/components/Warning";
 import JesusMessage from "@/components/Message/jesus-message";
 import UserMessage from "@/components/Message/user-message";
+import Input from "@/components/Input";
 
 //utils
 import { CounselingFlow } from "@/utils/flow";
@@ -163,11 +164,11 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         setEnd(true);
-      }, 2000);
+      }, 3600);
     },
     announceFailure: function () {
       setIsInput(false);
@@ -194,11 +195,11 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         setEnd(true);
-      }, 2000);
+      }, 3600);
     },
     askName: function () {
       addAssistantChat({
@@ -223,7 +224,7 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -239,8 +240,8 @@ function Home() {
 
         setTimeout(function () {
           setIsInput(true);
-        }, 1000);
-      }, 2000);
+        }, 1800);
+      }, 3600);
     },
     askAgenda: function () {
       addUserChat({
@@ -261,7 +262,7 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -274,7 +275,7 @@ function Home() {
             name
           ),
         });
-      }, 2000);
+      }, 3600);
 
       setTimeout(function () {
         addAssistantChat({
@@ -287,11 +288,11 @@ function Home() {
             name
           ),
         });
-      }, 3000);
+      }, 5400);
 
       setTimeout(function () {
         setIsInput(true);
-      }, 4000);
+      }, 7200);
     },
     askPrayer: function () {
       addChat({
@@ -312,7 +313,7 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -325,7 +326,7 @@ function Home() {
             name
           ),
         });
-      }, 2000);
+      }, 3600);
 
       setTimeout(function () {
         addAssistantChat({
@@ -338,12 +339,12 @@ function Home() {
             name
           ),
         });
-      }, 3000);
+      }, 5400);
 
       setTimeout(function () {
         setStep(3);
         setIsSelect(true);
-      }, 4000);
+      }, 7200);
     },
     acceptPrayer: function () {
       addUserParameter("pray", {
@@ -366,11 +367,11 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         setStep(5);
-      }, 2000);
+      }, 3600);
     },
     declinePrayer: function () {
       addUserParameter("pray", {
@@ -393,17 +394,17 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         setStep(5);
-      }, 2500);
+      }, 3600);
     },
     askReady: function () {
       addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: false,
-        time: 0,
+        time: 1000,
         content: replaceVariable(
           flow.getRandomText("ask_ready_finish"),
           "name",
@@ -411,20 +412,22 @@ function Home() {
         ),
       });
 
-      addAssistantChat({
-        type: MESSAGE_TYPE.JESUS,
-        isStart: false,
-        time: 1000,
-        content: replaceVariable(
-          flow.getRandomText("ask_ready_ready"),
-          "name",
-          name
-        ),
-      });
+      setTimeout(function () {
+        addAssistantChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: false,
+          time: 1000,
+          content: replaceVariable(
+            flow.getRandomText("ask_ready_ready"),
+            "name",
+            name
+          ),
+        });
+      }, 1800);
 
       setTimeout(function () {
         setIsSelect(true);
-      }, 1000);
+      }, 3600);
     },
     answerWord: function () {
       addUserParameter("ready", {
@@ -438,7 +441,24 @@ function Home() {
 
       const splittedCompletion = completions.split(". ");
 
-      splittedCompletion.forEach(function (completion, index, array) {
+      const periodAddedCompletion = splittedCompletion.map(function (
+        completion,
+        index,
+        array
+      ) {
+        if (index === array.length - 1) return completion;
+
+        if (
+          completion[completion.length - 1] !== "?" &&
+          completion[completion.length - 1] !== "!"
+        ) {
+          completion = completion + ".";
+        }
+
+        return completion;
+      });
+
+      periodAddedCompletion.forEach(function (completion, index, array) {
         if (!completion) return;
 
         setTimeout(function () {
@@ -448,12 +468,13 @@ function Home() {
             time: 2000,
             content: completion,
           });
-        }, index * 2000);
+        }, index * 2000 + index * 800);
       });
 
       setTimeout(function () {
         setIsSelect(true);
-      }, splittedCompletion.length * 2000);
+      }, periodAddedCompletion.length * 2000 +
+        (periodAddedCompletion.length + 1) * 800);
     },
     notReady: function () {
       addUserParameter("ready", {
@@ -479,8 +500,8 @@ function Home() {
 
         setTimeout(function () {
           setEnd(true);
-        }, 2000);
-      }, 1000);
+        }, 3800);
+      }, 1800);
     },
     satisfactionPositive: function () {
       addUserParameter("satisfaction", {
@@ -503,7 +524,7 @@ function Home() {
             name
           ),
         });
-      }, 0);
+      }, 800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -519,8 +540,8 @@ function Home() {
 
         setTimeout(function () {
           setIsInput(true);
-        }, 1000);
-      }, 1000);
+        }, 1800);
+      }, 2600);
     },
     satisfactionNeutral: function () {
       addUserParameter("satisfaction", {
@@ -543,11 +564,11 @@ function Home() {
             name
           ),
         });
-      }, 0);
+      }, 800);
 
       setTimeout(function () {
         setIsInput(true);
-      }, 1000);
+      }, 2600);
     },
     satisfactionNegative: function () {
       addUserParameter("satisfaction", {
@@ -570,7 +591,7 @@ function Home() {
             name
           ),
         });
-      }, 0);
+      }, 800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -586,8 +607,8 @@ function Home() {
 
         setTimeout(function () {
           setIsInput(true);
-        }, 1000);
-      }, 1000);
+        }, 1800);
+      }, 2600);
     },
     feedbackLong: function () {
       addUserChat({
@@ -597,16 +618,18 @@ function Home() {
         content: feedback,
       });
 
-      addAssistantChat({
-        type: MESSAGE_TYPE.JESUS,
-        isStart: true,
-        time: 1000,
-        content: replaceVariable(
-          flow.getRandomText("feedback_long_react"),
-          "name",
-          name
-        ),
-      });
+      setTimeout(function () {
+        addAssistantChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: replaceVariable(
+            flow.getRandomText("feedback_long_react"),
+            "name",
+            name
+          ),
+        });
+      }, 800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -623,7 +646,7 @@ function Home() {
         setTimeout(function () {
           setStep(10);
         }, 1000);
-      }, 1000);
+      }, 2600);
     },
     feedbackShort: function () {
       addUserChat({
@@ -633,39 +656,38 @@ function Home() {
         content: feedback,
       });
 
+      setTimeout(function () {
+        addAssistantChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: true,
+          time: 1000,
+          content: replaceVariable(
+            flow.getRandomText("feedback_short_react"),
+            "name",
+            name
+          ),
+        });
+      }, 800);
+
+      setTimeout(function () {
+        setStep(10);
+      }, 2600);
+    },
+    askRetry: function () {
       addAssistantChat({
         type: MESSAGE_TYPE.JESUS,
-        isStart: true,
+        isStart: false,
         time: 1000,
         content: replaceVariable(
-          flow.getRandomText("feedback_short_react"),
+          flow.getRandomText("ask_retry_ask"),
           "name",
           name
         ),
       });
 
       setTimeout(function () {
-        setStep(10);
-      }, 1000);
-    },
-    askRetry: function () {
-      addAssistantChat((current) => [
-        ...current,
-        {
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_retry_ask"),
-            "name",
-            name
-          ),
-        },
-      ]);
-
-      setTimeout(function () {
         setIsSelect(true);
-      }, 1000);
+      }, 1800);
     },
     nextAgenda: function () {
       addUserParameter("retry", {
@@ -674,7 +696,7 @@ function Home() {
         time: 0,
         content: flow
           .getChoices("retry")
-          .find((choice) => choice.choice_name === retry).text,
+          .find((choice) => choice.choice_name === true).text,
       });
 
       setTimeout(function () {
@@ -688,7 +710,7 @@ function Home() {
             name
           ),
         });
-      }, 1000);
+      }, 1800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -701,11 +723,11 @@ function Home() {
             name
           ),
         });
-      }, 2000);
+      }, 3600);
 
       setTimeout(function () {
         setIsInput(true);
-      }, 3000);
+      }, 5400);
     },
     announceEnd: function () {
       addUserParameter("retry", {
@@ -714,19 +736,21 @@ function Home() {
         time: 0,
         content: flow
           .getChoices("retry")
-          .find((choice) => choice.choice_name === retry).text,
+          .find((choice) => choice.choice_name === false).text,
       });
 
-      addAssistantChat({
-        type: MESSAGE_TYPE.JESUS,
-        time: 1000,
-        isStart: true,
-        content: replaceVariable(
-          flow.getRandomText("announce_end_react"),
-          "name",
-          name
-        ),
-      });
+      setTimeout(function () {
+        addAssistantChat({
+          type: MESSAGE_TYPE.JESUS,
+          time: 1000,
+          isStart: true,
+          content: replaceVariable(
+            flow.getRandomText("announce_end_react"),
+            "name",
+            name
+          ),
+        });
+      }, 800);
 
       setTimeout(function () {
         addAssistantChat({
@@ -743,7 +767,7 @@ function Home() {
         setTimeout(function () {
           setEnd(true);
         }, 1500);
-      }, 1000);
+      }, 2600);
     },
   };
 
@@ -753,7 +777,7 @@ function Home() {
 
   const handleShareClick = function () {
     navigator.clipboard.writeText(process.env.FRONT_HOST);
-    handleToast("Copied to clipboard");
+    handleToast("Link Copied to clipboard");
   };
 
   const checkEnter = function (e) {
@@ -889,7 +913,7 @@ function Home() {
             triggerMessage.satisfactionNegative();
           }
         } else if (step === 9) {
-          if (feedback.length < 100) {
+          if (feedback.length > 29) {
             triggerMessage.feedbackLong();
           } else {
             triggerMessage.feedbackShort();
@@ -914,17 +938,7 @@ function Home() {
     [step, completions]
   );
 
-  useEffect(
-    // scroll on message triggered
-    function () {
-      const currentHeight = document.documentElement.scrollHeight; // document height
-
-      if (window.innerHeight < currentHeight) {
-        window.scrollTo({ top: currentHeight, behavior: "smooth" });
-      }
-    },
-    [chats]
-  );
+  console.log(retry);
 
   return (
     <div className="container relative m-auto flex h-max justify-center">
@@ -1028,9 +1042,7 @@ function Home() {
           <footer className="max-w-kaya z-5 fixed bottom-0 flex w-full flex-row justify-between gap-2 bg-transparent bg-white bg-opacity-0 px-4 py-4">
             {isInput && step === 1 && (
               <>
-                <input
-                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
-                  placeholder="Type a message"
+                <Input
                   onChange={function (e) {
                     setName(e.target.value);
                   }}
@@ -1039,7 +1051,7 @@ function Home() {
                       handleNameSubmit();
                     }
                   }}
-                  {...INPUT_DEFAULT}
+                  placeholder={"Type a message"}
                 />
                 <Image
                   className="cursor-pointer active:scale-95"
@@ -1057,8 +1069,7 @@ function Home() {
             )}
             {isInput && step === 2 && (
               <>
-                <input
-                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
+                <Input
                   placeholder="Type a message"
                   onChange={function (e) {
                     setAgenda(e.target.value);
@@ -1086,8 +1097,7 @@ function Home() {
             )}
             {isInput && step === 8 && (
               <>
-                <input
-                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
+                <Input
                   placeholder="Type a message"
                   onChange={function (e) {
                     setFeedback(e.target.value);
@@ -1115,8 +1125,7 @@ function Home() {
             )}
             {isInput && step === 10 && (
               <>
-                <input
-                  className="focus:border-kaya-black h-12 flex-1 rounded-3xl bg-gray-200 px-4 py-3 placeholder:font-light"
+                <Input
                   placeholder="Type a message"
                   onChange={function (e) {
                     setAgenda(e.target.value);
@@ -1143,11 +1152,11 @@ function Home() {
               </>
             )}
             {isSelect && step === 3 && (
-              <div className="flex w-full max-w-full flex-row justify-center gap-3">
+              <SelectItemWrapper>
                 {flow.getChoices("pray").map(function (choice) {
                   return (
                     <SelectItem
-                      key={choice.response_name + choice.choice}
+                      key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
                         handleAmenSubmit(choice.choice_name);
                       }}
@@ -1156,14 +1165,14 @@ function Home() {
                     </SelectItem>
                   );
                 })}
-              </div>
+              </SelectItemWrapper>
             )}
             {isSelect && step === 6 && (
-              <div className="flex w-full max-w-full flex-row justify-center gap-3">
+              <SelectItemWrapper>
                 {flow.getChoices("ready").map(function (choice) {
                   return (
                     <SelectItem
-                      key={choice.response_name + choice.choice}
+                      key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
                         handleReadySubmit(choice.choice_name);
                       }}
@@ -1172,14 +1181,14 @@ function Home() {
                     </SelectItem>
                   );
                 })}
-              </div>
+              </SelectItemWrapper>
             )}
             {isSelect && step === 7 && (
-              <div className="flex w-full max-w-full flex-row justify-center gap-3">
+              <SelectItemWrapper>
                 {flow.getChoices("satisfaction").map(function (choice) {
                   return (
                     <SelectItem
-                      key={choice.response_name + choice.choice}
+                      key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
                         handleSatisfactionSubmit(choice.choice_name);
                       }}
@@ -1188,14 +1197,14 @@ function Home() {
                     </SelectItem>
                   );
                 })}
-              </div>
+              </SelectItemWrapper>
             )}
             {isSelect && step === 8 && (
-              <div className="flex w-full max-w-full flex-row justify-center gap-3">
+              <SelectItemWrapper>
                 {flow.getChoices("satisfaction").map(function (choice) {
                   return (
                     <SelectItem
-                      key={choice.response_name + choice.choice}
+                      key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
                         handleSatisfactionSubmit(choice.choice_name);
                       }}
@@ -1204,14 +1213,14 @@ function Home() {
                     </SelectItem>
                   );
                 })}
-              </div>
+              </SelectItemWrapper>
             )}
             {isSelect && step === 10 && (
-              <div className="flex w-full max-w-full flex-row justify-center gap-3">
+              <SelectItemWrapper>
                 {flow.getChoices("retry").map(function (choice) {
                   return (
                     <SelectItem
-                      key={choice.response_name + choice.choice}
+                      key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
                         handleRetrySubmit(choice.choice_name);
                       }}
@@ -1220,7 +1229,7 @@ function Home() {
                     </SelectItem>
                   );
                 })}
-              </div>
+              </SelectItemWrapper>
             )}
           </footer>
         )}
@@ -1231,11 +1240,43 @@ function Home() {
 
 export default Home;
 
+const SelectItemWrapper = function ({ children }) {
+  const ref = useRef();
+
+  useEffect(function () {
+    const wrapperWidth = ref.current.clientWidth;
+    let totalWidth = 0;
+
+    console.log(document.querySelectorAll("#select-item-wrapper"));
+    document
+      .querySelectorAll("#select-item-wrapper > *")
+      .forEach(function (child) {
+        totalWidth = totalWidth + child.offsetWidth;
+      });
+
+    if (wrapperWidth < totalWidth) {
+      ref.current.classList.remove("justify-center");
+      ref.current.classList.add("justify-start");
+      ref.current.classList.add("overflow-x-auto");
+    }
+  }, []);
+
+  return (
+    <div
+      id="select-item-wrapper"
+      ref={ref}
+      className="scrollbar-hidden flex w-full max-w-full flex-row justify-center gap-3"
+    >
+      {children}
+    </div>
+  );
+};
+
 const SelectItem = function ({ onClick, children }) {
   return (
     <div
       onClick={onClick}
-      className="hover:bg-kaya-hover active:bg-kaya-active border-kaya-black flex h-12 w-max min-w-max cursor-pointer flex-row items-center rounded-3xl border bg-white px-3 py-4"
+      className=" hover:bg-kaya-hover active:bg-kaya-active border-kaya-black flex h-12 w-max min-w-max cursor-pointer flex-row items-center overflow-hidden rounded-3xl border bg-white px-3 py-4"
     >
       {children}
     </div>
