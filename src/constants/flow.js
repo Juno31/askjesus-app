@@ -74,7 +74,7 @@ export const counselingFlowData = {
     },
     {
       chunk_name: "answer_word",
-      message_count: 0,
+      message_count: 1,
       response_type: "choice",
       response_name: "satisfaction",
       choice_count: 3,
@@ -252,7 +252,7 @@ export const counselingFlowData = {
     },
     {
       chunk_name: "agenda_tiny",
-      message_order: 1,
+      message_order: 2,
       message_name: "ask",
       message_code: "agenda_tiny_ask",
       line_count: 4,
@@ -304,6 +304,14 @@ export const counselingFlowData = {
       message_name: "ready",
       message_code: "ask_ready_ready",
       line_count: 4,
+      line_example: null,
+    },
+    {
+      chunk_name: "answer_word",
+      message_order: 1,
+      message_name: "suggest",
+      message_code: "answer_word_suggest",
+      line_count: 13,
       line_example: null,
     },
     {
@@ -1171,6 +1179,71 @@ export const counselingFlowData = {
       text: "No problem. I'm a cool guy.",
     },
     {
+      message_code: "answer_word_suggest",
+      line_case: 1,
+      text: "Here's a verse for you.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 2,
+      text: "I suggest you a Bible verse.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 3,
+      text: "I want to share this verse with you.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 4,
+      text: "Do you read Bible?",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 5,
+      text: "You might find this verse helpful.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 6,
+      text: "Check out this verse I got.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 7,
+      text: "This is a dope Bible verse.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 8,
+      text: "I prescribe this verse for your spiritual well-being.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 9,
+      text: "May this verse bring you closer to God.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 10,
+      text: "This can be a source of comfort and guidance.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 11,
+      text: "I hope this verse impacts your journey.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 12,
+      text: "Check this out.",
+    },
+    {
+      message_code: "answer_word_suggest",
+      line_case: 13,
+      text: "If you read Bible, you may find this verse.",
+    },
+    {
       message_code: "satisfaction_positive_react",
       line_case: 1,
       text: "My pleasure, {name}.",
@@ -1794,25 +1867,25 @@ export const counselingFlowData = {
       response_name: "retry",
       order: 1,
       choice_name: true,
-      text: "Yes, please.",
+      text: "😉 Yes, please.",
     },
     {
       response_name: "retry",
       order: 2,
       choice_name: false,
-      text: "No, I'm done.",
+      text: "🙄 No, I'm done.",
     },
     {
       response_name: "ready",
       order: 1,
       choice_name: true,
-      text: "Definitely",
+      text: "😍 Definitely",
     },
     {
       response_name: "ready",
       order: 2,
       choice_name: false,
-      text: "No, I'm not ready.",
+      text: "😣 No, I'm not ready.",
     },
     {
       response_name: "pray",
