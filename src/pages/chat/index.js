@@ -757,7 +757,7 @@ function Home() {
   return (
     <div className="container relative m-auto flex h-max justify-center">
       <Head>
-        <title>{"Ask Jesus | Chat"}</title>
+        <title>{"AskJesus | Chat"}</title>
       </Head>
       {Toast}
       <Background />
