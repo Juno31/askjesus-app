@@ -115,86 +115,87 @@ input:focus {
   .bg-kaya-black {
     background: #49454f;
   }
-  .text-kaya-100 {
-    color: #fae1fb;
-  }
-  .text-kaya-200 {
-    color: #f1c5f7;
-  }
-  .text-kaya-300 {
-    color: #dba2e8;
-  }
-  .text-kaya-400 {
-    color: #be82d1;
-  }
-  .text-kaya-500 {
-    color: #9759b3;
-  }
-  .text-kaya-600 {
-    color: #784199;
-  }
-  .text-kaya-700 {
-    color: #5b2c80;
-  }
-  .text-kaya-800 {
-    color: #411c67;
-  }
-  .text-kaya-900 {
-    color: #2e1155;
-  }
-  .bg-kaya-100 {
-    background: #fae1fb;
-  }
-  .bg-kaya-200 {
-    background: #f1c5f7;
-  }
-  .bg-kaya-300 {
-    background: #dba2e8;
-  }
-  .bg-kaya-400 {
-    background: #be82d1;
-  }
-  .bg-kaya-500 {
-    background: #9759b3;
-  }
-  .bg-kaya-600 {
-    background: #784199;
-  }
-  .bg-kaya-700 {
-    background: #5b2c80;
-  }
-  .bg-kaya-800 {
-    background: #411c67;
-  }
-  .bg-kaya-900 {
-    background: #2e1155;
-  }
+
   .border-kaya-100 {
-    border-color: #fae1fb;
+    border-color: #f8d7fa;
   }
   .border-kaya-200 {
-    border-color: #f1c5f7;
+    border-color: #edb0f5;
   }
   .border-kaya-300 {
-    border-color: #dba2e8;
+    border-color: #d183e2;
   }
   .border-kaya-400 {
-    border-color: #be82d1;
+    border-color: #ac5ec5;
   }
   .border-kaya-500 {
-    border-color: #9759b3;
+    border-color: #7d30a0;
   }
   .border-kaya-600 {
-    border-color: #784199;
+    border-color: #622389;
   }
   .border-kaya-700 {
-    border-color: #5b2c80;
+    border-color: #4a1873;
   }
   .border-kaya-800 {
-    border-color: #411c67;
+    border-color: #350f5c;
   }
   .border-kaya-900 {
-    border-color: #2e1155;
+    border-color: #25094c;
+  }
+  .bg-kaya-100 {
+    background-color: #f8d7fa;
+  }
+  .bg-kaya-200 {
+    background-color: #edb0f5;
+  }
+  .bg-kaya-300 {
+    background-color: #d183e2;
+  }
+  .bg-kaya-400 {
+    background-color: #ac5ec5;
+  }
+  .bg-kaya-500 {
+    background-color: #7d30a0;
+  }
+  .bg-kaya-600 {
+    background-color: #622389;
+  }
+  .bg-kaya-700 {
+    background-color: #4a1873;
+  }
+  .bg-kaya-800 {
+    background-color: #350f5c;
+  }
+  .bg-kaya-900 {
+    background-color: #25094c;
+  }
+  .text-kaya-100 {
+    color: #f8d7fa;
+  }
+  .text-kaya-200 {
+    color: #edb0f5;
+  }
+  .text-kaya-300 {
+    color: #d183e2;
+  }
+  .text-kaya-400 {
+    color: #ac5ec5;
+  }
+  .text-kaya-500 {
+    color: #7d30a0;
+  }
+  .text-kaya-600 {
+    color: #622389;
+  }
+  .text-kaya-700 {
+    color: #4a1873;
+  }
+  .text-kaya-800 {
+    color: #350f5c;
+  }
+  .text-kaya-900 {
+    color: #25094c;
   }
 }
 
