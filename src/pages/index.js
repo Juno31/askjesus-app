@@ -25,7 +25,7 @@ function Home() {
 
   const handleShareClick = function () {
     navigator.clipboard.writeText(process.env.FRONT_HOST);
-    handleToast("Copied to clipboard");
+    handleToast("Link Copied to clipboard");
   };
 
   const addChat = function (chat) {
@@ -47,7 +47,7 @@ function Home() {
         time: 1000,
         content: "Ask me anything",
       });
-    }, 1000);
+    }, 1800);
 
     setTimeout(function () {
       addChat({
@@ -56,7 +56,7 @@ function Home() {
         time: 0,
         content: "Type message...",
       });
-    }, 2000);
+    }, 3600);
   }, []);
 
   return (
@@ -126,13 +126,13 @@ function Home() {
           </div>
           <p className="z-0 mt-16 text-white">or give your friend a chance</p>
           <button
-            className="z-0 mx-6 mt-2 rounded-2xl border-2 py-4 px-7 text-base font-bold text-white md:min-w-full"
+            className="z-0 mx-6 mt-2 rounded-2xl border-2 py-4 px-8 text-base font-bold text-white md:min-w-full"
             onClick={handleShareClick}
           >
             Share to Your Faithful Friend
           </button>
           <p className="z-0 mt-56 mb-14 text-xs text-white">
-            Holisters 2023 kim@creator.ly
+            Holisters 2023 askjesus.me@gmail.com
           </p>
         </div>
       </div>
