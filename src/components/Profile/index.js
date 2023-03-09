@@ -9,7 +9,7 @@ function Profile({ appear, closeProfile }) {
         appear ? "z-10 opacity-100" : "z-0 opacity-0"
       }`}
     >
-      <div className="popup flex flex-col items-center justify-start rounded-3xl bg-white p-6">
+      <div className="popup flex flex-col items-center justify-start rounded-3xl bg-white p-6 pb-20">
         <div className="flex min-w-full justify-end">
           <Image
             src={"/icons/close-icon.svg"}
@@ -29,7 +29,7 @@ function Profile({ appear, closeProfile }) {
         />
         <h1 className="text-kaya-black mt-3 text-xl font-bold">Jesus</h1>
         <p className="text-kaya-black mt-2 text-center">
-          {"I'm not as old as you think"} <br />
+          {"I'm not as old as you think."} <br />
           #edm_lover
         </p>
       </div>
