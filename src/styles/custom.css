@@ -199,6 +199,15 @@ input:focus {
   }
 }
 
+@layer components {
+  .appear-target {
+    @apply translate-y-2 opacity-0 transition-all duration-500 ease-linear;
+  }
+  .appear-animate {
+    @apply translate-y-0 opacity-100;
+  }
+}
+
 @layer utilities {
   .toast {
     width: max-content;
