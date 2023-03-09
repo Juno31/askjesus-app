@@ -938,8 +938,6 @@ function Home() {
     [step, completions]
   );
 
-  console.log(retry);
-
   return (
     <div className="container relative m-auto flex h-max justify-center">
       <Head>
@@ -1247,7 +1245,6 @@ const SelectItemWrapper = function ({ children }) {
     const wrapperWidth = ref.current.clientWidth;
     let totalWidth = 0;
 
-    console.log(document.querySelectorAll("#select-item-wrapper"));
     document
       .querySelectorAll("#select-item-wrapper > *")
       .forEach(function (child) {

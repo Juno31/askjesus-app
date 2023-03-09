@@ -89,8 +89,6 @@ function Home() {
                     const time = chat.time;
                     const content = chat.content;
 
-                    console.log(chat);
-
                     if (type === MESSAGE_TYPE.JESUS) {
                       return (
                         <JesusMessage
