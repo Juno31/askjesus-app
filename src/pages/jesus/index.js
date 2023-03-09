@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import _ from "lodash";
+import _, { replace } from "lodash";
 
 //components
 import BubbleWrapper from "@/components/Message/bubble-wrapper";
@@ -55,94 +55,15 @@ function Home() {
   const [appear, setAppear] = useState(false);
   const [warning, setWarning] = useState(false);
 
+  const [isError, setIsError] = useState(false);
+
   const { handleToast, component: Toast } = useToast();
 
-  const reset = function () {
-    setStep(0);
-    setName("");
-    setAgenda("");
-    setPrayerType(null);
-    setReadyType(null);
-    setSatisfactionType(null);
-    setCompletions("");
-    setIsInput(false);
-    setIsSelect(false);
-    setIsLoading(false);
-  };
-
-  const checkService = async function () {
-    try {
-      const serverReady = api.getServerStatus;
-      const gptReady = api.getGPTStatus;
-
-      const serviceReady = Promise.all([serverReady(), gptReady()]);
-
-      return serviceReady;
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const initialize = async function () {
-    try {
-      const serviceReady = await checkService();
-      if (serviceReady) {
-        setTimeout(function () {
-          setStep(1);
-        }, 1000);
-      }
-    } catch (error) {
-      triggerMessage.announceOffline();
-    }
-  };
-
-  const addChat = function (chat) {
-    setChats((current) => [...current, chat]);
-  };
-
-  const addUserChat = function (chat) {
-    setChats((current) => [...current, chat]);
-
-    // if (pid) {
-    //   api.createCounselingMessages({
-    //     pid: pid,
-    //     isContext: false,
-    //     role: "assistant",
-    //     content: chat.content,
-    //   });
-    // }
-  };
-
-  const addAssistantChat = function (chat) {
-    setChats((current) => [...current, chat]);
-
-    // if (pid) {
-    //   api.createCounselingMessages({
-    //     pid: pid,
-    //     isContext: false,
-    //     role: "assistant",
-    //     content: chat.content,
-    //   });
-    // }
-  };
-
-  const addUserParameter = function (key, chat) {
-    setChats((current) => [...current, chat]);
-
-    if (pid) {
-      api.createCounselingParameters({
-        pid: pid,
-        key: key,
-        value: chat.content,
-      });
-    }
-  };
-
   const triggerMessage = {
-    announceOffline: function () {
+    announce_offline: function () {
       setIsInput(false);
       setIsSelect(false);
-      addAssistantChat({
+      addChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
@@ -154,7 +75,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
+        addChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: false,
           time: 1000,
@@ -170,10 +91,10 @@ function Home() {
         setEnd(true);
       }, 3600);
     },
-    announceFailure: function () {
+    announce_failure: function () {
       setIsInput(false);
       setIsSelect(false);
-      addAssistantChat({
+      addChat({
         type: MESSAGE_TYPE.JESUS,
         isStart: true,
         time: 1000,
@@ -201,49 +122,12 @@ function Home() {
         setEnd(true);
       }, 3600);
     },
-    askName: function () {
-      addAssistantChat({
-        type: MESSAGE_TYPE.JESUS,
-        isStart: true,
-        time: 1000,
-        content: replaceVariable(
-          flow.getRandomText("ask_name_introduce"),
-          "name",
-          name
-        ),
+    ask_name: function () {
+      generateMessages("ask_name", function () {
+        setIsInput(true);
       });
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_name_talk"),
-            "name",
-            name
-          ),
-        });
-      }, 1800);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_name_ask"),
-            "name",
-            name
-          ),
-        });
-
-        setTimeout(function () {
-          setIsInput(true);
-        }, 1800);
-      }, 3600);
     },
-    askAgenda: function () {
+    ask_agenda: function () {
       addUserChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -252,49 +136,12 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_agenda_welcome"),
-            "name",
-            name
-          ),
+        generateMessages("ask_agenda", function () {
+          setIsInput(true);
         });
-      }, 1800);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_agenda_ask"),
-            "name",
-            name
-          ),
-        });
-      }, 3600);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_agenda_guide"),
-            "name",
-            name
-          ),
-        });
-      }, 5400);
-
-      setTimeout(function () {
-        setIsInput(true);
-      }, 7200);
+      }, 800);
     },
-    askPrayer: function () {
+    agenda_long: function () {
       addChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -303,207 +150,138 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_pray_react"),
-            "name",
-            name
-          ),
+        generateMessages("agenda_long", function () {
+          setStep(3);
         });
-      }, 1800);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_pray_think"),
-            "name",
-            name
-          ),
-        });
-      }, 3600);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_pray_ask"),
-            "name",
-            name
-          ),
-        });
-      }, 5400);
-
-      setTimeout(function () {
-        setStep(3);
-        setIsSelect(true);
-      }, 7200);
+      }, 800);
     },
-    acceptPrayer: function () {
-      addUserParameter("pray", {
+    agenda_short: function () {
+      addChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 0,
-        content: flow
-          .getChoices("pray")
-          .find((choice) => choice.choice_name === prayerType).text,
+        content: agenda,
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("accept_pray_thank"),
-            "name",
-            name
-          ),
+        generateMessages("agenda_short", function () {
+          setStep(3);
         });
-      }, 1800);
-
-      setTimeout(function () {
-        setStep(5);
-      }, 3600);
+      }, 800);
     },
-    declinePrayer: function () {
-      addUserParameter("pray", {
+    agenda_tiny: function () {
+      addUserChat({
         type: MESSAGE_TYPE.USER,
-        isStart: false,
+        isStart: true,
         time: 0,
-        content: flow
-          .getChoices("pray")
-          .find((choice) => choice.choice_name === prayerType).text,
+        content: agenda,
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("decline_pray_react"),
-            "name",
-            name
-          ),
+        generateMessages("agenda_tiny", function () {
+          setAgenda("");
+          setIsInput(true);
         });
-      }, 1800);
-
-      setTimeout(function () {
-        setStep(5);
-      }, 3600);
+      }, 800);
     },
-    askReady: function () {
-      addAssistantChat({
-        type: MESSAGE_TYPE.JESUS,
+    announce_reject: function () {
+      addUserChat({
+        type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 1000,
-        content: replaceVariable(
-          flow.getRandomText("ask_ready_finish"),
-          "name",
-          name
-        ),
+        content: agenda,
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("ask_ready_ready"),
-            "name",
-            name
-          ),
-        });
-      }, 1800);
-
-      setTimeout(function () {
-        setIsSelect(true);
-      }, 3600);
-    },
-    answerWord: function () {
-      addUserParameter("ready", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("ready")
-          .find((choice) => choice.choice_name === readyType).text,
-      });
-
-      const splittedCompletion = completions.split(". ");
-
-      const periodAddedCompletion = splittedCompletion.map(function (
-        completion,
-        index,
-        array
-      ) {
-        if (index === array.length - 1) return completion;
-
-        if (
-          completion[completion.length - 1] !== "?" &&
-          completion[completion.length - 1] !== "!"
-        ) {
-          completion = completion + ".";
-        }
-
-        return completion;
-      });
-
-      periodAddedCompletion.forEach(function (completion, index, array) {
-        if (!completion) return;
-
-        setTimeout(function () {
-          addChat({
-            type: MESSAGE_TYPE.JESUS,
-            isStart: index === 0,
-            time: 2000,
-            content: completion,
-          });
-        }, index * 2000 + index * 800);
-      });
-
-      setTimeout(function () {
-        setIsSelect(true);
-      }, periodAddedCompletion.length * 2000 +
-        (periodAddedCompletion.length + 1) * 800);
-    },
-    notReady: function () {
-      addUserParameter("ready", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("ready")
-          .find((choice) => choice.choice_name === readyType).text,
-      });
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("not_ready_sorry"),
-            "name",
-            name
-          ),
-        });
-
-        setTimeout(function () {
+        generateMessages("announce_reject", function () {
           setEnd(true);
-        }, 3800);
+        });
       }, 1800);
     },
-    satisfactionPositive: function () {
+    ask_pray: function () {
+      generateMessages(
+        "ask_pray",
+        function () {
+          setStep(3);
+          setIsSelect(true);
+        },
+        true
+      );
+    },
+    accept_prayer: function () {
+      addUserParameter("pray", {
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: flow
+          .getChoices("pray")
+          .find((choice) => choice.choice_name === prayerType).text,
+      });
+
+      setTimeout(function () {
+        generateMessages("accept_pray", function () {
+          setStep(5);
+        });
+      }, 800);
+    },
+    decline_prayer: function () {
+      addUserParameter("pray", {
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: flow
+          .getChoices("pray")
+          .find((choice) => choice.choice_name === prayerType).text,
+      });
+
+      setTimeout(function () {
+        generateMessages("decline_pray", function () {
+          setStep(5);
+        });
+      }, 800);
+    },
+    ask_ready: function () {
+      generateMessages(
+        "ask_ready",
+        function () {
+          setIsSelect(true);
+        },
+        true
+      );
+    },
+    answer_word: function () {
+      addUserParameter("ready", {
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: flow
+          .getChoices("ready")
+          .find((choice) => choice.choice_name === readyType).text,
+      });
+
+      setTimeout(function () {
+        generateGptMessages(completions, function () {
+          setIsSelect(true);
+        });
+      }, 800);
+    },
+    not_ready: function () {
+      addUserParameter("ready", {
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: flow
+          .getChoices("ready")
+          .find((choice) => choice.choice_name === readyType).text,
+      });
+
+      setTimeout(function () {
+        generateMessages("not_ready", function () {
+          setEnd(true);
+        });
+      }, 800);
+    },
+    satisfaction_positive: function () {
       addUserParameter("satisfaction", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -514,36 +292,12 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("satisfaction_positive_react"),
-            "name",
-            name
-          ),
-        });
-      }, 800);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("satisfaction_positive_ask"),
-            "name",
-            name
-          ),
-        });
-
-        setTimeout(function () {
+        generateMessages("satisfaction_positive", function () {
           setIsInput(true);
-        }, 1800);
-      }, 2600);
+        });
+      }, 800);
     },
-    satisfactionNeutral: function () {
+    satisfaction_neutral: function () {
       addUserParameter("satisfaction", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -554,63 +308,28 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("satisfaction_neutral_ask"),
-            "name",
-            name
-          ),
-        });
-      }, 800);
-
-      setTimeout(function () {
-        setIsInput(true);
-      }, 2600);
-    },
-    satisfactionNegative: function () {
-      addUserParameter("satisfaction", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("satisfaction")
-          .find((choice) => choice.choice_name === satisfactionType).text,
-      });
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("satisfaction_negative_react"),
-            "name",
-            name
-          ),
-        });
-      }, 800);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("satisfaction_negative_ask"),
-            "name",
-            name
-          ),
-        });
-
-        setTimeout(function () {
+        generateMessages("satisfaction_neural", function () {
           setIsInput(true);
-        }, 1800);
-      }, 2600);
+        });
+      }, 800);
     },
-    feedbackLong: function () {
+    satisfaction_negative: function () {
+      addUserParameter("satisfaction", {
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: flow
+          .getChoices("satisfaction")
+          .find((choice) => choice.choice_name === satisfactionType).text,
+      });
+
+      setTimeout(function () {
+        generateMessages("satisfaction_negative", function () {
+          setIsInput(true);
+        });
+      }, 800);
+    },
+    feedback_long: function () {
       addUserChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -619,36 +338,12 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("feedback_long_react"),
-            "name",
-            name
-          ),
-        });
-      }, 800);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("feedback_long_talk"),
-            "name",
-            name
-          ),
-        });
-
-        setTimeout(function () {
+        generateMessages("feedback_long", function () {
           setStep(10);
-        }, 1000);
-      }, 2600);
+        });
+      }, 800);
     },
-    feedbackShort: function () {
+    feedback_short: function () {
       addUserChat({
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -657,39 +352,33 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("feedback_short_react"),
-            "name",
-            name
-          ),
+        generateMessages("feedback_short", function () {
+          setStep(10);
         });
       }, 800);
+    },
+    feedback_tiny: function () {
+      addUserChat({
+        type: MESSAGE_TYPE.USER,
+        isStart: false,
+        time: 0,
+        content: feedback,
+      });
 
       setTimeout(function () {
         setStep(10);
-      }, 2600);
-    },
-    askRetry: function () {
-      addAssistantChat({
-        type: MESSAGE_TYPE.JESUS,
-        isStart: false,
-        time: 1000,
-        content: replaceVariable(
-          flow.getRandomText("ask_retry_ask"),
-          "name",
-          name
-        ),
-      });
-
-      setTimeout(function () {
-        setIsSelect(true);
       }, 1800);
     },
-    nextAgenda: function () {
+    ask_retry: function () {
+      generateMessages(
+        "ask_retry",
+        function () {
+          setIsSelect(true);
+        },
+        chats?.[chats.length - 1].type === MESSAGE_TYPE.JESUS
+      );
+    },
+    next_agenda: function () {
       addUserParameter("retry", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -700,36 +389,14 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: true,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("next_agenda_talk"),
-            "name",
-            name
-          ),
+        generateMessages("next_agenda", function () {
+          setIsInput(true);
         });
       }, 1800);
-
-      setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          isStart: false,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText("next_agenda_ask"),
-            "name",
-            name
-          ),
-        });
-      }, 3600);
-
-      setTimeout(function () {
-        setIsInput(true);
-      }, 5400);
     },
-    announceEnd: function () {
+    announce_end: function () {
+      setIsInput(false);
+      setIsSelect(false);
       addUserParameter("retry", {
         type: MESSAGE_TYPE.USER,
         isStart: false,
@@ -740,35 +407,190 @@ function Home() {
       });
 
       setTimeout(function () {
-        addAssistantChat({
-          type: MESSAGE_TYPE.JESUS,
-          time: 1000,
-          isStart: true,
-          content: replaceVariable(
-            flow.getRandomText("announce_end_react"),
-            "name",
-            name
-          ),
+        generateMessages("announce_end", function () {
+          setEnd(true);
         });
       }, 800);
+    },
+  };
 
+  const reset = function () {
+    setStep(0);
+    setName("");
+    setAgenda("");
+    setPrayerType(null);
+    setReadyType(null);
+    setSatisfactionType(null);
+    setCompletions("");
+    setIsInput(false);
+    setIsSelect(false);
+    setIsLoading(false);
+  };
+
+  const checkService = async function () {
+    try {
+      const serverReady = api.getServerStatus;
+      const gptReady = api.getGPTStatus;
+
+      const serviceReady = Promise.all([serverReady(), gptReady()]);
+
+      return serviceReady;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const getChatGpt = async function () {
+    setIsLoading(true);
+    try {
+      const currentAttempt = attempt;
+      const response = await api.createCounselingMessages({
+        pid,
+        isContext: true,
+        role: "user",
+        content: agenda,
+      });
+
+      const completion =
+        response.payload.messages[response.payload.messages.length - 1].content;
+
+      setAttempt((current) => current + 1);
+      setCompletions(completion);
+      setIsLoading(false);
+      api.patchCounseling(pid, currentAttempt + 1);
+    } catch (error) {
+      setIsError(true);
+      setIsLoading(false);
+
+      setTimeout(function () {
+        triggerMessage.announce_offline();
+      }, 800);
+    }
+  };
+
+  const initialize = async function () {
+    try {
+      const serviceReady = await checkService();
+      if (serviceReady) {
+        setTimeout(function () {
+          setStep(1);
+        }, 1000);
+      }
+    } catch (error) {
+      triggerMessage.announce_offline();
+    }
+  };
+
+  const addChat = function (chat) {
+    setChats((current) => [...current, chat]);
+  };
+
+  const addUserChat = function (chat) {
+    if (!isError) {
+      setChats((current) => [...current, chat]);
+    }
+
+    // if (pid) {
+    //   api.createCounselingMessages({
+    //     pid: pid,
+    //     isContext: false,
+    //     role: "assistant",
+    //     content: chat.content,
+    //   });
+    // }
+  };
+
+  const addAssistantChat = function (chat) {
+    if (!isError) {
+      setChats((current) => [...current, chat]);
+    }
+
+    // if (pid) {
+    //   api.createCounselingMessages({
+    //     pid: pid,
+    //     isContext: false,
+    //     role: "assistant",
+    //     content: chat.content,
+    //   });
+    // }
+  };
+
+  const addUserParameter = function (key, chat) {
+    if (!isError) {
+      setChats((current) => [...current, chat]);
+
+      if (pid) {
+        api.createCounselingParameters({
+          pid: pid,
+          key: key,
+          value: chat.content,
+        });
+      }
+    }
+  };
+
+  const generateMessages = function (chunk_name, callback, noStart = false) {
+    const messages = flow.getChunkMessages(chunk_name); // array and sorted in order
+
+    messages.forEach(function (message, index, array) {
       setTimeout(function () {
         addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
-          isStart: false,
+          isStart: index === 0 && !noStart,
           time: 1000,
           content: replaceVariable(
-            flow.getRandomText("announce_end_talk"),
+            flow.getRandomText(message.message_code),
             "name",
             name
           ),
         });
 
-        setTimeout(function () {
-          setEnd(true);
-        }, 1500);
-      }, 2600);
-    },
+        if (index === array.length - 1) {
+          setTimeout(function () {
+            callback();
+          }, 1800);
+        }
+      }, index * 1000 + index * 800);
+    });
+  };
+
+  const generateGptMessages = function (completions, callback) {
+    const splittedCompletion = completions.split(". ");
+
+    const periodAddedCompletion = splittedCompletion.map(function (
+      completion,
+      index,
+      array
+    ) {
+      if (index === array.length - 1) return completion;
+
+      if (
+        completion[completion.length - 1] !== "?" &&
+        completion[completion.length - 1] !== "!"
+      ) {
+        completion = completion + ".";
+      }
+
+      return completion;
+    });
+
+    periodAddedCompletion.forEach(function (completion, index, array) {
+      if (!completion) return;
+
+      setTimeout(function () {
+        addChat({
+          type: MESSAGE_TYPE.JESUS,
+          isStart: index === 0,
+          time: 2000,
+          content: completion,
+        });
+      }, index * 2000 + index * 800);
+    });
+
+    setTimeout(function () {
+      callback();
+    }, periodAddedCompletion.length * 2000 +
+      (periodAddedCompletion.length + 1) * 800);
   };
 
   const handleArrowClick = function () {
@@ -794,29 +616,43 @@ function Home() {
         setIsInput(false);
         setStep(2);
       } catch (error) {
-        triggerMessage.announceOffline();
+        setIsError(true);
+
+        setTimeout(function () {
+          triggerMessage.announce_offline();
+        }, 800);
       }
     }
   };
 
   const handleAgendaSubmit = async function () {
     try {
-      const serviceReady = await checkService();
+      setIsInput(false);
+      await checkService();
 
-      if (serviceReady) {
-        setIsInput(false);
+      if (agenda.length < 10) {
+        const no = _.random(1, 10);
+        console.log(no);
+
+        if (no <= 8) {
+          triggerMessage.agenda_tiny();
+        } else {
+          triggerMessage.announce_reject();
+        }
+      } else if (agenda.length < 30) {
         getChatGpt();
-        setStep(3);
+        triggerMessage.agenda_short();
+      } else {
+        getChatGpt();
+        triggerMessage.agenda_long();
       }
     } catch (error) {
-      triggerMessage.announceFailure();
-    }
-  };
+      setIsError(true);
 
-  const handleRetryAgendaSubmit = function () {
-    setIsInput(false);
-    getChatGpt();
-    setStep(3);
+      setTimeout(function () {
+        triggerMessage.announce_failure();
+      }, 800);
+    }
   };
 
   const handleAmenSubmit = function (type) {
@@ -836,30 +672,6 @@ function Home() {
     setStep(9);
   };
 
-  const getChatGpt = async function () {
-    setIsLoading(true);
-    try {
-      const currentAttempt = attempt;
-      const response = await api.createCounselingMessages({
-        pid,
-        isContext: true,
-        role: "user",
-        content: agenda,
-      });
-
-      const completion =
-        response.payload.messages[response.payload.messages.length - 1].content;
-
-      setAttempt((current) => current + 1);
-      setCompletions(completion);
-      setIsLoading(false);
-      api.patchCounseling(pid, currentAttempt + 1);
-    } catch (error) {
-      setIsLoading(false);
-      triggerMessage.announceOffline();
-    }
-  };
-
   const handleReadySubmit = function (type) {
     setIsSelect(false);
     setReadyType(type);
@@ -872,54 +684,55 @@ function Home() {
 
     if (type) {
       setAgenda(null);
-      triggerMessage.nextAgenda();
+      triggerMessage.next_agenda();
     } else {
-      triggerMessage.announceEnd();
+      triggerMessage.announce_end();
     }
   };
 
   useEffect(
-    // triggerMessage on step change
     function () {
       const stepListener = function (step) {
         if (step === 0) {
           initialize();
         } else if (step === 1) {
-          triggerMessage.askName();
+          triggerMessage.ask_name();
         } else if (step === 2) {
-          triggerMessage.askAgenda();
+          triggerMessage.ask_agenda();
         } else if (step === 3) {
-          triggerMessage.askPrayer();
+          triggerMessage.ask_pray();
         } else if (step === 4) {
           if (prayerType) {
-            triggerMessage.acceptPrayer();
+            triggerMessage.accept_prayer();
           } else {
-            triggerMessage.declinePrayer();
+            triggerMessage.decline_prayer();
           }
         } else if (step === 6) {
-          triggerMessage.askReady();
+          triggerMessage.ask_ready();
         } else if (step === 7) {
           if (readyType) {
-            triggerMessage.answerWord();
+            triggerMessage.answer_word();
           } else {
-            triggerMessage.notReady();
+            triggerMessage.not_ready();
           }
         } else if (step === 8) {
           if (satisfactionType === "positive") {
-            triggerMessage.satisfactionPositive();
+            triggerMessage.satisfaction_positive();
           } else if (satisfactionType === "neutral") {
-            triggerMessage.satisfactionNeutral();
+            triggerMessage.satisfaction_neutral();
           } else if (satisfactionType === "negative") {
-            triggerMessage.satisfactionNegative();
+            triggerMessage.satisfaction_negative();
           }
         } else if (step === 9) {
-          if (feedback.length > 29) {
-            triggerMessage.feedbackLong();
+          if (feedback.length >= 30) {
+            triggerMessage.feedback_long();
+          } else if (feedback.length >= 10) {
+            triggerMessage.feedback_short();
           } else {
-            triggerMessage.feedbackShort();
+            triggerMessage.feedback_tiny();
           }
         } else if (step === 10) {
-          triggerMessage.askRetry();
+          triggerMessage.ask_retry();
         }
       };
 
@@ -1130,7 +943,7 @@ function Home() {
                   }}
                   onKeyUp={function (e) {
                     if (checkEnter(e)) {
-                      handleRetryAgendaSubmit();
+                      handleAgendaSubmit();
                     }
                   }}
                   {...INPUT_DEFAULT}
@@ -1144,7 +957,7 @@ function Home() {
                   }
                   width={48}
                   height={48}
-                  onClick={handleRetryAgendaSubmit}
+                  onClick={handleAgendaSubmit}
                   alt={"submit"}
                 />
               </>
