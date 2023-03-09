@@ -27,6 +27,17 @@ input:focus {
 }
 
 @layer utilities {
+  .scrollbar-hidden {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
   .max-h-view {
     max-height: calc(var(--vh, 1vh) * 100);
   }
