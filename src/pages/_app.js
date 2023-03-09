@@ -40,7 +40,18 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>AskJesus</title>
-        <DefaultSeo {...DEFAULT_SEO} />
+        <meta name="description" content="Hi, I'm Jesus. Ask me anything." />
+        <meta property="og:type" content="website" />
+        <meta
+          id="og:image"
+          property="og:image"
+          content="https://askjesus.me/ogimage-v01.png"
+        />
+        <meta property="og:title" content="AskJesus | AI Jesus Chatbot" />
+        <meta
+          property="og:description"
+          content="Hi, I'm Jesus. Ask me anything."
+        />
       </Head>
       {process?.env?.NODE_ENV === "production" && (
         <>
