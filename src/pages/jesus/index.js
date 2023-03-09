@@ -13,6 +13,7 @@ import Warning from "@/components/Warning";
 import JesusMessage from "@/components/Message/jesus-message";
 import UserMessage from "@/components/Message/user-message";
 import Input from "@/components/Input";
+import AppearText from "@/components/AppearText";
 
 //utils
 import { CounselingFlow } from "@/utils/flow";
@@ -694,7 +695,9 @@ function Home() {
     function () {
       const stepListener = function (step) {
         if (step === 0) {
-          initialize();
+          setTimeout(function () {
+            initialize();
+          }, 500);
         } else if (step === 1) {
           triggerMessage.ask_name();
         } else if (step === 2) {
@@ -794,9 +797,7 @@ function Home() {
         </header>
         <div className="flex min-w-full max-w-full justify-center px-4 pt-16">
           <section className="flex w-full max-w-full flex-col gap-2 rounded-3xl">
-            <p className="flex min-w-full flex-row items-center justify-center py-4 text-sm font-medium text-white md:text-base">
-              Jesus has entered the chat.
-            </p>
+            <AppearText>Jesus has entered the chat.</AppearText>
             {chats.map(function (chat, index) {
               const type = chat.type;
               const isStart = chat.isStart;
@@ -841,11 +842,7 @@ function Home() {
                 </BubbleWrapper>
               </div>
             )}
-            {end && (
-              <p className="mt-1 min-w-full py-3 text-center text-sm font-medium text-white md:text-base">
-                Jesus left the chat.
-              </p>
-            )}
+            {end && <AppearText>Jesus left the chat.</AppearText>}
             <div className="h-32 min-w-full"></div>
           </section>
         </div>
