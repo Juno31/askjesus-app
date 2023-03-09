@@ -8,7 +8,7 @@ function BubbleWrapper({ children, type }) {
     <div
       className={`flex flex-1 flex-col ${
         type === MESSAGE_TYPE.JESUS ? "items-start" : "items-end"
-      } ${type === MESSAGE_TYPE.JESUS && "pr-14"} gap-2`}
+      } ${type === MESSAGE_TYPE.JESUS ? "pr-14" : "pl-14"} gap-2`}
     >
       {children}
     </div>
