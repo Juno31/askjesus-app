@@ -58,6 +58,18 @@ input:focus {
 }
 
 @layer utilities {
+  .header-hidden {
+    @apply -translate-y-10 opacity-0 transition-all duration-100 ease-linear;
+  }
+
+  .header-visible {
+    /* @apply translate-y-0 bg-opacity-60 opacity-100 transition-all duration-100 ease-linear; */
+
+    background: #221b31;
+  }
+}
+
+@layer utilities {
   .bg-url {
     position: fixed;
     top: 0;
