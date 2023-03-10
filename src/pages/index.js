@@ -116,21 +116,23 @@ function Home() {
               </div>
               <Link
                 href={"/chat"}
-                className="bg-kaya-500 mt-2 rounded-2xl px-16 py-4 text-center font-bold text-white md:mt-4"
+                className="bg-kaya-500 mt-2 rounded-2xl py-4 text-center font-bold text-white md:mt-4"
               >
-                Start chat with Jesus
+                Start Chat with Jesus
               </Link>
             </section>
           </div>
           <p className="z-0 mt-16 text-white">or give your friend a chance</p>
-          <button
-            className="z-0 mx-6 mt-2 rounded-2xl border-2 py-4 px-8 text-base font-bold text-white md:min-w-full"
-            onClick={handleShareClick}
-          >
-            Share to Your Faithful Friend
-          </button>
+          <div className="z-0 flex min-w-full justify-center px-10 md:px-6">
+            <button
+              className="z-0 mt-2 w-full rounded-2xl border-2 py-4 text-base font-bold text-white md:min-w-full"
+              onClick={handleShareClick}
+            >
+              Share to Your Faithful Friend
+            </button>
+          </div>
           <p className="z-0 mt-56 mb-14 text-xs text-white">
-            Holisters 2023 askjesus.me@gmail.com
+            askjesus.me@gmail.com
           </p>
         </div>
       </div>
