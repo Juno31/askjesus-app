@@ -28,7 +28,12 @@ import api from "@/apis";
 import useToast from "@/hooks/useToast";
 
 //constants
-import { MESSAGE_TYPE, INPUT_DEFAULT, MESSAGE_GAP } from "@/constants/service";
+import {
+  MESSAGE_TYPE,
+  INPUT_DEFAULT,
+  MESSAGE_GAP,
+  REGEX,
+} from "@/constants/service";
 import Head from "next/head";
 
 function Home() {
@@ -71,6 +76,7 @@ function Home() {
           "name",
           name
         ),
+        attempt: attempt,
       });
 
       setTimeout(function () {
@@ -83,6 +89,7 @@ function Home() {
             "name",
             name
           ),
+          attempt: attempt,
         });
 
         setTimeout(function () {
@@ -102,6 +109,7 @@ function Home() {
           "name",
           name
         ),
+        attempt: attempt,
       });
 
       setTimeout(function () {
@@ -114,6 +122,7 @@ function Home() {
             "name",
             name
           ),
+          attempt: attempt,
         });
 
         setTimeout(function () {
@@ -134,6 +143,7 @@ function Home() {
           isStart: false,
           time: 0,
           content: name,
+          attempt: attempt,
         }
       );
 
@@ -149,6 +159,7 @@ function Home() {
         isStart: false,
         time: 0,
         content: agenda,
+        attempt: attempt,
       });
 
       setTimeout(function () {
@@ -163,6 +174,7 @@ function Home() {
         isStart: false,
         time: 0,
         content: agenda,
+        attempt: attempt,
       });
 
       setTimeout(function () {
@@ -177,6 +189,7 @@ function Home() {
         isStart: true,
         time: 0,
         content: agenda,
+        attempt: attempt,
       });
 
       setTimeout(function () {
@@ -192,6 +205,7 @@ function Home() {
         isStart: false,
         time: 1000,
         content: agenda,
+        attempt: attempt,
       });
 
       setTimeout(function () {
@@ -220,6 +234,7 @@ function Home() {
           content: flow
             .getChoices("pray")
             .find((choice) => choice.choice_name === prayerType).text,
+          attempt: attempt,
         }
       );
 
@@ -239,6 +254,7 @@ function Home() {
           content: flow
             .getChoices("pray")
             .find((choice) => choice.choice_name === prayerType).text,
+          attempt: attempt,
         }
       );
 
@@ -267,6 +283,7 @@ function Home() {
           content: flow
             .getChoices("ready")
             .find((choice) => choice.choice_name === readyType).text,
+          attempt: attempt,
         }
       );
 
@@ -286,6 +303,7 @@ function Home() {
           content: flow
             .getChoices("ready")
             .find((choice) => choice.choice_name === readyType).text,
+          attempt: attempt,
         }
       );
 
@@ -305,6 +323,7 @@ function Home() {
           content: flow
             .getChoices("satisfaction")
             .find((choice) => choice.choice_name === satisfactionType).text,
+          attempt: attempt,
         }
       );
 
@@ -324,6 +343,7 @@ function Home() {
           content: flow
             .getChoices("satisfaction")
             .find((choice) => choice.choice_name === satisfactionType).text,
+          attempt: attempt,
         }
       );
 
@@ -343,6 +363,7 @@ function Home() {
           content: flow
             .getChoices("satisfaction")
             .find((choice) => choice.choice_name === satisfactionType).text,
+          attempt: attempt,
         }
       );
 
@@ -360,6 +381,7 @@ function Home() {
           isStart: false,
           time: 0,
           content: feedback,
+          attempt: attempt,
         }
       );
 
@@ -377,6 +399,7 @@ function Home() {
           isStart: false,
           time: 0,
           content: feedback,
+          attempt: attempt,
         }
       );
 
@@ -394,6 +417,7 @@ function Home() {
           isStart: false,
           time: 0,
           content: feedback,
+          attempt: attempt,
         }
       );
 
@@ -420,6 +444,7 @@ function Home() {
           content: flow
             .getChoices("retry")
             .find((choice) => choice.choice_name === true).text,
+          attempt: attempt,
         }
       );
 
@@ -444,6 +469,7 @@ function Home() {
           content: flow
             .getChoices("retry")
             .find((choice) => choice.choice_name === false).text,
+          attempt: attempt,
         }
       );
 
@@ -598,6 +624,7 @@ function Home() {
           isStart: index === 0 && !noStart,
           time: textLoadingTime,
           content: text,
+          attempt: attempt,
         });
 
         if (index === array.length - 1) {
@@ -612,7 +639,13 @@ function Home() {
   };
 
   const generateGptMessages = function (completions, callback) {
-    const splittedCompletion = completions.split(". ");
+    const verse = completions.match(REGEX.VERSE)?.[0];
+    const pureCompletion = completions.replace(verse, "");
+
+    const splittedCompletion = pureCompletion
+      .split(". ")
+      .filter((completion) => completion.length);
+
     const periodAddedCompletion = splittedCompletion.map(function (
       completion,
       index,
@@ -626,10 +659,11 @@ function Home() {
       ) {
         completion = completion + ".";
       }
-
       return completion;
     });
     let previousCompletionLoadingTimes = 0;
+
+    if (verse) periodAddedCompletion.push(verse);
 
     periodAddedCompletion.forEach(function (completion, index, array) {
       if (!completion) return;
@@ -642,6 +676,7 @@ function Home() {
           isStart: index === 0,
           time: completionLoadingTime,
           content: completion,
+          attempt: attempt,
         });
 
         if (index === array.length - 1) {
@@ -850,11 +885,12 @@ function Home() {
               const isStart = chat.isStart;
               const time = chat.time;
               const content = chat.content;
+              const attempt = chat.attempt;
 
               if (type === MESSAGE_TYPE.JESUS) {
                 return (
                   <JesusMessage
-                    key={chat.type + chat.time + chat.content + index}
+                    key={chat.type + chat.time + chat.content + index + attempt}
                     type={type}
                     isStart={isStart}
                     time={time}
@@ -868,7 +904,7 @@ function Home() {
 
               return (
                 <UserMessage
-                  key={chat.type + chat.time + chat.content}
+                  key={chat.type + chat.time + chat.content + attempt}
                   type={type}
                   content={content}
                 />
@@ -893,7 +929,7 @@ function Home() {
             <div className="h-32 min-w-full"></div>
           </section>
         </div>
-        {(isInput || isSelect) && (
+        {(isInput || isSelect) && !isError && (
           <footer className="apear max-w-kaya z-5 fixed bottom-0 flex w-full flex-row justify-between gap-2 bg-transparent bg-white bg-opacity-0 px-4 py-4">
             {isInput && step === 1 && (
               <>
