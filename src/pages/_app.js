@@ -3,27 +3,6 @@ import "@/styles/custom.css";
 import { useEffect } from "react";
 import Script from "next/script";
 import Head from "next/head";
-import { DefaultSeo } from "next-seo";
-
-const DEFAULT_SEO = {
-  title: "AskJesus | AI Jesus Chatbot",
-  description: "Hi, I'm Jesus. Ask me anything.",
-  openGraph: {
-    type: "website",
-    locale: "ko_KR",
-    url: "https://askjesus.me",
-    title: "AskJesus | AI Jesus Chatbot",
-    site_name: "AskJesus",
-    images: [
-      {
-        url: "https://askjesus.me/ogimage-v01.png",
-        width: 285,
-        height: 167,
-        alt: "AskJesus openGraph Image",
-      },
-    ],
-  },
-};
 
 export default function App({ Component, pageProps }) {
   useEffect(function () {
