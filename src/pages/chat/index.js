@@ -27,11 +27,7 @@ import api from "@/apis";
 import useToast from "@/hooks/useToast";
 
 //constants
-import {
-  MESSAGE_TYPE,
-  INPUT_DEFAULT,
-  SATISFACTION_TYPE,
-} from "@/constants/service";
+import { MESSAGE_TYPE, INPUT_DEFAULT, MESSAGE_GAP } from "@/constants/service";
 import Head from "next/head";
 
 function Home() {
@@ -87,11 +83,11 @@ function Home() {
             name
           ),
         });
-      }, 1800);
 
-      setTimeout(function () {
-        setEnd(true);
-      }, 3600);
+        setTimeout(function () {
+          setEnd(true);
+        }, MESSAGE_GAP);
+      }, 1000 + MESSAGE_GAP);
     },
     announce_failure: function () {
       setIsInput(false);
@@ -118,11 +114,11 @@ function Home() {
             name
           ),
         });
-      }, 1800);
 
-      setTimeout(function () {
-        setEnd(true);
-      }, 3600);
+        setTimeout(function () {
+          setEnd(true);
+        }, MESSAGE_GAP);
+      }, 1000 + MESSAGE_GAP);
     },
     ask_name: function () {
       generateMessagesByChunkName("ask_name", function () {
@@ -130,18 +126,21 @@ function Home() {
       });
     },
     ask_agenda: function () {
-      addUserChat({
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: name,
-      });
+      addUserChat(
+        { key: "name", value: name },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: name,
+        }
+      );
 
       setTimeout(function () {
         generateMessagesByChunkName("ask_agenda", function () {
           setIsInput(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     agenda_long: function () {
       addChat({
@@ -155,7 +154,7 @@ function Home() {
         generateMessagesByChunkName("agenda_long", function () {
           setStep(3);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     agenda_short: function () {
       addChat({
@@ -169,10 +168,10 @@ function Home() {
         generateMessagesByChunkName("agenda_short", function () {
           setStep(3);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     agenda_tiny: function () {
-      addUserChat({
+      addUserChat(null, {
         type: MESSAGE_TYPE.USER,
         isStart: true,
         time: 0,
@@ -184,10 +183,10 @@ function Home() {
           setAgenda("");
           setIsInput(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     announce_reject: function () {
-      addUserChat({
+      addUserChat(null, {
         type: MESSAGE_TYPE.USER,
         isStart: false,
         time: 1000,
@@ -198,7 +197,7 @@ function Home() {
         generateMessagesByChunkName("announce_reject", function () {
           setEnd(true);
         });
-      }, 1800);
+      }, 1000 + MESSAGE_GAP);
     },
     ask_pray: function () {
       generateMessagesByChunkName(
@@ -227,7 +226,7 @@ function Home() {
         generateMessagesByChunkName("accept_pray", function () {
           setStep(5);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     decline_prayer: function () {
       addUserParameter(
@@ -246,7 +245,7 @@ function Home() {
         generateMessagesByChunkName("decline_pray", function () {
           setStep(5);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     ask_ready: function () {
       generateMessagesByChunkName(
@@ -274,7 +273,7 @@ function Home() {
         generateGptMessages(completions, function () {
           setIsSelect(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     not_ready: function () {
       addUserParameter(
@@ -293,7 +292,7 @@ function Home() {
         generateMessagesByChunkName("not_ready", function () {
           setEnd(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     satisfaction_positive: function () {
       addUserParameter(
@@ -312,7 +311,7 @@ function Home() {
         generateMessagesByChunkName("satisfaction_positive", function () {
           setIsInput(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     satisfaction_neutral: function () {
       addUserParameter(
@@ -331,7 +330,7 @@ function Home() {
         generateMessagesByChunkName("satisfaction_neutral", function () {
           setIsInput(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     satisfaction_negative: function () {
       addUserParameter(
@@ -350,47 +349,56 @@ function Home() {
         generateMessagesByChunkName("satisfaction_negative", function () {
           setIsInput(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     feedback_long: function () {
-      addUserChat({
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: feedback,
-      });
+      addUserChat(
+        { key: "feedback", value: feedback },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: feedback,
+        }
+      );
 
       setTimeout(function () {
         generateMessagesByChunkName("feedback_long", function () {
           setStep(10);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     feedback_short: function () {
-      addUserChat({
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: feedback,
-      });
+      addUserChat(
+        { key: "feedback", value: feedback },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: feedback,
+        }
+      );
 
       setTimeout(function () {
         generateMessagesByChunkName("feedback_short", function () {
           setStep(10);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
     feedback_tiny: function () {
-      addUserChat({
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: feedback,
-      });
+      addUserChat(
+        { key: "feedback", value: feedback },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: feedback,
+        }
+      );
 
       setTimeout(function () {
         setStep(10);
-      }, 1800);
+      }, MESSAGE_GAP);
     },
     ask_retry: function () {
       generateMessagesByChunkName(
@@ -414,29 +422,35 @@ function Home() {
         }
       );
 
+      api.patchCounseling(pid, attempt + 1);
+      setAttempt((current) => current + 1);
+
       setTimeout(function () {
         generateMessagesByChunkName("next_agenda", function () {
           setIsInput(true);
         });
-      }, 1800);
+      }, MESSAGE_GAP);
     },
     announce_end: function () {
       setIsInput(false);
       setIsSelect(false);
-      addUserParameter("retry", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("retry")
-          .find((choice) => choice.choice_name === false).text,
-      });
+      addUserParameter(
+        { key: "retry", value: false },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("retry")
+            .find((choice) => choice.choice_name === false).text,
+        }
+      );
 
       setTimeout(function () {
         generateMessagesByChunkName("announce_end", function () {
           setEnd(true);
         });
-      }, 800);
+      }, MESSAGE_GAP);
     },
   };
 
@@ -480,17 +494,15 @@ function Home() {
       const completion =
         response.payload.messages[response.payload.messages.length - 1].content;
 
-      setAttempt((current) => current + 1);
       setCompletions(completion);
       setIsLoading(false);
-      api.patchCounseling(pid, currentAttempt + 1);
     } catch (error) {
       setIsError(true);
       setIsLoading(false);
 
       setTimeout(function () {
         triggerMessage.announce_offline();
-      }, 800);
+      }, MESSAGE_GAP);
     }
   };
 
@@ -511,9 +523,17 @@ function Home() {
     setChats((current) => [...current, chat]);
   };
 
-  const addUserChat = function (chat) {
+  const addUserChat = function (body, chat) {
     if (!isError) {
       setChats((current) => [...current, chat]);
+
+      if (pid && body) {
+        api.createCounselingParameters({
+          pid: pid,
+          key: body.key,
+          value: body.value,
+        });
+      }
     }
 
     // if (pid) {
@@ -545,7 +565,7 @@ function Home() {
     if (!isError) {
       setChats((current) => [...current, chat]);
 
-      if (pid) {
+      if (pid && body) {
         api.createCounselingParameters({
           pid: pid,
           key: body.key,
@@ -582,9 +602,9 @@ function Home() {
         if (index === array.length - 1) {
           setTimeout(function () {
             callback();
-          }, textLoadingTime + 800);
+          }, textLoadingTime + MESSAGE_GAP);
         }
-      }, previousTextLoadingTimes + index * 800);
+      }, previousTextLoadingTimes + index * MESSAGE_GAP);
 
       previousTextLoadingTimes += textLoadingTime;
     });
@@ -626,9 +646,9 @@ function Home() {
         if (index === array.length - 1) {
           setTimeout(function () {
             callback();
-          }, completionLoadingTime + 800);
+          }, completionLoadingTime + MESSAGE_GAP);
         }
-      }, previousCompletionLoadingTimes + index * 800);
+      }, previousCompletionLoadingTimes + index * MESSAGE_GAP);
 
       previousCompletionLoadingTimes += completionLoadingTime;
     });
@@ -661,7 +681,7 @@ function Home() {
 
         setTimeout(function () {
           triggerMessage.announce_offline();
-        }, 800);
+        }, MESSAGE_GAP);
       }
     }
   };
@@ -673,9 +693,8 @@ function Home() {
 
       if (agenda.length < 10) {
         const no = _.random(1, 10);
-        console.log(no);
 
-        if (no <= 8) {
+        if (no <= 7) {
           triggerMessage.agenda_tiny();
         } else {
           triggerMessage.announce_reject();
@@ -692,7 +711,7 @@ function Home() {
 
       setTimeout(function () {
         triggerMessage.announce_failure();
-      }, 800);
+      }, MESSAGE_GAP);
     }
   };
 
