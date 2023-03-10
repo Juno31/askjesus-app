@@ -125,7 +125,7 @@ function Home() {
       }, 3600);
     },
     ask_name: function () {
-      generateMessages("ask_name", function () {
+      generateMessagesByChunkName("ask_name", function () {
         setIsInput(true);
       });
     },
@@ -138,7 +138,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("ask_agenda", function () {
+        generateMessagesByChunkName("ask_agenda", function () {
           setIsInput(true);
         });
       }, 800);
@@ -152,7 +152,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("agenda_long", function () {
+        generateMessagesByChunkName("agenda_long", function () {
           setStep(3);
         });
       }, 800);
@@ -166,7 +166,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("agenda_short", function () {
+        generateMessagesByChunkName("agenda_short", function () {
           setStep(3);
         });
       }, 800);
@@ -180,7 +180,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("agenda_tiny", function () {
+        generateMessagesByChunkName("agenda_tiny", function () {
           setAgenda("");
           setIsInput(true);
         });
@@ -195,13 +195,13 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("announce_reject", function () {
+        generateMessagesByChunkName("announce_reject", function () {
           setEnd(true);
         });
       }, 1800);
     },
     ask_pray: function () {
-      generateMessages(
+      generateMessagesByChunkName(
         "ask_pray",
         function () {
           setStep(3);
@@ -211,39 +211,45 @@ function Home() {
       );
     },
     accept_prayer: function () {
-      addUserParameter("pray", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("pray")
-          .find((choice) => choice.choice_name === prayerType).text,
-      });
+      addUserParameter(
+        { key: "pray", value: prayerType },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("pray")
+            .find((choice) => choice.choice_name === prayerType).text,
+        }
+      );
 
       setTimeout(function () {
-        generateMessages("accept_pray", function () {
+        generateMessagesByChunkName("accept_pray", function () {
           setStep(5);
         });
       }, 800);
     },
     decline_prayer: function () {
-      addUserParameter("pray", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("pray")
-          .find((choice) => choice.choice_name === prayerType).text,
-      });
+      addUserParameter(
+        { key: "pray", value: prayerType },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("pray")
+            .find((choice) => choice.choice_name === prayerType).text,
+        }
+      );
 
       setTimeout(function () {
-        generateMessages("decline_pray", function () {
+        generateMessagesByChunkName("decline_pray", function () {
           setStep(5);
         });
       }, 800);
     },
     ask_ready: function () {
-      generateMessages(
+      generateMessagesByChunkName(
         "ask_ready",
         function () {
           setIsSelect(true);
@@ -252,14 +258,17 @@ function Home() {
       );
     },
     answer_word: function () {
-      addUserParameter("ready", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("ready")
-          .find((choice) => choice.choice_name === readyType).text,
-      });
+      addUserParameter(
+        { key: "ready", value: readyType },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("ready")
+            .find((choice) => choice.choice_name === readyType).text,
+        }
+      );
 
       setTimeout(function () {
         generateGptMessages(completions, function () {
@@ -268,65 +277,77 @@ function Home() {
       }, 800);
     },
     not_ready: function () {
-      addUserParameter("ready", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("ready")
-          .find((choice) => choice.choice_name === readyType).text,
-      });
+      addUserParameter(
+        { key: "ready", value: readyType },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("ready")
+            .find((choice) => choice.choice_name === readyType).text,
+        }
+      );
 
       setTimeout(function () {
-        generateMessages("not_ready", function () {
+        generateMessagesByChunkName("not_ready", function () {
           setEnd(true);
         });
       }, 800);
     },
     satisfaction_positive: function () {
-      addUserParameter("satisfaction", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("satisfaction")
-          .find((choice) => choice.choice_name === satisfactionType).text,
-      });
+      addUserParameter(
+        { key: "satisfaction", value: satisfactionType },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("satisfaction")
+            .find((choice) => choice.choice_name === satisfactionType).text,
+        }
+      );
 
       setTimeout(function () {
-        generateMessages("satisfaction_positive", function () {
+        generateMessagesByChunkName("satisfaction_positive", function () {
           setIsInput(true);
         });
       }, 800);
     },
     satisfaction_neutral: function () {
-      addUserParameter("satisfaction", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("satisfaction")
-          .find((choice) => choice.choice_name === satisfactionType).text,
-      });
+      addUserParameter(
+        { key: "satisfaction", value: satisfactionType },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("satisfaction")
+            .find((choice) => choice.choice_name === satisfactionType).text,
+        }
+      );
 
       setTimeout(function () {
-        generateMessages("satisfaction_neutral", function () {
+        generateMessagesByChunkName("satisfaction_neutral", function () {
           setIsInput(true);
         });
       }, 800);
     },
     satisfaction_negative: function () {
-      addUserParameter("satisfaction", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("satisfaction")
-          .find((choice) => choice.choice_name === satisfactionType).text,
-      });
+      addUserParameter(
+        { key: "satisfaction", value: satisfactionType },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("satisfaction")
+            .find((choice) => choice.choice_name === satisfactionType).text,
+        }
+      );
 
       setTimeout(function () {
-        generateMessages("satisfaction_negative", function () {
+        generateMessagesByChunkName("satisfaction_negative", function () {
           setIsInput(true);
         });
       }, 800);
@@ -340,7 +361,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("feedback_long", function () {
+        generateMessagesByChunkName("feedback_long", function () {
           setStep(10);
         });
       }, 800);
@@ -354,7 +375,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("feedback_short", function () {
+        generateMessagesByChunkName("feedback_short", function () {
           setStep(10);
         });
       }, 800);
@@ -372,7 +393,7 @@ function Home() {
       }, 1800);
     },
     ask_retry: function () {
-      generateMessages(
+      generateMessagesByChunkName(
         "ask_retry",
         function () {
           setIsSelect(true);
@@ -381,17 +402,20 @@ function Home() {
       );
     },
     next_agenda: function () {
-      addUserParameter("retry", {
-        type: MESSAGE_TYPE.USER,
-        isStart: false,
-        time: 0,
-        content: flow
-          .getChoices("retry")
-          .find((choice) => choice.choice_name === true).text,
-      });
+      addUserParameter(
+        { key: "retry", value: true },
+        {
+          type: MESSAGE_TYPE.USER,
+          isStart: false,
+          time: 0,
+          content: flow
+            .getChoices("retry")
+            .find((choice) => choice.choice_name === true).text,
+        }
+      );
 
       setTimeout(function () {
-        generateMessages("next_agenda", function () {
+        generateMessagesByChunkName("next_agenda", function () {
           setIsInput(true);
         });
       }, 1800);
@@ -409,7 +433,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("announce_end", function () {
+        generateMessagesByChunkName("announce_end", function () {
           setEnd(true);
         });
       }, 800);
@@ -517,21 +541,25 @@ function Home() {
     // }
   };
 
-  const addUserParameter = function (key, chat) {
+  const addUserParameter = function (body, chat) {
     if (!isError) {
       setChats((current) => [...current, chat]);
 
       if (pid) {
         api.createCounselingParameters({
           pid: pid,
-          key: key,
-          value: chat.content,
+          key: body.key,
+          value: body.value,
         });
       }
     }
   };
 
-  const generateMessages = function (chunk_name, callback, noStart = false) {
+  const generateMessagesByChunkName = function (
+    chunk_name,
+    callback,
+    noStart = false
+  ) {
     const messages = flow.getChunkMessages(chunk_name); // array and sorted in order
     let previousTextLoadingTimes = 0;
 
@@ -668,13 +696,13 @@ function Home() {
     }
   };
 
-  const handleAmenSubmit = function (type) {
+  const handleAmenSelect = function (type) {
     setIsSelect(false);
     setPrayerType(type);
     setStep(4);
   };
 
-  const handleSatisfactionSubmit = function (type) {
+  const handleSatisfactionSelect = function (type) {
     setIsSelect(false);
     setSatisfactionType(type);
     setStep(8);
@@ -685,13 +713,13 @@ function Home() {
     setStep(9);
   };
 
-  const handleReadySubmit = function (type) {
+  const handleReadySelect = function (type) {
     setIsSelect(false);
     setReadyType(type);
     setStep(7);
   };
 
-  const handleRetrySubmit = function (type) {
+  const handleRetrySelect = function (type) {
     setIsSelect(false);
     setRetry(type);
 
@@ -871,7 +899,7 @@ function Home() {
                       handleNameSubmit();
                     }
                   }}
-                  placeholder={"Type a message"}
+                  placeholder={flow.getChunk("ask_name").text_placeholder}
                 />
                 <Image
                   className="cursor-pointer active:scale-75"
@@ -890,7 +918,7 @@ function Home() {
             {isInput && step === 2 && (
               <>
                 <Input
-                  placeholder="Type a message"
+                  placeholder={flow.getChunk("ask_agenda").text_placeholder}
                   onChange={function (e) {
                     setAgenda(e.target.value);
                   }}
@@ -918,7 +946,10 @@ function Home() {
             {isInput && step === 8 && (
               <>
                 <Input
-                  placeholder="Type a message"
+                  placeholder={
+                    flow.getChunk(`satisfaction_${satisfactionType}`)
+                      .text_placeholder
+                  }
                   onChange={function (e) {
                     setFeedback(e.target.value);
                   }}
@@ -946,7 +977,7 @@ function Home() {
             {isInput && step === 10 && (
               <>
                 <Input
-                  placeholder="Type a message"
+                  placeholder={flow.getChunk("ask_agenda").text_placeholder}
                   onChange={function (e) {
                     setAgenda(e.target.value);
                   }}
@@ -978,7 +1009,7 @@ function Home() {
                     <SelectItem
                       key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
-                        handleAmenSubmit(choice.choice_name);
+                        handleAmenSelect(choice.choice_name);
                       }}
                     >
                       {choice.text}
@@ -994,7 +1025,7 @@ function Home() {
                     <SelectItem
                       key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
-                        handleReadySubmit(choice.choice_name);
+                        handleReadySelect(choice.choice_name);
                       }}
                     >
                       {choice.text}
@@ -1010,7 +1041,7 @@ function Home() {
                     <SelectItem
                       key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
-                        handleSatisfactionSubmit(choice.choice_name);
+                        handleSatisfactionSelect(choice.choice_name);
                       }}
                     >
                       {choice.text}
@@ -1026,7 +1057,7 @@ function Home() {
                     <SelectItem
                       key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
-                        handleSatisfactionSubmit(choice.choice_name);
+                        handleSatisfactionSelect(choice.choice_name);
                       }}
                     >
                       {choice.text}
@@ -1042,7 +1073,7 @@ function Home() {
                     <SelectItem
                       key={choice.response_name + choice.choice + choice.order}
                       onClick={function () {
-                        handleRetrySubmit(choice.choice_name);
+                        handleRetrySelect(choice.choice_name);
                       }}
                     >
                       {choice.text}
