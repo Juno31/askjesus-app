@@ -87,6 +87,26 @@ const api = {
       throw error;
     }
   },
+
+  async getFollow(pid) {
+    try {
+      const { data } = await axios.get(`/bots/${pid}`);
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  async addFollow(pid) {
+    try {
+      const { data } = await axios.post(`/bots/${pid}/follows`);
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default api;
