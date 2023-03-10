@@ -25,7 +25,7 @@ function Home() {
 
   const handleShareClick = function () {
     navigator.clipboard.writeText(process.env.FRONT_HOST);
-    handleToast("Link Copied to clipboard");
+    handleToast("Link copied to clipboard");
   };
 
   const addChat = function (chat) {
