@@ -10,4 +10,5 @@ body,
   min-height: calc(var(--vh, 1vh) * 100);
 
   font-family: "Noto Sans", sans-serif;
+  background: linear-gradient(to bottom, #221b31, #2e2d4d);
 }
