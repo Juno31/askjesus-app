@@ -6,6 +6,7 @@ const MESSAGE_TYPE = {
 const INPUT_DEFAULT = {
   spellCheck: false,
   autoComplete: "off",
+  preventScroll: true,
 };
 
 const PRAYER_TYPE = {
