@@ -894,7 +894,7 @@ function Home() {
           </section>
         </div>
         {(isInput || isSelect) && (
-          <footer className="max-w-kaya z-5 fixed bottom-0 flex w-full flex-row justify-between gap-2 bg-transparent bg-white bg-opacity-0 px-4 py-4">
+          <footer className="apear max-w-kaya z-5 fixed bottom-0 flex w-full flex-row justify-between gap-2 bg-transparent bg-white bg-opacity-0 px-4 py-4">
             {isInput && step === 1 && (
               <>
                 <Input
@@ -1133,7 +1133,7 @@ const SelectItem = function ({ onClick, children }) {
   return (
     <div
       onClick={onClick}
-      className="hover:bg-kaya-200 active:bg-kaya-300 border-kaya-black flex h-12 w-max min-w-max cursor-pointer flex-row items-center overflow-hidden rounded-3xl border bg-white px-3 py-4"
+      className="hover:bg-kaya-200 active:bg-kaya-300 border-kaya-black flex h-12 w-max min-w-max cursor-pointer flex-row items-center overflow-hidden rounded-3xl border bg-white px-6 py-4"
     >
       {children}
     </div>

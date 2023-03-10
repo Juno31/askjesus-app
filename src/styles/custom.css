@@ -81,7 +81,7 @@ input:focus {
     background-size: cover;
     font-family: "Montserrat", sans-serif;
     text-align: center;
-    animation: marquee 300000s infinite linear;
+    animation: marquee 400000s infinite linear;
     transform: scale(1.4);
 
     @apply md:scale-100;
@@ -255,6 +255,23 @@ input:focus {
     100% {
       transform: translate(-50%, 0%);
       opacity: 0;
+    }
+  }
+}
+
+@layer utilities {
+  .apear {
+    animation: 0.2s ease 1 normal appear-footer;
+  }
+
+  @keyframes appear-footer {
+    0% {
+      transform: translateY(80px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
     }
   }
 }
