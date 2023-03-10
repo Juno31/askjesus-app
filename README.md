@@ -10,6 +10,10 @@
 
 ### Explainations
 
-This App is configured by create-next-app with tailwind css.
-testtest
-chang
+1. This App is configured by create-next-app with tailwind css.
+
+### Chat Bubble Rules
+
+1. action => trigger message => callback
+2. trigger message is always called 800ms after Action is done
+3. callback is always called 800ms after trigger message is done
