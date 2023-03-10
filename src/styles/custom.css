@@ -62,9 +62,7 @@ input:focus {
     position: fixed;
     top: 0;
     left: 0;
-    /* height: 100vh;
-    max-height: 100vh; */
-    min-height: calc(var(--bg, 1px) * 100 + 120px);
+    min-height: calc(var(--bg, 1px) * 100);
     background-image: url("../../public/assets/background.png");
     background-repeat: repeat-x;
     background-position: 100% 100%;
@@ -72,6 +70,9 @@ input:focus {
     font-family: "Montserrat", sans-serif;
     text-align: center;
     animation: marquee 300000s infinite linear;
+    transform: scale(1.4);
+
+    @apply md:scale-100;
   }
 
   @keyframes marquee {
