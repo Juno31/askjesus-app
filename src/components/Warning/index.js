@@ -12,7 +12,7 @@ function Warning({ warning, cancel, leave }) {
           Are you sure?
         </h1>
         <p className="text-kaya-black mt-2 text-center">
-          If you leave, this chat disappears from memory.
+          If you leave, this chat <br /> disappears from memory.
         </p>
         <div className="mt-8 flex w-full flex-row gap-3">
           <button
