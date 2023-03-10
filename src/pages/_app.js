@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
         <meta
           id="og:image"
           property="og:image"
-          content="https://askjesus.me/ogimage-v01.png"
+          content="https://askjesus.me/ogimage-v02.png"
         />
         <meta property="og:title" content="AskJesus | AI Jesus Chatbot" />
         <meta
