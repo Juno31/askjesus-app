@@ -6,7 +6,6 @@ const MESSAGE_TYPE = {
 const INPUT_DEFAULT = {
   spellCheck: false,
   autoComplete: "off",
-  preventScroll: true,
 };
 
 const PRAYER_TYPE = {
@@ -27,6 +26,11 @@ const SATISFACTION_TYPE = {
 
 const MESSAGE_GAP = 1000;
 
+const REGEX = {
+  VERSE:
+    /“(.*)\”([\s\-]*)?(?<bookName>[\w]+)[\s]*(?<chapter>[1-9]+)\:?(?<verseStart>[1-9]+)-?(?<verseEnd>[1-9]+)?$/,
+};
+
 Object.freeze([
   MESSAGE_TYPE,
   INPUT_DEFAULT,
@@ -34,6 +38,7 @@ Object.freeze([
   READY_TYPE,
   SATISFACTION_TYPE,
   MESSAGE_GAP,
+  REGEX,
 ]);
 
 export {
@@ -43,4 +48,5 @@ export {
   READY_TYPE,
   SATISFACTION_TYPE,
   MESSAGE_GAP,
+  REGEX,
 };
