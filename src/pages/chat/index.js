@@ -14,6 +14,7 @@ import JesusMessage from "@/components/Message/jesus-message";
 import UserMessage from "@/components/Message/user-message";
 import Input from "@/components/Input";
 import AppearText from "@/components/AppearText";
+import Header from "@/components/Header";
 
 //utils
 import { CounselingFlow } from "@/utils/flow";
@@ -837,23 +838,10 @@ function Home() {
         }}
       />
       <div className="max-w-kaya relative flex w-full flex-col items-center bg-white bg-opacity-0">
-        <header className="max-w-kaya z-5 fixed top-0 flex h-16 w-full flex-row justify-between bg-white bg-opacity-0 px-4 py-4">
-          <Image
-            src={"/icons/arrow-left-icon.svg"}
-            width={23.35}
-            height="20"
-            className="cursor-pointer active:scale-95"
-            onClick={handleArrowClick}
-            alt={"back arrow"}
-          />
-          <div className="text-xl font-bold text-white">Jesus</div>
-          <div
-            className="text-kaya-500 cursor-pointer text-xl font-semibold"
-            onClick={handleShareClick}
-          >
-            Share
-          </div>
-        </header>
+        <Header
+          handleArrowClick={handleArrowClick}
+          handleShareClick={handleShareClick}
+        />
         <div className="flex min-w-full max-w-full justify-center px-4 pt-16">
           <section className="flex w-full max-w-full flex-col gap-2 rounded-3xl">
             <AppearText>Jesus has entered the chat.</AppearText>
