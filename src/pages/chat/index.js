@@ -309,7 +309,7 @@ function Home() {
       });
 
       setTimeout(function () {
-        generateMessages("satisfaction_neural", function () {
+        generateMessages("satisfaction_neutral", function () {
           setIsInput(true);
         });
       }, 800);
