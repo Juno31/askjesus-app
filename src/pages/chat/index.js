@@ -18,6 +18,7 @@ import AppearText from "@/components/AppearText";
 //utils
 import { CounselingFlow } from "@/utils/flow";
 import replaceVariable from "@/utils/replaceVariable";
+import getTextLoadingTime from "@/utils/getTextLoadingTime";
 
 //api
 import api from "@/apis";
@@ -532,32 +533,37 @@ function Home() {
 
   const generateMessages = function (chunk_name, callback, noStart = false) {
     const messages = flow.getChunkMessages(chunk_name); // array and sorted in order
+    let previousTextLoadingTimes = 0;
 
     messages.forEach(function (message, index, array) {
+      const text = replaceVariable(
+        flow.getRandomText(message.message_code),
+        "name",
+        name
+      );
+      const textLoadingTime = getTextLoadingTime(text);
+
       setTimeout(function () {
         addAssistantChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: index === 0 && !noStart,
-          time: 1000,
-          content: replaceVariable(
-            flow.getRandomText(message.message_code),
-            "name",
-            name
-          ),
+          time: textLoadingTime,
+          content: text,
         });
 
         if (index === array.length - 1) {
           setTimeout(function () {
             callback();
-          }, 1800);
+          }, textLoadingTime + 800);
         }
-      }, index * 1000 + index * 800);
+      }, previousTextLoadingTimes + index * 800);
+
+      previousTextLoadingTimes += textLoadingTime;
     });
   };
 
   const generateGptMessages = function (completions, callback) {
     const splittedCompletion = completions.split(". ");
-
     const periodAddedCompletion = splittedCompletion.map(function (
       completion,
       index,
@@ -574,24 +580,30 @@ function Home() {
 
       return completion;
     });
+    let previousCompletionLoadingTimes = 0;
 
     periodAddedCompletion.forEach(function (completion, index, array) {
       if (!completion) return;
+
+      const completionLoadingTime = getTextLoadingTime(completion);
 
       setTimeout(function () {
         addChat({
           type: MESSAGE_TYPE.JESUS,
           isStart: index === 0,
-          time: 2000,
+          time: completionLoadingTime,
           content: completion,
         });
-      }, index * 2000 + index * 800);
-    });
 
-    setTimeout(function () {
-      callback();
-    }, periodAddedCompletion.length * 2000 +
-      (periodAddedCompletion.length + 1) * 800);
+        if (index === array.length - 1) {
+          setTimeout(function () {
+            callback();
+          }, completionLoadingTime + 800);
+        }
+      }, previousCompletionLoadingTimes + index * 800);
+
+      previousCompletionLoadingTimes += completionLoadingTime;
+    });
   };
 
   const handleArrowClick = function () {
