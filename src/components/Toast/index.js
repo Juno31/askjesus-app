@@ -8,7 +8,7 @@ function Toast({ toast }) {
         src={"/icons/check-icon.svg"}
         width={24}
         height={24}
-        priority={priority}
+        priority={true}
       />
       <p className="">{toast}</p>
     </div>
