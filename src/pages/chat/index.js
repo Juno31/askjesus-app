@@ -955,6 +955,7 @@ function Home() {
                   height={48}
                   onClick={handleNameSubmit}
                   alt={"submit"}
+                  priority={true}
                 />
               </>
             )}
@@ -983,6 +984,7 @@ function Home() {
                   height={48}
                   onClick={handleAgendaSubmit}
                   alt={"submit"}
+                  priority={true}
                 />
               </>
             )}
@@ -1014,6 +1016,7 @@ function Home() {
                   height={48}
                   onClick={handleFeedbackSubmit}
                   alt={"submit"}
+                  priority={true}
                 />
               </>
             )}
@@ -1042,6 +1045,7 @@ function Home() {
                   height={48}
                   onClick={handleAgendaSubmit}
                   alt={"submit"}
+                  priority={true}
                 />
               </>
             )}

@@ -11,6 +11,7 @@ function Jesus({ onClick }) {
         className={"min-w-6 cursor-pointer"}
         alt={"jesus image"}
         onClick={onClick}
+        priority={true}
       />
     </div>
   );
