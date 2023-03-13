@@ -35,6 +35,7 @@ import {
   REGEX,
 } from "@/constants/service";
 import Head from "next/head";
+import ReactGA from "react-ga4";
 
 function Home() {
   const router = useRouter();
@@ -706,6 +707,7 @@ function Home() {
   const handleNameSubmit = async function () {
     if (name?.length) {
       try {
+        ReactGA.event("name_submit");
         const response = await api.createCounseling(name);
         const pid = response.payload.pid;
 
@@ -724,6 +726,7 @@ function Home() {
 
   const handleAgendaSubmit = async function () {
     try {
+      ReactGA.event("agenda_submit");
       setIsInput(false);
       await checkService();
 

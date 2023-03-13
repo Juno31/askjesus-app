@@ -4,6 +4,7 @@ import React from "react";
 
 //api
 import api from "@/apis";
+import ReactGA from "react-ga4";
 
 function Profile({ appear, closeProfile }) {
   const numberFilter = new Intl.NumberFormat("en-US");
@@ -12,6 +13,7 @@ function Profile({ appear, closeProfile }) {
 
   const handleFollowClick = async function () {
     try {
+      ReactGA.event("follow");
       await api.addFollow("3124ecce-06cf-4953-bd7a-12d940df1ff2");
 
       setFollow((current) => current + 1);

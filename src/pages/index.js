@@ -17,7 +17,7 @@ import Background from "@/components/Background";
 
 //utils
 import useToast from "@/hooks/useToast";
-
+import ReactGA from "react-ga4";
 function Home() {
   const { handleToast, component: Toast } = useToast();
   const [appear, setAppear] = useState(false);
@@ -116,6 +116,9 @@ function Home() {
               </div>
               <Link
                 href={"/chat"}
+                onClick={() => {
+                  ReactGA.event("start_chat");
+                }}
                 className="bg-kaya-500 mt-2 rounded-2xl py-4 text-center font-bold text-white md:mt-4"
               >
                 Start Chat with Jesus
