@@ -25,7 +25,7 @@ export default function Document() {
             width="0"
             style={{
               display: "none",
-              visibilit: "hidden",
+              visibility: "hidden",
             }}
           ></iframe>
         </noscript>
