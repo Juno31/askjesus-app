@@ -38,6 +38,7 @@ export default function App({ Component, pageProps }) {
       {process?.env?.NODE_ENV === "production" && (
         <>
           <Script
+            strategy="afterInteractive"
             id="beusable-script"
             dangerouslySetInnerHTML={{
               __html: `          
@@ -54,11 +55,13 @@ export default function App({ Component, pageProps }) {
             }}
           />
           <Script
+            strategy="afterInteractive"
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-T3LCKS2W46"
           />
           <Script
             id="google-analytics"
+            strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `
   window.dataLayer = window.dataLayer || [];
@@ -69,6 +72,15 @@ export default function App({ Component, pageProps }) {
   `,
             }}
           />
+          <Script id="gtm-script" strategy="afterInteractive">
+            {`<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MRX3GMR');</script>
+<!-- End Google Tag Manager -->`}
+          </Script>
         </>
       )}
 

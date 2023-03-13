@@ -18,6 +18,17 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MRX3GMR"
+            height="0"
+            width="0"
+            style={{
+              display: "none",
+              visibilit: "hidden",
+            }}
+          ></iframe>
+        </noscript>
       </body>
     </Html>
   );
