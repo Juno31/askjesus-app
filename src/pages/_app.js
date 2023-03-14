@@ -31,6 +31,8 @@ export default function App({ Component, pageProps }) {
           property="og:description"
           content="Hi, I'm Jesus. Ask me anything."
         />
+        <meta property="og:url" content="https://askjesus.me" />
+        <meta property="og:site_name" content="AskJesus" />
       </Head>
       {process?.env?.NODE_ENV === "production" && (
         <>
